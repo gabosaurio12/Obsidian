@@ -1,0 +1,2 @@
+- Banco de reactivos (incompleto)
+- Hacer los equipos y que se guarden

@@ -1,0 +1,17 @@
+## Caso Práctico - Aplicación de conducción automática
+La empresa Einstein desarrolló una aplicación para que sus automóviles sean totalmente independientes, es decir, que no necesiten de un conductor para moverse y llegar a un destino. La.aplicación se planeaba sacar al mercado en un mes.
+Durante el análisis de diseño se omitió una funcionalidad muy importante que afecta la seguridad del pasaje, el cuál se descubrió durante la fase de pruebas final. Es una funcionalidad compleja de agregar a un mes del despliegue de la aplicación ya que requiere entrenar a la IA que se usa para la detección de objetos y la toma de decisiones en casos catastróficos. Por ejemplo, a quién salva si algo falla: Va a atropellar a alguien y no hay forma de evitarlo, a quién salva a un anciano o a un niño persiguiendo su pelota, si salva al niño hay un 45% de probabilidades de causarle un daño al pasajero, si salva al anciano hay un 15% de probabilidades de causarle daño al pasajero; ¿En este caso a quién debe salvar? Estas preguntas requieren ayuda de abogados, filósofos y expertos en ética para contestarlas por lo que todo el análisis que conlleva no dará tiempo. 
+En caso de que la aplicación se despliegue pondrá en riesgo la vida no solo del pasajero, sino la de los peatones u otros conductores. Sin embargo, la empresa pide al tester que apruebe el despliegue y al equipo que lo arreglen en dos semanas.
+## Preguntas a contestar
+- ¿Qué principios éticos están en conflicto en este escenario?
+	- Sociedad: El interés social siempre será preservar la seguridad, en este caso la seguridad vial la cual probablemente se ponga en riesgo
+	- Cliente: El producto siempre debe priorizar la seguridad y los intereses del cliente. En este caso se está poniendo en extremo peligro la vida del cliente al no tener una balanza que le de prioridad
+	- Producto: Este producto es considerado un producto de baja calidad ya que no cumpliría con **requisitos** básicos y vitales
+	- Juicio: Si el tester aprueba el aplicativo pondría en duda su ética profesional e integridad al poner en riesgo muchas vidas
+	- Administración: Se busca que los ISOF promuevan y se centren en un enfoque ético, lo cual se viola en este caso hipotético
+	- Profesión: La reputación de la ingeniería de software y la IA se verá sumamente afectada con el primer accidente que ocurra, porque la gente no verá a la empresa Einstein como malvada, sino a la tecnología que "los está tratando de matar"
+	- Personal: Si el tester aprueba el aplicativo traicionará el enfoque ético con el que debería trabajar
+- ¿Cuál es el dilema ético principal que enfrenta el probador?
+	- El de hacerle caso a sus superiores o a su ética y su moral la cual dependerá de él, de qué tanto valora los principios con los que se debería guiar. Si rechaza el aprobar la aplicación probablemente lo despidan y contraten a alguien que sí lo apruebe o al menos lo sacarían del proyecto, pero si lo aprueba pueden incluso premiarlo por "ayudar" a la empresa (esto hablaría mucho de la ética y moral de la empresa). Al tomar la decisión de **NO** aprobar la aplicación cuidaría la reputación de su disciplina, de lo contrario sería un golpe muy grande para los avances que se han tenido en el área y quién sabe si de verdad se podría recuperar la confianza que se han ganado.
+- ¿Qué acción debe tomar el probador para ser congruente con los principios éticos?
+- ¿Qué posibles consecuencias (positivas y negativas) tendría cada decisión (lanzar el producto con el error vs. retrasar el lanzamiento para corregirlo)?

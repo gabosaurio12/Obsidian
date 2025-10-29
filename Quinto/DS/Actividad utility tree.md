@@ -1,0 +1,1 @@
+Hacer de cada sub atributo una hipótesis verificable

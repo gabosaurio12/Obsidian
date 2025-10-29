@@ -1,0 +1,4 @@
+- Usar el core
+- WPF net framework
+- Compilar ≠ Run
+- Hay que establecer algo como punto de inicio en el menú Proyecto

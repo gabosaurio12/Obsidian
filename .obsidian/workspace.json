@@ -1,0 +1,219 @@
+{
+  "main": {
+    "id": "603c7efff1259e19",
+    "type": "split",
+    "children": [
+      {
+        "id": "6ad22a19d0d41ba1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3d81e4aa07b0acfe",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Nueva pestaña"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "86cd25ac38a9f35c",
+    "type": "split",
+    "children": [
+      {
+        "id": "b16f32d96a7c78c3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "37c2f4dbd506e7c0",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "byCreatedTimeReverse",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "718ab1be93c3c1d9",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "estilos",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "e8799c5ec45c6ecb",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 219
+  },
+  "right": {
+    "id": "7d93f3e7ac4e78be",
+    "type": "split",
+    "children": [
+      {
+        "id": "996905503a29b2e4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5a54a06a96e15398",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Gabosaurio/DS/Repaso 1er parcial.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes de Repaso 1er parcial"
+            }
+          },
+          {
+            "id": "ef418e1b152420ea",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Welcome.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Welcome"
+            }
+          },
+          {
+            "id": "3a059bbb31d3af95",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "ff36ed1d9b67ab67",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Welcome.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Welcome"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false
+    }
+  },
+  "active": "37c2f4dbd506e7c0",
+  "lastOpenFiles": [
+    "Notas/Microsoft Entity Framework.md",
+    "Notas/SQL Server.md",
+    "Notas/Semaforo.md",
+    "Notas/Recomendaciones.md",
+    "Notas/Puertos imporantes.md",
+    "Notas/Libros.md",
+    "Notas/TCS.md",
+    "Notas/Redes.md",
+    "Notas/ISOF.md",
+    "Notas/DS.md",
+    "Notas",
+    "Quinto/TCS/Software actual y Frameworks.md",
+    "Quinto/IA/Imágenes/IMG_20250901_135422123~2.jpg",
+    "Quinto/IA/Búsquedas/Recocido Simulado (Simulated Annealing).md",
+    "Quinto/TCS/Actividades/Reporte - Internacionalización.md",
+    "Quinto/IA/Búsquedas/Búsquedas.md",
+    "Quinto/IA/Búsquedas/Búsquedas poblacionales.md",
+    "Quinto/IA/Búsquedas/Búsquedas Locales.md",
+    "Quinto/IA/Búsquedas/Escalado de Colina (Hill Climbing).md",
+    "Quinto/IA/Búsquedas/Búsqueda en Amplitud (BFS).md",
+    "Quinto/IA/Búsquedas/Búsquedas Informadas.md",
+    "Quinto/IA/Búsquedas/Búsqueda exhaustiva.md",
+    "Quinto/IA/Búsquedas/Búsqueda Tabú (Tabú Search).md",
+    "Quinto/IA/Búsquedas/Algoritmo A*.md",
+    "Quinto/IA/Búsquedas/Búsqueda en Profundidad (DFS).md",
+    "Quinto/IA/Búsquedas/Búsqueda Heurística (Greedy Best-First).md",
+    "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 7.46.49 p.m..png",
+    "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.15.53 p.m..png",
+    "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 8.34.45 p.m..png",
+    "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 8.16.24 p.m..png",
+    "Quinto/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 12.45.33 a.m..png",
+    "Quinto/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 12.47.15 a.m..png",
+    "Quinto/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 12.43.46 a.m..png",
+    "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.15.09 p.m..png",
+    "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.14.20 p.m..png",
+    "Quinto/DS/Atributos de calidad/Modificabilidad.md",
+    "Quinto/DS/Atributos de calidad/Disponibilidad.md",
+    "Quinto/TCS/Actividades",
+    "Quinto/IA/Imágenes",
+    "Quinto/IA/Búsquedas",
+    "Quinto/FPS/imagenes",
+    "Quinto/DS/Imágenes",
+    "Quinto/DS/Atributos de calidad",
+    "Quinto/DS/Diagramas UML",
+    "Quinto/DS/Actividades",
+    "Quinto/DS/Arquitectura",
+    "Sin título.canvas",
+    "Sin título.canvas 17-10-50-871.canvas"
+  ]
+}

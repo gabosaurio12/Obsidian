@@ -1,0 +1,25 @@
+Nos dice que existen cuatro actores en este proceso
+- Actores de estado (actividad de grupo)
+- Ciberdelincuencia - Extorsión
+- Hactivismo - Epstein
+- Actores internos - Personas con acceso legítimo
+## Principales ataques
+- Inyecciones SQL 'OR'I' = '1
+- Broken access control -> GUR (Gestión de Usuarios y Roles)
+- Cross-site Scripting (XSS) -> JS
+- Diseño Inseguro
+- Cross-site Request Forgery (CSRF)
+- Click-Jacking - Engañar por medio de elementos invisibles en la GUI
+- Phishing
+- Man-in-the-Middle (MitM) - Alguien intercepta los paquetes
+- Bibliotecas y dependencias vulnerable
+- DDOS y DOS
+	- Botnets
+		- Malware
+		- Ransonware
+			- Secuestro/Extorsión, encripta todos los archivos del equipo
+		- Spyware
+			- Novia tóxica
+		- Adware
+			- Anuncios
+		- Rootkit

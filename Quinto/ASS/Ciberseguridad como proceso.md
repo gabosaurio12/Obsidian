@@ -1,0 +1,46 @@
+**Esto es un proceso que se repetirá**
+Es una estrella
+- Análisis de Riesgos
+	- Relación entre impacto y probabilidad
+	- Probabilidades
+		- Muy Bajo
+		- Bajo
+		- Medio
+		- Medio-Alto
+		- Alto
+		- Muy Alto
+		- Crítico
+	- ![[Captura de pantalla 2025-09-02 a la(s) 11.06.57 p.m..png]]
+- Diseño de controles
+	- Cualquier cosa que:
+		- Prevenir
+			- Estar listo para el riesgo
+		- Mitigar
+			- Minimizar el riesgo e impactos
+			- Eliminar las consecuencias
+		- Transferir
+			- Pasar el manejo del riesgo a un equipo adecuado
+		- Aceptar
+			- Aceptar que ocurrió
+- Diseño de procedimientos
+	- Diseñar tácticas y acciones para prevenir y mitigar
+- Implementación
+	- Aplicar los procedimientos
+	- Contraseña segura por ejemplo
+		- 4 cosas que me gustan
+			- DormirComerHarryVoleibol
+- Auditoría
+	- Prestar atención en las políticas
+- Gestión de Riesgos
+	- Con los resultados de la auditoría podemos gestionar los riesgos
+	- Me permitirá saber qué es lo que funciona y lo que no
+## Política de Seguridad
+- Roles y Responsabilidades
+- Procedimientos de Respuesta ante incidentes
+- Requisito de cumplimiento normativo
+**Sigue este proceso:**
+- Revisión
+- Adaptavilidad
+- Precisión
+- Compromiso
+- Comunicación

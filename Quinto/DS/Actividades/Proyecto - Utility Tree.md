@@ -1,0 +1,4 @@
+Fuente - Estímulo - Artefacto - Entorno - Respuesta - Medida
+Humano - Capturar información - Información en el sistema (métodos de pago) - Conectado a la red - La información está protegida de acceso no autorizado - Qué tanto un ataque es vulnerable al ataque
+
+Un adversario intenta ser un MitM durante una transacción - El adversario quiere capturar los métodos de pago del usuario - Sistema de pagos - conectado a la red - Terminar/Cancelar la transacción, alertar a las operaciones de seguridad, bloquear la conexión sospechosa y forzar reautenticación del usuario - Aplicar TLS obligatorio, tokenización de tarketas y pinning o mTLS para los clientes.
