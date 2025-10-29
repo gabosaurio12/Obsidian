@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "6ad22a19d0d41ba1",
+        "id": "a50c4b37fa268676",
         "type": "tabs",
         "children": [
           {
-            "id": "3d81e4aa07b0acfe",
+            "id": "be26e4090609fe59",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -74,7 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 219
+    "width": 382
   },
   "right": {
     "id": "7d93f3e7ac4e78be",
@@ -167,6 +167,18 @@
   },
   "active": "37c2f4dbd506e7c0",
   "lastOpenFiles": [
+    "Quinto/IA/Busquedas/En Amplitud (BFS).md",
+    "Quinto/IA/Busquedas/Poblacionales.md",
+    "Quinto/IA/Busquedas/Tabú (Tabú Search).md",
+    "Quinto/IA/Busquedas/Escalado de Colina (Hill Climbing).md",
+    "Quinto/IA/Busquedas/Locales.md",
+    "Quinto/IA/Busquedas/Algoritmo A*.md",
+    "Quinto/IA/Busquedas/Heurística (Greedy Best-First).md",
+    "Quinto/IA/Busquedas/Informadas.md",
+    "Quinto/IA/Busquedas/Exhaustiva.md",
+    "Quinto/IA/Busquedas/En Profundidad (DFS).md",
+    "Quinto/IA/Busquedas/Busquedas.md",
+    "Software actual y Frameworks.md",
     "Notas/Microsoft Entity Framework.md",
     "Notas/SQL Server.md",
     "Notas/Semaforo.md",
@@ -180,19 +192,8 @@
     "Notas",
     "Quinto/TCS/Software actual y Frameworks.md",
     "Quinto/IA/Imágenes/IMG_20250901_135422123~2.jpg",
-    "Quinto/IA/Búsquedas/Recocido Simulado (Simulated Annealing).md",
+    "Quinto/IA/Busquedas/Recocido Simulado (Simulated Annealing).md",
     "Quinto/TCS/Actividades/Reporte - Internacionalización.md",
-    "Quinto/IA/Búsquedas/Búsquedas.md",
-    "Quinto/IA/Búsquedas/Búsquedas poblacionales.md",
-    "Quinto/IA/Búsquedas/Búsquedas Locales.md",
-    "Quinto/IA/Búsquedas/Escalado de Colina (Hill Climbing).md",
-    "Quinto/IA/Búsquedas/Búsqueda en Amplitud (BFS).md",
-    "Quinto/IA/Búsquedas/Búsquedas Informadas.md",
-    "Quinto/IA/Búsquedas/Búsqueda exhaustiva.md",
-    "Quinto/IA/Búsquedas/Búsqueda Tabú (Tabú Search).md",
-    "Quinto/IA/Búsquedas/Algoritmo A*.md",
-    "Quinto/IA/Búsquedas/Búsqueda en Profundidad (DFS).md",
-    "Quinto/IA/Búsquedas/Búsqueda Heurística (Greedy Best-First).md",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 7.46.49 p.m..png",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.15.53 p.m..png",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 8.34.45 p.m..png",
@@ -203,10 +204,9 @@
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.15.09 p.m..png",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.14.20 p.m..png",
     "Quinto/DS/Atributos de calidad/Modificabilidad.md",
-    "Quinto/DS/Atributos de calidad/Disponibilidad.md",
     "Quinto/TCS/Actividades",
     "Quinto/IA/Imágenes",
-    "Quinto/IA/Búsquedas",
+    "Quinto/IA/Busquedas",
     "Quinto/FPS/imagenes",
     "Quinto/DS/Imágenes",
     "Quinto/DS/Atributos de calidad",
