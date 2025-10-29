@@ -11,10 +11,14 @@
             "id": "be26e4090609fe59",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Quinto/IA/Busquedas/Algoritmo A Estrella.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nueva pestaña"
+              "title": "Algoritmo A Estrella"
             }
           }
         ]
@@ -165,14 +169,15 @@
       "bases:Crear nueva base": false
     }
   },
-  "active": "37c2f4dbd506e7c0",
+  "active": "be26e4090609fe59",
   "lastOpenFiles": [
+    "Quinto/IA/Imágenes/IMG_20250901_135422123~2.jpg",
     "Quinto/IA/Busquedas/En Amplitud (BFS).md",
     "Quinto/IA/Busquedas/Poblacionales.md",
     "Quinto/IA/Busquedas/Tabú (Tabú Search).md",
     "Quinto/IA/Busquedas/Escalado de Colina (Hill Climbing).md",
     "Quinto/IA/Busquedas/Locales.md",
-    "Quinto/IA/Busquedas/Algoritmo A*.md",
+    "Quinto/IA/Busquedas/Algoritmo A Estrella.md",
     "Quinto/IA/Busquedas/Heurística (Greedy Best-First).md",
     "Quinto/IA/Busquedas/Informadas.md",
     "Quinto/IA/Busquedas/Exhaustiva.md",
@@ -191,7 +196,6 @@
     "Notas/DS.md",
     "Notas",
     "Quinto/TCS/Software actual y Frameworks.md",
-    "Quinto/IA/Imágenes/IMG_20250901_135422123~2.jpg",
     "Quinto/IA/Busquedas/Recocido Simulado (Simulated Annealing).md",
     "Quinto/TCS/Actividades/Reporte - Internacionalización.md",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 7.46.49 p.m..png",
@@ -203,7 +207,6 @@
     "Quinto/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 12.43.46 a.m..png",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.15.09 p.m..png",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.14.20 p.m..png",
-    "Quinto/DS/Atributos de calidad/Modificabilidad.md",
     "Quinto/TCS/Actividades",
     "Quinto/IA/Imágenes",
     "Quinto/IA/Busquedas",

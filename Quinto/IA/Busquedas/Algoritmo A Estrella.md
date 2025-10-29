@@ -1,3 +1,4 @@
+También conocido como A*.
 ## Idea principal
 Combina el costo del camino recorrido (g(n)) con la heurística (h(n)) para encontrar el camino óptimo
 f(n) = g(n) + h(n)
