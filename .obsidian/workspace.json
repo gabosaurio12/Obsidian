@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "a50c4b37fa268676",
+        "id": "94a7187890464a7d",
         "type": "tabs",
         "children": [
           {
-            "id": "be26e4090609fe59",
+            "id": "deda482169ac09a7",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Quinto/IA/Busquedas/Algoritmo A Estrella.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Algoritmo A Estrella"
+              "title": "Nueva pestaña"
             }
           }
         ]
@@ -169,15 +165,15 @@
       "bases:Crear nueva base": false
     }
   },
-  "active": "be26e4090609fe59",
+  "active": "deda482169ac09a7",
   "lastOpenFiles": [
+    "Quinto/IA/Busquedas/Algoritmo A Estrella.md",
     "Quinto/IA/Imágenes/IMG_20250901_135422123~2.jpg",
     "Quinto/IA/Busquedas/En Amplitud (BFS).md",
     "Quinto/IA/Busquedas/Poblacionales.md",
     "Quinto/IA/Busquedas/Tabú (Tabú Search).md",
     "Quinto/IA/Busquedas/Escalado de Colina (Hill Climbing).md",
     "Quinto/IA/Busquedas/Locales.md",
-    "Quinto/IA/Busquedas/Algoritmo A Estrella.md",
     "Quinto/IA/Busquedas/Heurística (Greedy Best-First).md",
     "Quinto/IA/Busquedas/Informadas.md",
     "Quinto/IA/Busquedas/Exhaustiva.md",
