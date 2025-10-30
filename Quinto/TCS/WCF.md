@@ -8,7 +8,7 @@ Alumno: Gabriel Antonio González López
 	- Es el contrato de los métodos que se expondrán al cliente
 	- Tipos de contrato:
 		- Contrato de servicio: Provee información al cliente así como al mundo externo acerca de las ofertas al endpoint y los protocolos que se usarán en el proceso de comunicación
-		- Contrat de información: La información intercambiada por un servcio y que es definida por un contrato de mensaje.
+		- Contrato de información: La información intercambiada por un servcio y que es definida por un contrato de mensaje.
 		- Contrato de mensaje: Un contrato de información es controlado por un contrato de mensaje. Personaliza el tipo de formato de los parámetros de un mensaje SOAP
 		- Política y vinculación (binding): Hay ciertas pre-condiciones para comunicarse con un servicio. Un cliente debe seguir este contrato
 - ¿Qué es un endpoint en WCF?
