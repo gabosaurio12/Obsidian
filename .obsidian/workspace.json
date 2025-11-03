@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "94a7187890464a7d",
+        "id": "51c043d5610e710a",
         "type": "tabs",
         "children": [
           {
-            "id": "deda482169ac09a7",
+            "id": "ea647ce66e43a003",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Quinto/FPS/Repaso Fundamentos de Pruebas de Software.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nueva pestaña"
+              "title": "Repaso Fundamentos de Pruebas de Software"
             }
           }
         ]
@@ -74,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 382
+    "width": 245
   },
   "right": {
     "id": "7d93f3e7ac4e78be",
@@ -90,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Gabosaurio/DS/Repaso 1er parcial.md",
+                "file": "Quinto/FPS/Repaso Fundamentos de Pruebas de Software.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Enlaces entrantes de Repaso 1er parcial"
+              "title": "Enlaces entrantes de Repaso Fundamentos de Pruebas de Software"
             }
           },
           {
@@ -165,13 +169,20 @@
       "bases:Crear nueva base": false
     }
   },
-  "active": "37c2f4dbd506e7c0",
+  "active": "ea647ce66e43a003",
   "lastOpenFiles": [
+    "Notas/Arch.md",
+    "Quinto/FPS/Repaso Fundamentos de Pruebas de Software.md",
+    "Sin título.base",
+    "Quinto/FPS/EX_1er_Parcial/Ejercicio 3.md",
+    "Quinto/FPS/EX_1er_Parcial/Ejercicio 1.md",
+    "Quinto/FPS/EX_1er_Parcial/Ejercicio 2.md",
+    "Quinto/FPS/EX_1er_Parcial",
+    "Pasted image 20251029225255.png",
+    "Notas/El mundo esta al reves.md",
     "Quinto/TCS/Repaso 1er Parcial.md",
     "Quinto/TCS/Frameworks orientados a objetos.md",
     "Quinto/TCS/Frameworks Mapa mental.canvas",
-    "Pasted image 20251029225255.png",
-    "Notas/El mundo está al revés.md",
     "Aprendiendo/Desarrollo Web/Temario.md",
     "Aprendiendo/Desarrollo Web/2. HTML y CSS.md",
     "Aprendiendo/Desarrollo Web/1. Fundamentos de la Web.md",
@@ -196,11 +207,6 @@
     "Notas/Microsoft Entity Framework.md",
     "Notas/SQL Server.md",
     "Notas/Semaforo.md",
-    "Notas/Recomendaciones.md",
-    "Notas/Puertos imporantes.md",
-    "Notas/Libros.md",
-    "Notas/TCS.md",
-    "Notas/Redes.md",
     "Notas",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 7.46.49 p.m..png",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.15.53 p.m..png",
@@ -212,8 +218,6 @@
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.15.09 p.m..png",
     "Quinto/TCS/Actividades",
     "Quinto/IA/Imágenes",
-    "Quinto/IA/Busquedas",
-    "Quinto/FPS/imagenes",
     "Sin título.canvas",
     "Sin título.canvas 17-10-50-871.canvas"
   ]
