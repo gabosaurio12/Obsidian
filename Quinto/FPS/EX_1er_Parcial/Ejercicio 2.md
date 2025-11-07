@@ -1,0 +1,10 @@
+| #    | Clase de Equivalencia                                                      | Criterio de Cobertura                   | Comportamiento Esperado     | Valor de Prueba                   |
+| ---- | -------------------------------------------------------------------------- | --------------------------------------- | --------------------------- | --------------------------------- |
+| CP01 | **Inválido** (Está en una edad fuera de rango (< 16))                      | Edad ≤ 15                               | Rechaza la compra           | 12                                |
+| CP02 | **Inválido** (Su edad es muy avanzada (>80))                               | Edad ≥ 81                               | Rechaza la compra           | 88                                |
+| CP03 | **Válido** (Está en el rango de edad de Adultos Mayores)                   | 61 ≤ Edad ≤ 80                          | Obtiene un descuento de 25% | 70                                |
+| CP04 | **Válido** (Está en el rango de edad de Adultos Estándar)                  | 18 ≤ Edad ≤ 60                          | Permite la compra           | 30                                |
+| CP05 | **Válido** (Está en el rango de edad de Menores con su membresía activa)   | 16 ≤ Edad ≤ 17 Y Membresía = "Activa"   | Permite la compra           | Edad = 16<br>Membresía = Activa   |
+| CP06 | **Válido** (Está en el rango de edad de Menores con su membresía inactiva) | 16 ≤ Edad ≤ 17 Y Membresía = "Inactiva" | Rechaza la compra           | Edad = 17<br>Membresía = Inactiva |
+### ¿Qué limitaciones presenta este conjunto de valores de prueba? Y ¿Cómo puede robustecerse?
+Está limitado en los límites de la variable de la edad porque si el programador se equivoca en un signo en las condicionales puede permitir la compra o asignar un descuento incorrectamente. La forma de robustecerla sería combinar la técnica de partición con la de los límtes robustos usando min, min+, min-, max, max+, max-, de esa forma ya habríamos mejorado mucho nuestro set de pruebas.
