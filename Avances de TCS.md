@@ -1,0 +1,10 @@
+- [ ] Entrega interfaces de jugabilidad
+- [x] Tablero
+- [x] Una que otra trancisiones.
+- [ ] Siguiente semana avance de jugabilidad e interacción
+- [x] Reporte de análisis de código del Sonarqube
+- [ ] No ocupar algoritmo, regenerar proxies de cliente
+- [ ] App config de server: 
+	- [ ] Direcciones de endpoints, no poner  direcciones harckodeada
+	- [ ] Cuando se prueba la configuración de red ver la ip de la máquina poner la ip de la máquina como servidor y el cliente mapea la ip y actualizar proxies.
+	- [ ] Tener un hostpot de celular o diferente
