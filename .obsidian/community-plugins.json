@@ -1,4 +1,8 @@
 [
   "oz-image-plugin",
-  "break-page"
+  "break-page",
+  "drawio-obsidian",
+  "obsidian-kanban",
+  "obsidian-export-image",
+  "image-converter"
 ]

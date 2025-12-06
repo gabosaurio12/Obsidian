@@ -1,6 +1,32 @@
 - Frameworks orientado a objetos
 	- Conjunto de herramientas y convenciones predefinidas para el desarrollo de software que se basa en los principios de POO [1]
+	- Es un generador de aplicaciones semi-completo
+	- Arquitectura reutilizable diseñada para resolver problemas dentro de un dominio específico
 	- Organizan el código en torno a objetos que representan entidades del mundo real
+	- Hot Spots
+		- Es un punto de flexibilidad de un framework
+		- Clase o método abstracto que debe ser implementado
+	- Frozen Spots (kernel)
+		- Es una parte inmutable del framework
+		- Código que no puede ser alterado fácilmente
+		- Llaman a los hot spots a menudo
+		- Si se cambian afecta mantenibilidad
+- Tipos de Frameworks
+	- Caja blanca
+		- La extensibilidad se logra introduciendo nuevas clases mediante herencia de clases base del framework o composición
+		- Se requiere conocer a profundidad la arquitectura del Framework
+	- Caja negra
+		- La extensibilidad se basa en **composición** y **delegación**
+		- Se implementan componentes que se ajustan a interfaces predefinidas y se conectan al framework
+		- Es fácil de usar pero difícil de desarrollar
+	- Caja gris
+		- Es mixto
+		- Parte de caja negra
+			- Permite la configuración sencilla
+			- Generación de código a través de herramientas o scripts
+		- Parte de caja blanca
+			- El desarrollador extiende el código o sobreescribir métodos mediante herencia
+			- Requiere conocimiento interno
 - Etapas o consideraciones necesarias para desarrollar un framework orientado a objetos [2]  [3]
 	1. Aprende el lenguaje de programación base
 	2. Define el propósito y la estructura principal
@@ -15,6 +41,8 @@
 	- Admiten distintos idiomas
 	- Modular
 	- Extensible
+		- Hook Methods
+			- Permiten a las aplicaciones extender las interfaces estables de un framework
 	- Seguro
 	- Estandarizado
 	- Automatización de tareas

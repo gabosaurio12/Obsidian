@@ -4,24 +4,67 @@
     "type": "split",
     "children": [
       {
-        "id": "51c043d5610e710a",
+        "id": "1b356b7e17a12681",
         "type": "tabs",
         "children": [
           {
-            "id": "ea647ce66e43a003",
+            "id": "6686f5d7095aecc4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Quinto/FPS/Repaso Fundamentos de Pruebas de Software.md",
+                "file": "Actividad actual.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Repaso Fundamentos de Pruebas de Software"
+              "title": "Actividad actual"
+            }
+          },
+          {
+            "id": "1c95646c67387f77",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Entrevista a Maggie.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Entrevista a Maggie"
+            }
+          },
+          {
+            "id": "3f1fae2ded6db74a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Quinto/ASS/Autenticación vs Autorización.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Autenticación vs Autorización"
+            }
+          },
+          {
+            "id": "451d9637e9859097",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Estudiar (Correcciones).md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Estudiar (Correcciones)"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -53,8 +96,8 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "estilos",
-                "matchingCase": false,
+                "query": "",
+                "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -78,7 +121,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 245
+    "width": 245,
+    "collapsed": true
   },
   "right": {
     "id": "7d93f3e7ac4e78be",
@@ -94,7 +138,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Quinto/FPS/Repaso Fundamentos de Pruebas de Software.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +147,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Enlaces entrantes de Repaso Fundamentos de Pruebas de Software"
+              "title": "Enlaces entrantes"
             }
           },
           {
@@ -113,12 +156,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Welcome.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Welcome"
+              "title": "Enlaces salientes"
             }
           },
           {
@@ -133,7 +175,7 @@
                 "searchQuery": ""
               },
               "icon": "lucide-tags",
-              "title": "Tags"
+              "title": "Etiquetas"
             }
           },
           {
@@ -142,20 +184,21 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Welcome.md",
+                "file": "Quinto/TCS/Seguridad.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Welcome"
+              "title": "Esquema de Seguridad"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 524.5,
     "collapsed": true
   },
   "left-ribbon": {
@@ -166,58 +209,59 @@
       "daily-notes:Abrir la nota de hoy": false,
       "templates:Insertar plantilla": false,
       "command-palette:Abrir paleta de comandos": false,
-      "bases:Crear nueva base": false
+      "bases:Crear nueva base": false,
+      "obsidian-kanban:Create new board": false
     }
   },
-  "active": "ea647ce66e43a003",
+  "active": "451d9637e9859097",
   "lastOpenFiles": [
-    "Notas/Arch.md",
-    "Quinto/FPS/Repaso Fundamentos de Pruebas de Software.md",
-    "Sin título.base",
-    "Quinto/FPS/EX_1er_Parcial/Ejercicio 3.md",
-    "Quinto/FPS/EX_1er_Parcial/Ejercicio 1.md",
-    "Quinto/FPS/EX_1er_Parcial/Ejercicio 2.md",
-    "Quinto/FPS/EX_1er_Parcial",
-    "Pasted image 20251029225255.png",
-    "Notas/El mundo esta al reves.md",
-    "Quinto/TCS/Repaso 1er Parcial.md",
-    "Quinto/TCS/Frameworks orientados a objetos.md",
-    "Quinto/TCS/Frameworks Mapa mental.canvas",
-    "Aprendiendo/Desarrollo Web/Temario.md",
-    "Aprendiendo/Desarrollo Web/2. HTML y CSS.md",
-    "Aprendiendo/Desarrollo Web/1. Fundamentos de la Web.md",
+    "Estudiar (Correcciones).md",
+    "Quinto/ASS/Autenticación vs Autorización.md",
+    "Quinto/ASS/SSO.md",
+    "Notas/ISOF.md",
+    "Quinto/ASS/Infraestructura de red.md",
+    "Notas/DS.md",
+    "Notas/TCS.md",
+    "Notas/Libros.md",
+    "Quinto/TCS/Repaso segundo parcial TCS.md",
+    "Quinto/ASS/Aspectos de la seguridad.md",
+    "Quinto/FPS/Datos pruebas.md",
+    "Quinto/IA/Métricas.md",
+    "Comparación e Interpretación de Modelos.md",
+    "Entrevista a Maggie.md",
+    "Quinto/DS/Diagramas UML/Despliegue.md",
+    "Quinto/DS/Biblio.md",
+    "Quinto/DS/Arquitectura/Diseño.md",
+    "Quinto/DS/Actividades/Proyecto - Utility Tree.md",
+    "Quinto/DS/Actividad utility tree.md",
+    "Quinto/DS/Deuda técnica.md",
+    "Quinto/DS/Proyecto Final.md",
+    "Entrevista Ix.md",
+    "Actividad actual.md",
+    "Sin nombre",
+    "Credenciales.md",
+    "Quinto/ASS/OWASP.md",
+    "Quinto/ASS/Ciberseguridad como proceso.md",
     "Aprendiendo/Temario.pdf",
-    "Aprendiendo/Desarrollo Web",
-    "Aprendiendo/2. HTML y CSS.pdf",
     "Aprendiendo/1. Fundamentos de la Web.pdf",
-    "Aprendiendo",
-    "Quinto/IA/Busquedas/Algoritmo A Estrella.md",
+    "Quinto/IA/Aprendizaje",
+    "Quinto/DIG/imagenes/letras-fondo-colores.jpg",
+    "Quinto/DIG/imagenes/circulo-cromatico.jpg",
+    "Quinto/DIG/imagenes/Sin confirmar 296594.crdownload",
+    "Quinto/DIG/imagenes",
+    "Quinto/DS/Proyecto",
+    "NextYou",
+    "Quinto/DS/Exposiciones",
+    "Quinto/TCS/Frameworks Mapa mental.canvas",
+    "Sin título.base",
+    "Pasted image 20251029225255.png",
     "Quinto/IA/Imágenes/IMG_20250901_135422123~2.jpg",
-    "Quinto/IA/Busquedas/En Amplitud (BFS).md",
-    "Quinto/IA/Busquedas/Poblacionales.md",
-    "Quinto/IA/Busquedas/Tabú (Tabú Search).md",
-    "Quinto/IA/Busquedas/Escalado de Colina (Hill Climbing).md",
-    "Quinto/IA/Busquedas/Locales.md",
-    "Quinto/IA/Busquedas/Heurística (Greedy Best-First).md",
-    "Quinto/IA/Busquedas/Informadas.md",
-    "Quinto/IA/Busquedas/Exhaustiva.md",
-    "Quinto/IA/Busquedas/En Profundidad (DFS).md",
-    "Quinto/IA/Busquedas/Busquedas.md",
-    "Software actual y Frameworks.md",
-    "Notas/Microsoft Entity Framework.md",
-    "Notas/SQL Server.md",
-    "Notas/Semaforo.md",
-    "Notas",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 7.46.49 p.m..png",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.15.53 p.m..png",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 8.34.45 p.m..png",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 8.16.24 p.m..png",
     "Quinto/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 12.45.33 a.m..png",
     "Quinto/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 12.47.15 a.m..png",
-    "Quinto/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 12.43.46 a.m..png",
-    "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 2.15.09 p.m..png",
-    "Quinto/TCS/Actividades",
-    "Quinto/IA/Imágenes",
     "Sin título.canvas",
     "Sin título.canvas 17-10-50-871.canvas"
   ]
