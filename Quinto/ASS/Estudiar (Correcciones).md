@@ -15,6 +15,7 @@ Ya no se considera seguro para la encriptación debido a vulnerabilidades de col
 Aumenta la seguridad y protege contra ataques de diccionario
 ## OAuth 2.0
 
+<<<<<<< HEAD
 Es un estándar abierto de autorización que permite a una aplicación (cliente) acceder a recursos protegidos en otro servidor (servidor de recursos) en nombre de un usuario, sin compartir las credenciales (usuario/contraseña).
 
 Funciona mediante tokens de acceso temporales y acotados, concediendo permisos específicos (scopes), lo que mejora la seguridad, es como usar Google o Facebook para iniciar sesión en otra app, delegando acceso de forma controlada.
@@ -42,6 +43,9 @@ OAuth 2.0 tiene varios "flujos" para diferentes tipos de aplicaciones (web, móv
 - **Flexibilidad:** Permite acceso delegadoa a APIs, siendo estándar en Google, Facebook, Twitter, etc.
 
 https://auth0.com/es/intro-to-iam/what-is-oauth-2
+=======
+
+>>>>>>> b40ef9e72e6379ef238d5c05165fb9dcab91762b
 ## JWS
 ## Cookies (Simples y medidas de seguridad)
 ## HTTP/HTTPS

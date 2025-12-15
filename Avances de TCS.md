@@ -1,4 +1,4 @@
-- [ ] Entrega interfaces de jugabilidad
+- [x] Entrega interfaces de jugabilidad
 - [x] Tablero
 - [x] Una que otra trancisiones.
 - [ ] Siguiente semana avance de jugabilidad e interacción

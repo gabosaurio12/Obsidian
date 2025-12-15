@@ -2,7 +2,7 @@
 ### Qué es
 Es el porcentaje de instancias correctamente clasificadas sobre el total
 ### Cómo se interpreta
-Si el modelo tiene un accuracy del 78%, significa que clasificó bien 78% de los pasajeros (tanto sobrevivientes como no sobrevivientes)
+Si el modelo tiene un accuracy del 78%, significa que clasificó bien 78% de los pasajeros (tanto sobrevivientes como no sobrevivientes)¿
 ### Ejemplo
 De 100 personas, predijo bien a 78 => Accuracy 78%
 ## Precisión sí
@@ -40,12 +40,20 @@ Hubo 50 sobrevivientes reales y el modelo detectó 45 => 45/50 = 90%
 **Accuracy (Exactitud)**
 Proporción de predicciones correctas
 $Accuracy = numero de Aciertos / total de predicciones$
-**Revisión**
+
+**PrecisiónSi**
 ¿Qué porcentaje de los positivos predichos son correctos?
 $Precisión = TP / TP + FP$
+
+$TP = PositivosVerdaderos$
+$FP = FalsosPositivos$
+
 **Recall**
 ¿Qué porcentaje de los positivos reales fueron encontrados?
 $Recall = TP / TP + FN$
+
+$TP = PositivosVerdaderos$
+$FP = FalsosNegativos$
 
 **Predichos**
 

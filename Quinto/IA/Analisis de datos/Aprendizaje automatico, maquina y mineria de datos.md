@@ -41,6 +41,6 @@ El objetivo es predecir si una persona jugará tenis (Sí / No) en función de c
 - Viento (débil, fuerte)
 La variable de salida es Jugar = Sí / No
 
-## Nai Bayes
+## Naive Bayes
 
 ## J48
