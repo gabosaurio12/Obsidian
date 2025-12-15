@@ -10,7 +10,7 @@
 	- Uso de framework de UI
 		- WPF
 	- Prácticas seguras de escritura de código
-		-  Proyecto inseguro no se recibe
+		- Proyecto inseguro no se recibe
 		- Todo código que se escriba debe ser seguro y probado
 		- Pruebas de inyección de código en distintos niveles
 	- Seguridad en la BD
@@ -53,7 +53,6 @@
 public void TestLoginSuccessful()
 public void TestLoginEmptyCredentials()
 public void TestLoginNoDatabaseConnection()
-
 # Usuarios de SQL Server
 ## Usuario Sysadmin
 SA
@@ -68,3 +67,5 @@ Las contraseñas deberan tener:
 - Al menos un aletra **minúscula**
 - Al menos un **número**
 - Al menos un caracter especial **! @ # $ % & _**
+## Apartados
+- Agregar a reporte de proyecto final, reporte de seguridad en la que los componentes que se usan no identificaron una vulnerabilidad conocida

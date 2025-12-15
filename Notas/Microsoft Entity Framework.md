@@ -1,5 +1,3 @@
-
-
 ## Propósito de Microsoft Entity Framework  
 
 Microsoft Entity Framework (EF) es un Object Relational Mapper (ORM) que permite a los desarrolladores trabajar con bases de datos utilizando objetos de .NET, sin necesidad de escribir directamente consultas SQL.  

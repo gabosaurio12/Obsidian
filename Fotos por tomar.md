@@ -1,0 +1,33 @@
+## Casillas
+- [ ] classroom-104.png
+- [ ] classroom-112.png
+- [ ] classroom-f103.png
+- [ ] classroom-3.png
+- [ ] cc1.png
+- [ ] cc2.png
+- [ ] cc4.png
+- [ ] isof-lab.png
+- [ ] usability-lab.png
+- [ ] economy-classrooms.png
+- [ ] isof-cubicle-boss.png
+- [ ] listi-cubicle-boss.png
+- [ ] isof-cubicle.png
+- [ ] elrevo-cubicle.png
+- [ ] crystal-salon.png
+- [ ] audiovisual.png
+- [ ] auditory.png
+- [ ] komalli.png
+- [ ] cendhiu.png
+- [ ] mini-cafe.png
+- [ ] yard.png
+- [ ] esplanade.png
+- [ ] spiral-staircase.png
+- [ ] esplanade-table.png
+## Tesoros
+- [ ] clean-code.png
+- [ ] cubicle-keys.png
+- [ ] volleyball.png
+- [ ] imac.png
+## Cartas especiales
+- [ ] antivirus
+- [ ] :q!

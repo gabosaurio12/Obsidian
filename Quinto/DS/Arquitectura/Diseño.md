@@ -12,15 +12,6 @@ Los componentes son los ladrillos de las arquitecturas.
 - Conceptualización de estilos arquitectónicos
 - Identificación de estilos arquitectónicos
 - Elaboración de diseño de la arquitectura
-## Bibliografía
-
-- Software Architecture in Practice Fourth Edition (Bass, Clements, Kazman)
-- Pattern Oriented Software Architecture A System of Patterns Vol 1 (Buschmann, Meunier, Rohnert, Sommerlad, Stal)
-- Designing Software Architectures A Practical Approach Second Edition (Cervantes, Kazman)
-- Documenting Software Architectures Views and Beyond Second edition (Clements, Bass, Bachman, …)
-- Fundamentals of Software Architecture A Modern Engineering Approach 2nd Edition (Richards & Ford)
-- UML Components A Simple Process for Specifying Component-Based Software (Clemens Szyperski)
-- Component-Based Software Engineering Putting the Pieces Together
 ## Qué es el diseño
 
 - **Disciplina**: Aplicación de conocimiento, información e imaginación para definir un sistema que cumpla funciones específicas con máxima eficiencia
