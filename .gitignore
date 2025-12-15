@@ -1,5 +1,8 @@
+# mac
 .DS_Store
 .Thumbs_db
 
-.obsidian/
+# obsidian
+.obsidian/cache
 .obsidian/workspace.json
+obsidian/hotkeys.json
