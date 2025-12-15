@@ -3,22 +3,23 @@
 	- [ ] GUI Verificar token
 	- [ ] verificar cuenta (update)
 - [ ] Descartar cartas
-- [ ] Mover avatar
-- [ ] Mojar/hundir casilla
+- [x] Mover avatar
+- [x] Mojar/hundir casilla
 - [ ] Tomar tesoro
 
 **Lunes**
 - [ ] Alcanzar las 80 Pruebas
 - [ ] Solo aceptar imágenes
-- [ ] Quitar posibilidad de hacer cosas con login
-	- [ ] Cerrar sesión
-	- [ ] Editar perfil
-	- [ ] Ver amigos
+- [x] Quitar posibilidad de hacer cosas con login
+	- [x] Cerrar sesión
+	- [x] Editar perfil
+	- [x] Ver amigos
 
 **Martes**
 
 **Miércoles**
 - [ ] Alcanzar las 80 Pruebas
+
 **Jueves**
 - [ ] Transferencia de imágenes
 	- [ ] GetImage()
@@ -32,6 +33,5 @@
 		- [ ] La guarda en el dir al que corresponde (avatars)
 
 **Viernes**
-
 - [ ] DCU solo CRUD
 - [ ] 3 Diagramas de secuencia

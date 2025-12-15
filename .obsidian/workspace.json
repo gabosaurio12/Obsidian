@@ -13,58 +13,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Actividad actual.md",
+                "file": "Quinto/IA/Comparacion e Interpretacion de Modelos.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Actividad actual"
-            }
-          },
-          {
-            "id": "1c95646c67387f77",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Entrevista a Maggie.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Entrevista a Maggie"
-            }
-          },
-          {
-            "id": "3f1fae2ded6db74a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Quinto/ASS/Autenticación vs Autorización.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Autenticación vs Autorización"
-            }
-          },
-          {
-            "id": "451d9637e9859097",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Estudiar (Correcciones).md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Estudiar (Correcciones)"
+              "title": "Comparacion e Interpretacion de Modelos"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -121,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 245,
-    "collapsed": true
+    "width": 245
   },
   "right": {
     "id": "7d93f3e7ac4e78be",
@@ -213,11 +169,22 @@
       "obsidian-kanban:Create new board": false
     }
   },
-  "active": "451d9637e9859097",
+  "active": "6686f5d7095aecc4",
   "lastOpenFiles": [
+    "Quinto/IA/Redes bayesianas.md",
+    "Quinto/IA/Comparacion e Interpretacion de Modelos.md",
+    "Actividad actual.md",
+    "Credenciales.md",
+    "Libros.md",
+    "Plan Nutricional.md",
+    "Quinto/DIG/Entrevista a Maggie.md",
+    "Quinto/ASS/Estudiar (Correcciones).md",
+    "Mock.md",
     "Avances de TCS.md",
-    "Estudiar (Correcciones).md",
+    "PresentaciónFinal.pdf",
+    "Sin título.md",
     "Quinto/ASS/Autenticación vs Autorización.md",
+    "Guión SSO.md",
     "Quinto/ASS/SSO.md",
     "Notas/ISOF.md",
     "Quinto/ASS/Infraestructura de red.md",
@@ -228,20 +195,10 @@
     "Quinto/ASS/Aspectos de la seguridad.md",
     "Quinto/FPS/Datos pruebas.md",
     "Quinto/IA/Métricas.md",
-    "Comparación e Interpretación de Modelos.md",
-    "Entrevista a Maggie.md",
     "Quinto/DS/Diagramas UML/Despliegue.md",
     "Quinto/DS/Biblio.md",
     "Quinto/DS/Arquitectura/Diseño.md",
-    "Quinto/DS/Actividades/Proyecto - Utility Tree.md",
-    "Quinto/DS/Actividad utility tree.md",
-    "Quinto/DS/Deuda técnica.md",
-    "Quinto/DS/Proyecto Final.md",
-    "Entrevista Ix.md",
-    "Actividad actual.md",
     "Sin nombre",
-    "Credenciales.md",
-    "Quinto/ASS/OWASP.md",
     "Aprendiendo/Temario.pdf",
     "Aprendiendo/1. Fundamentos de la Web.pdf",
     "Quinto/IA/Aprendizaje",
@@ -253,7 +210,6 @@
     "NextYou",
     "Quinto/DS/Exposiciones",
     "Quinto/TCS/Frameworks Mapa mental.canvas",
-    "Sin título.base",
     "Pasted image 20251029225255.png",
     "Quinto/IA/Imágenes/IMG_20250901_135422123~2.jpg",
     "Quinto/FPS/imagenes/Captura de pantalla 2025-10-27 a la(s) 7.46.49 p.m..png",
