@@ -23,6 +23,17 @@
 	- [ ] Callback eliminar amigo
 	- [ ] Mover ficha
 
+**Viernes**
+- [ ] Asignación de roles a jugadores
+
+**Sábado**
+- [ ] Mejoras de sonido
+- [ ] Mejoras en imágenes de fondo
+	- [ ] Debe verse definido aunque sea pixel art
+- [ ] Mejoras en GUI
+	- [ ] Constancia en la forma de los botones
+	- [ ] Constancia de colores
+
 **Extra**
 - [ ] Transferencia de imágenes
 	- [ ] GetImage()
