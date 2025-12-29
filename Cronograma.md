@@ -24,6 +24,7 @@
 		8. cuenta verificada
 		- [x] Hacer callback para actualizar la página principal y que ya no aparezca el botón de verificación si se verificó con éxito
 - [ ] Descartar cartas
+- [ ] Usar cartas de tesoro
 - [ ] Tomar tesoro
 - [ ] Asignación de roles a jugadores
 
@@ -31,6 +32,8 @@
 - [ ] Alcanzar 100 Pruebas
 - [ ] Reporte de pruebas
 - [ ] Solo aceptar imágenes
+- [ ] Manejo de turnos
+- [ ] Reconstruir tablero después de un minijuego (podría usarse un json)
 
 **Martes**
 - [ ] DCU solo CRUD
