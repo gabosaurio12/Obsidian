@@ -34,6 +34,9 @@
 	- [ ] Constancia en la forma de los botones
 	- [ ] Constancia de colores
 
+**Refactorizar**
+- [ ] Magic numbers en BuildBoard (UserControlBoard)
+
 **Extra**
 - [ ] Transferencia de imágenes
 	- [ ] GetImage()

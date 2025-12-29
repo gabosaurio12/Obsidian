@@ -1,0 +1,65 @@
+**Estado de viaje:**
+- [x] *Ida*
+- [ ] *Vuelta*
+## Conmigo (Puesto)
+- [ ] 1 cartera
+- [ ] 1 audífonos air-pods
+- [ ] 1 celular
+- [ ] 1 llaves de casa
+- [x] 1 bóxers M
+- [x] 1 camiseta CH
+- [x] 1 par de calcetas
+- [x] 1 pantalón de mezclilla
+- [x] 1 playera
+- [x] 1 reloj huawei
+## Mochila negra (Ropa)
+- [x] 3 camisetas M
+- [x] 1 camiseta CH
+- [x] 1 camiseta de tirantes CH
+- [x] 2 bóxers G
+- [x] 2 bóxers M
+- [x] 3 pares de calcetines
+- [x] 1 par de calcetas
+- [x] 1 pantalón de mezclilla
+- [x] 3 playeras estampadas
+- [x] 1 playera
+- [x] 1 sudadera
+- [x] 1 desodorante
+- [x] 1 crema cerave
+- [x] 1 pijama
+- [ ] 1 cepillo de dientes portátil
+- [ ] 1 pasta de dientes
+## Mochila de Superman (Artículos)
+- [x] 1 mac
+- [x] 1 cargador mac
+- [x] 1 SSD M.2
+- [x] 1 Hub
+- [x] 1 mouse
+- [x] 2 USB
+- [x] 1 cargador celular
+- [x] 1 Switch
+	- [x] Super Smash
+	- [x] Star Wars
+	- [x] Mario Kart
+	- [x] Super Mario Bros
+	- [x] Mario Tennis
+	- [x] Zelda Tears of the Kingdom
+	- [x] Pokemon Violet
+- [x] 1 dock joy-con
+- [x] 1 lámpara
+- [x] 1 lentes para pantalla
+- [x] 1 lentes oscuros
+- [x] 1 cepillo
+- [x] 1 carmex
+- [x] 1 hilo dental
+- [x] 1 lapicera
+	- [x] Eutirox
+	- [x] Loratadina
+	- [x] Metformina
+	- [x] 1 sterimar
+	- [x] 1 ilidadin
+- [x] 1 perfume portatil
+- [x] 1 termo yeti
+- [x] 1 sombrilla
+- [x] 1 audífonos billboard
+- [x] 1 pastillero
