@@ -1,32 +1,49 @@
-**Lunes**
-- [ ] Estudiar para TCS
-- [ ] Verificar cuenta
+**Domingo**
+- [x] Verificar cuenta
 	- [x] GUI Verificar token
 	- [x] verificar cuenta (update)
-	- [ ] Probar verificación CU
+	- [x] Probar verificación CU
+		- [x] Flujo normal (soleado)
+		1. crear cuenta
+		2. ingresar código token
+		3. cuenta verificada
+		- [x] Flujo token incorrecto
+		1. crear cuenta
+		2. ingresar código token incorrecto
+		3. cuenta no verificada
+		4. ingresar el correcto
+		5. cuenta verificada
+		- [x] Flujo verificar después (se envía nuevo código)
+		1. crear cuenta
+		2. no ingresar código token
+		3. cuenta no verificada
+		4. iniciar sesión
+		5. seleccionar verificar
+		6. se envía un nuevo código de verificación
+		7. ingresar el correcto
+		8. cuenta verificada
+		- [x] Hacer callback para actualizar la página principal y que ya no aparezca el botón de verificación si se verificó con éxito
 - [ ] Descartar cartas
+- [ ] Usar cartas de tesoro
 - [ ] Tomar tesoro
+- [ ] Asignación de roles a jugadores
 
-**Martes**
-- [ ] Alcanzar 40 Pruebas
+**Lunes**
+- [ ] Alcanzar 100 Pruebas
 - [ ] Reporte de pruebas
 - [ ] Solo aceptar imágenes
+- [ ] Manejo de turnos
+- [ ] Reconstruir tablero después de un minijuego (podría usarse un json)
 
-**Miércoles**
-- [ ] Alcanzar 80 Pruebas
+**Martes**
 - [ ] DCU solo CRUD
-
-**Jueves**
 - [ ] Diagrama de despliegue
 - [ ] 3 Diagramas de secuencia
 	- [ ] Callback enviar solicitud de amistad
 	- [ ] Callback eliminar amigo
 	- [ ] Mover ficha
 
-**Viernes**
-- [ ] Asignación de roles a jugadores
-
-**Sábado**
+**Miércoles**
 - [ ] Mejoras de sonido
 - [ ] Mejoras en imágenes de fondo
 	- [ ] Debe verse definido aunque sea pixel art
@@ -36,6 +53,15 @@
 
 **Refactorizar**
 - [ ] Magic numbers en BuildBoard (UserControlBoard)
+
+**Jueves (Proyecto Terminado)**
+- [ ] Jugar con él
+
+**Viernes**
+
+
+**Sábado**
+- [ ] 
 
 **Extra**
 - [ ] Transferencia de imágenes
