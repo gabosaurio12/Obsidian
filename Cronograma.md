@@ -23,17 +23,21 @@
 		7. ingresar el correcto
 		8. cuenta verificada
 		- [x] Hacer callback para actualizar la página principal y que ya no aparezca el botón de verificación si se verificó con éxito
-- [ ] Descartar cartas
-- [ ] Usar cartas de tesoro
-- [ ] Tomar tesoro
-- [ ] Asignación de roles a jugadores
+- [x] Descartar cartas
+	- [x] No se descarta la segunda carta
+	- [x] doble flood pick
+	- [ ] Aparece ventana excedente de cartas entre flood tiles pero no se interactúa con el
+- [x] Usar cartas de tesoro (código)
+- [x] Capturar tesoro (código)
+	- [x] Corregir que se activan casillas
 
 **Lunes**
-- [ ] Alcanzar 100 Pruebas
-- [ ] Reporte de pruebas
-- [ ] Solo aceptar imágenes
-- [ ] Manejo de turnos
-- [ ] Reconstruir tablero después de un minijuego (podría usarse un json)
+- [x] Solo aceptar imágenes
+- [x] Probar el uso de cartas
+	- [x] :q!
+	- [x] Mitigation
+- [x] Probar el capturar tesoro
+- [x] Alcanzar las 50 Pruebas
 
 **Martes**
 - [ ] DCU solo CRUD
@@ -42,6 +46,15 @@
 	- [ ] Callback enviar solicitud de amistad
 	- [ ] Callback eliminar amigo
 	- [ ] Mover ficha
+
+- [ ] Manejo de turnos
+- [ ] Alcanzar las 75 Pruebas
+- [ ] Alcanzar 100 Pruebas
+- [ ] Reporte de pruebas
+- [ ] Reconstruir tablero después de un minijuego (podría usarse un json)
+
+- [ ] Asignación de roles a jugadores (código)
+- [ ] Probar la asignación de roles
 
 **Miércoles**
 - [ ] Mejoras de sonido
@@ -53,15 +66,16 @@
 
 **Refactorizar**
 - [ ] Magic numbers en BuildBoard (UserControlBoard)
+- [ ] Identificar constantes y cambiar el nombre (MAYUSCULAS)
 
 **Jueves (Proyecto Terminado)**
 - [ ] Jugar con él
 
 **Viernes**
-
+- [ ] Jugar con él
 
 **Sábado**
-- [ ] 
+- [ ] Terminar documentación
 
 **Extra**
 - [ ] Transferencia de imágenes

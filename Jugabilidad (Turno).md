@@ -1,25 +1,38 @@
-- [ ] Asignar a cada jugador (aleatoriamente) el rol
-	- [ ] Ingeniero de software
-		- [ ] Buscar algo que haga
-	- [ ] Licenciado en Ciberseguridad
-		- [x] Puede asegurar una loseta
-	- [ ] Ingeniero en sistemas
-		- [ ] Puede asegurar una loseta
-	- [ ] Licenciado en ciencia de datos
-		- [ ] Puede moverse a cualquier loseta una vez por turno
-- [x] Mojar y hundir casillas
+- [ ] Mojar y hundir casillas
 	- [x] Mojar 2 casillas aleatoriamente al fin del turno
-	- [x] Si al robar 2 cartas del tesoro sale 1 water-rise se pierden las casillas que estén mojadas
-- [ ] Hacer hasta tres acciones
+	- [x] Con cada water rise se reinicia la pila de inundación
+	- [ ] Si se pierde una casilla en la que esta un jugador el jugador debe moversa a una casilla adyacente
+- [x] Hacer hasta tres acciones
 	- [x] Moverse
 		- [x] Cuesta 1 acción
 		- [x] WASD, jamás en diagonal
 		- [x] No te puedes mover por una loseta perdida, pero sí por una mojada
 	- [x] Asegurar
-	- [ ] Utilizar una carta de tesoro especial
-	- [ ] Capturar un tesoro
-		- [ ] Verificar si tienes las 2 cartas del tesoro
-- [ ] Robar cartas de tesoro
+	- [x] Utilizar una carta de tesoro especial
+		- [x] :q!
+		- [x] Mitigation
+	- [x] Capturar un tesoro
+		- [x] Verificar si tienes las 2 cartas del tesoro
+- [x] Robar cartas de tesoro
 	- [x] No se puede terminar el turno sin robar 2 cartas
-	- [ ] Si se terminan las cartas deben revolverse de nuevo las que ya pasaron
-	- [ ] Si tienes 6 cartas y robas debes descartar las que no quieras
+	- [x] Si se terminan las cartas deben revolverse de nuevo las que ya pasaron
+	- [x] Si tienes 6 cartas y robas debes descartar una que no quieras o quedarte con las que tienes
+		- [x] Revisar flujo (choca al mostrar las cartas que se inundarán)
+
+- [ ] Refactorización
+	- [x] Mover
+	- [x] Secar
+		- [x] Secar casillas inundadas
+	- [x] Descartar cartas
+	- [ ] Capturar tesoro
+	- [ ] corregir que se bloquean las acciones después del primer end turn
+
+- [ ] Asignar a cada jugador (aleatoriamente) el rol
+	- [ ] Ingeniero de software
+		- [ ] Una vez por turno puedes obtener una carta de tesoro ya sea de la pila de descarte o de la pila de tesoro (refactor)
+	- [ ] Licenciado en Ciberseguridad
+		- [ ] Puede asegurar dos losetas por turno (firewall)
+	- [ ] Ingeniero en sistemas
+		- [ ] Puede moverse a cualquier loseta una vez por turno (puenteo)
+	- [ ] Licenciado en ciencia de datos
+		- [ ] Puede dar una carta a cualquier jugador una vez por turno (análisis estadístico)

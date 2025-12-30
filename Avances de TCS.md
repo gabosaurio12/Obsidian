@@ -1,7 +1,7 @@
 - [x] Entrega interfaces de jugabilidad
 - [x] Tablero
 - [x] Una que otra trancisiones.
-- [ ] Siguiente semana avance de jugabilidad e interacción
+- [x] Siguiente semana avance de jugabilidad e interacción
 - [x] Reporte de análisis de código del Sonarqube
 - [ ] No ocupar algoritmo, regenerar proxies de cliente
 - [ ] App config de server: 

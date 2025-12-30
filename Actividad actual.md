@@ -1,7 +1,7 @@
 **Domingo**
-- [ ] Verificar cuenta
-	- [ ] GUI Verificar token
-	- [ ] verificar cuenta (update)
+- [x] Verificar cuenta
+	- [x] GUI Verificar token
+	- [x] verificar cuenta (update)
 - [ ] Descartar cartas
 - [x] Mover avatar
 - [x] Mojar/hundir casilla
