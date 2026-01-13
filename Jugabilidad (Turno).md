@@ -1,7 +1,7 @@
-- [ ] Mojar y hundir casillas
+- [x] Mojar y hundir casillas
 	- [x] Mojar 2 casillas aleatoriamente al fin del turno
 	- [x] Con cada water rise se reinicia la pila de inundación
-	- [ ] Si se pierde una casilla en la que esta un jugador el jugador debe moversa a una casilla adyacente
+	- [x] Si se pierde una casilla en la que esta un jugador el jugador debe moversa a una casilla adyacente
 - [x] Hacer hasta tres acciones
 	- [x] Moverse
 		- [x] Cuesta 1 acción
