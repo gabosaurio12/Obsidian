@@ -1,0 +1,1 @@
+**Leer el capítulo 2 del libro para el jueves**

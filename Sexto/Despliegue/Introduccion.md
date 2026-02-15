@@ -1,0 +1,11 @@
+- Tecnología
+	- Kotlin
+	- Se usarán tres diferentes manejadores de bases de datos distintos
+		- Al menos uno no SQL (MongoDB, Kassandra)
+		- Tener en mente manejadores basados en grafos
+	- NET 10
+- Herramientas
+	- Visual Studio Code
+	- JetBrains
+- Antipatrones
+	- Instalar con una usb en vez de usar un script

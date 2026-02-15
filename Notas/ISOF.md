@@ -13,6 +13,7 @@ El trabajo de un ISOF es resolver problemas, buscar formas de resolverlos
 
 Es mucho más difícil conseguir un nuevo cliente que mantenerlo
 
+- Grady Booch, James Rumbaugh y Ivar Jacobson son los creadores de UML
 # Organizaciones
 - IEEE -> Desarrollo de software
 	- https://ieeexplore.ieee.org/Xplore/home.jsp
