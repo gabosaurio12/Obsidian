@@ -1,8 +1,10 @@
 [
   "oz-image-plugin",
   "break-page",
-  "drawio-obsidian",
   "obsidian-kanban",
   "obsidian-export-image",
-  "image-converter"
+  "image-converter",
+  "lovely-mindmap",
+  "obsidian-enhancing-export",
+  "drawio-obsidian"
 ]

@@ -30,12 +30,12 @@
 	- Este método no posee la transparencia que se busca ya que se está identificando que existen varias máquinas trabajando
 		- No es transparente porque necesitas conocer el host y el puerto
 	- Si el **servidor** falla, se pierde el servicio pues los programas compilados tienen integrado ese número de máquina para ese servicio. Una variación de este esquema, utiliza **machine.local_id**
-### Otra forma de direccionamiento es dejar que los procesos elijan direccionas al azar y localizarlos mediante transmisiones:**
+### Otra forma de direccionamiento es dejar que los procesos elijan direccionas al azar y localizarlos mediante transmisiones:
 - En una LAN que soporte transmisiones, el emisor puede transmitir un paquete especial de localización con la dirección del proceso destino
 - Las máquinas en la red reciben este mensaje y verifican si la dirección es la suya; en caso de que lo sea, regresa un mensaje "aquí estoy" con su dirección en la red (número de máquina)
 - El cliente utiliza entonces esa dirección y la captura para uso posterior. Si bien esto cumple con las premisas, genera una carga adicional en el sistema
 - **Generar un servidor de nombres:**
-	- Cada vez que se ejecute un lciente en su primer intento por utilizar un servidor, el cliente envía una solicitud al servidor de nombres (nombre en ASCII) para pedirle el número de la máquina donde se localiza al servidor
+	- Cada vez que se ejecute un cliente en su primer intento por utilizar un servidor, el cliente envía una solicitud al servidor de nombres (nombre en ASCII) para pedirle el número de la máquina donde se localiza al servidor
 	- Una vez obtenida la dirección se puede enviar la solicitud de manera directa
 - **Desventajas**
 	- El problema de este método es que es un componente centralizado y si bien se puede duplicar, presenta problemas en el mantenimiento de la consistencia
@@ -45,7 +45,7 @@ Dejando que los procesos elijan su dirección en forma aleatoria
 - Las tramas usarían direcciones de procesos en vez de direcciones de máquinas. Al recibir cada trama, el chip de interface de la red solo tendría que examinar la trama para saber si el proveso destinado se encuentra en esa máquina. En caso afirmativo, la aceptaría de lo contrario no
 ## Primitivas
 **Con bloqueo y sin bloqueo**
-- Las primitivas descritas anteriormente, reciben el nombre de primitivas cn bloqueo (síncronas) y sin bloqueo (asíncronas)
+- Las primitivas descritas anteriormente, reciben el nombre de primitivas con bloqueo (síncronas) y sin bloqueo (asíncronas)
 **Primitivas send con bloqueo**
 - Mientras que se envía el mensaje el proceso emisor se bloquea
 - En algunos casos el receptor puede especificar de quiénes queire recibir el mensaje queda bloqueado 

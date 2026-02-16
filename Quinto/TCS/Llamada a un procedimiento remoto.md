@@ -18,7 +18,7 @@
 - Si suma (a,b) es un procedimiento remoto entonces:
 	- Se coloca una copia de suma, llamada resguardo del cliente (Client Stub). Para realizar la llamada a esta copia, se realiza de la forma habitual mediante un señalamiento al núcleo
 	- A diferencia de la original, NO coloca los parámetros en registros ni le pide al núcleo que le proporcione los datos
-	- *Empaca los parametros en un emsnaje* y le pide al núcelo que envíe el mensaje al servidor (serialización)
+	- *Empaca los parametros en un mensaje* y le pide al núcelo que envíe el mensaje al servidor (serialización)
 	- Después de llamar a *SEND*, el resguardo del cliente llama a *RECEIVE* y se bloquea hasta que regrese la respuesta
 ## Transferencia de parámetros
 . Orivkenas eb ka reoresebtacupib de ebteris /cinokenebti a 1 t cinokenebti
@@ -33,7 +33,7 @@
 - El cliente conoce la máquina con la que debe contactar y proveer un "demonio" en esa máquian que conozca toda la información de los servidores (RPC y RMI)
 ## Semántica RPC en presencia de fallas
 - El objetivo de RPC es ocultar la comunicación, al hacer que las llamadas a procedimientos remotos se parezcan a los locales
-- Aunque este funcionamiento es transparente, RPC no se slava de errores, entre los que encontramos:
+- Aunque este funcionamiento es transparente, RPC no se salva de errores, entre los que encontramos:
 	- El cliente no puede localizar el servidor
 		- Solución: Manejo de mensajes de error
 	- Se pierde el mensaje de solicitud del cliente al servidor
@@ -44,7 +44,7 @@
 		- Esperar a que se levante el servidor y volver a transmitir los datos
 		- No hacer nada, no se notifica al cliente que el servidor se cae
 	- El cliente falla después de enviar la solicitud
-		- En el servidor, se activa una labor de cómputo y ninún padre espera el resultado. A esta labor se le llama **huérfano**
+		- En el servidor, se activa una labor de cómputo y ningún padre espera el resultado. A esta labor se le llama **huérfano**
 		- ¿Qué podemos hacer con los procesos huérfanos?
 			- **Exterminación:** Antes de que el resguardo del cliente envié un mensaje RPC, crea una entrada en el HD indicando lo que va a hacer, en caso de falla cuando el cliente arranque se lee la entrada y el huérfano se elimina
 			- **Reencarnación:**

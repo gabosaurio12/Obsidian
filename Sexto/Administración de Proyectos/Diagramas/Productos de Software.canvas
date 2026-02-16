@@ -1,0 +1,17 @@
+{
+	"nodes":[
+		{"id":"50da9e016b0b10fe","x":-280,"y":-135,"width":105,"height":50,"type":"text","text":"¿Qué?"},
+		{"id":"89bc84733f9046cb","x":-60,"y":-140,"width":125,"height":60,"type":"text","text":"Producto"},
+		{"id":"6623ad83b2482701","x":-279,"y":-35,"width":104,"height":50,"type":"text","text":"¿Cómo?"},
+		{"id":"ce59e7cd869bc933","x":-55,"y":-40,"width":115,"height":60,"type":"text","text":"Proceso"},
+		{"id":"e77da1074b6a5359","x":160,"y":-40,"width":145,"height":60,"type":"text","text":"Metodologías"},
+		{"id":"3a4ecb9b4fff2925","x":-279,"y":65,"width":104,"height":50,"type":"text","text":"¿Quién?"},
+		{"id":"dcac5de2acaf0ea3","x":-54,"y":60,"width":119,"height":60,"type":"text","text":"Personas"}
+	],
+	"edges":[
+		{"id":"09657609768f667c","fromNode":"50da9e016b0b10fe","fromSide":"right","toNode":"89bc84733f9046cb","toSide":"left"},
+		{"id":"dc8857c90af58049","fromNode":"6623ad83b2482701","fromSide":"right","toNode":"ce59e7cd869bc933","toSide":"left"},
+		{"id":"2793ef5c84e88b46","fromNode":"ce59e7cd869bc933","fromSide":"right","toNode":"e77da1074b6a5359","toSide":"left"},
+		{"id":"c9800052f45fab38","fromNode":"3a4ecb9b4fff2925","fromSide":"right","toNode":"dcac5de2acaf0ea3","toSide":"left"}
+	]
+}

@@ -1,0 +1,29 @@
+- IPC (Inter-Process Communication)
+	- Colas de mensajes: Estructuras que permiten la comunicación asíncrona
+	- Sockets/MPI (Message-passing interface): Utilizado en aplicaciones paralelas para la comunicación de alto nivel
+	- UWP/App Services: Mecanismos de Microsoft para el intercambio de datos entre aplicaciones
+- Sistemas distribuidos
+	- Comparte recursos
+	- Interoperable
+		- Servicios
+	- Sistemas heterogéneos
+		- Protocolos
+		- Servicios
+- Tecnologías
+	- NodeJS
+	- TypeScript
+	- Python
+	- Java/C++
+- Herramientas
+	- Postman
+	- Docker
+	- WSL
+	- VBox
+	- Vagrant
+- Parciales
+	- 1er Parcial: 7
+	- 2do Parcial: 7
+- Bibliografía
+	- Thomas Erl (2008). Service Oriented Architecture Principles of Service Design. Pearson Education.
+	- Jin B., Sahni, S., & Shevat, A. (2018). Designing Web APIs: Building APIs That Developers Love. O'Reilly.
+	- Richards, M. (2016). Microservices vs. Service-Oriented Architecture. O'Reilly.
