@@ -22,33 +22,32 @@
 		- Si el SO está en inglés el juego también
 	- Pruebas
 		- 300 pruebas
-		- Pruebas de GUI
+		- Pruebas de GUI (opcional)
 ## Características generales
-- Registro de usuarios / jugadores
+- [x] Registro de usuarios / jugadores
 	- El registro debe estar ligado a una confirmación de registro vía email
-- Cambio de contraseñas
-	- Confirmación por email
-- Personalización de perfil
+- [x] Personalización de perfil
 	- Avatar del jugador
 	- Nickname
 	- Datos
 		- Nombre y apellidos
 	- Correo electrónico
 	- Redes sociales
-- Inicio de sesión / jugar como invitado
-- Invitación de amigos (email/código)
-- Lista de amigos
+- [x] Lista de amigos
 	- Agregar amigos
 	- Remover amigos
-- Jugadores expulsados
-	- Bannear
-- Lobby / sala de espera
-- Chat colaborativo (en sala o en partida)
-- Unirse a la partida
-- Marcadores / tabla de ganadores
-- Iniciar juego
-- Personalización de reglas / look and feel
-	- Cada casilla de tesoro tiene una animación personalizada
+- [x] Lobby / sala de espera
+- [x] Iniciar juego
+- [x] Personalización de reglas / look and feel
+- [x] Chat colaborativo (en sala o en partida) 
+- [x] Invitación de amigos (email/código)
+- [x] Jugadores expulsados
+- [ ] Unirse a la partida
+- [ ] Marcador
+- [ ] Jugar como invitado
+- [ ] Cambio de contraseñas
+	- Confirmación por email
+	- Hacer el cambio de contraseña y se verifica mediante token
 ## Convención de Pruebas
 public void TestLoginSuccessful()
 public void TestLoginEmptyCredentials()

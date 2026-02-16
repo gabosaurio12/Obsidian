@@ -6,4 +6,4 @@
 - [x] bool CancelFriendRequest(string senderUsername, string receiverUsername)
 - [x] bool DeleteFriend(string friendUsername, string playerUsername)
 - [x] List[FriendRequest] GetFriendRequests(string receiverUsername)
-- [ ] List[Friendship] GetFriendsByID(int playerID)
+- [x] List[Friendship] GetFriendsByID(int playerID)

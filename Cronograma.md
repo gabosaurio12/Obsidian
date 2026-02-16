@@ -26,7 +26,6 @@
 - [x] Descartar cartas
 	- [x] No se descarta la segunda carta
 	- [x] doble flood pick
-	- [ ] Aparece ventana excedente de cartas entre flood tiles pero no se interactúa con el
 - [x] Usar cartas de tesoro (código)
 - [x] Capturar tesoro (código)
 	- [x] Corregir que se activan casillas
@@ -40,51 +39,36 @@
 - [x] Alcanzar las 50 Pruebas
 
 **Martes**
-- [ ] DCU solo CRUD
-- [ ] Diagrama de despliegue
-- [ ] 3 Diagramas de secuencia
-	- [ ] Callback enviar solicitud de amistad
-	- [ ] Callback eliminar amigo
-	- [ ] Mover ficha
+- [x] DCU solo CRUD
+	- [x] CRUD JUGADOR
+	- [x] CRUD AMIGO
 
-- [ ] Manejo de turnos
-- [ ] Alcanzar las 75 Pruebas
+- [x] Manejo de turnos
+- [x] Alcanzar las 75 Pruebas
 - [ ] Alcanzar 100 Pruebas
 - [ ] Reporte de pruebas
-- [ ] Reconstruir tablero después de un minijuego (podría usarse un json)
-
-- [ ] Asignación de roles a jugadores (código)
-- [ ] Probar la asignación de roles
+- [ ] Hacer ciclo final de juego
+	- [ ] Poner el anuncio de emergencia
+	- [ ] Entrar a la riuv
+	- [ ] Apagar el servidor
 
 **Miércoles**
 - [ ] Mejoras de sonido
-- [ ] Mejoras en imágenes de fondo
-	- [ ] Debe verse definido aunque sea pixel art
-- [ ] Mejoras en GUI
+- [x] Mejoras en imágenes de fondo
+	- [x] Debe verse definido aunque sea pixel art
+- [x] Mejoras en GUI
 	- [ ] Constancia en la forma de los botones
-	- [ ] Constancia de colores
+- [x] Habilitar juego para invitados
 
 **Refactorizar**
-- [ ] Magic numbers en BuildBoard (UserControlBoard)
-- [ ] Identificar constantes y cambiar el nombre (MAYUSCULAS)
+- [x] Magic numbers en BuildBoard (UserControlBoard)
 
 **Jueves (Proyecto Terminado)**
-- [ ] Jugar con él
+- [x] Diagrama de despliegue
 
 **Viernes**
 - [ ] Jugar con él
+- [x] Diagramas de secuencia enviar solicitud de amistad
 
 **Sábado**
 - [ ] Terminar documentación
-
-**Extra**
-- [ ] Transferencia de imágenes
-	- [ ] GetImage()
-		- [ ] Obtiene la imagen
-		- [ ] La mete en un buffer
-		- [ ] La hace byte array
-		- [ ] Transporta la imagen por TCP
-	- [ ] DownlowadImage()
-		- [ ] Usa GetImage()
-		- [ ] La reconstruye desde el byte array
-		- [ ] La guarda en el dir al que corresponde (avatars)

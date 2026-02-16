@@ -1,7 +1,8 @@
-- [ ] Mojar y hundir casillas
+## Turno
+- [x] Mojar y hundir casillas
 	- [x] Mojar 2 casillas aleatoriamente al fin del turno
 	- [x] Con cada water rise se reinicia la pila de inundación
-	- [ ] Si se pierde una casilla en la que esta un jugador el jugador debe moversa a una casilla adyacente
+	- [x] Si se pierde una casilla en la que esta un jugador el jugador debe moversa a una casilla adyacente (código)
 - [x] Hacer hasta tres acciones
 	- [x] Moverse
 		- [x] Cuesta 1 acción
@@ -18,15 +19,15 @@
 	- [x] Si se terminan las cartas deben revolverse de nuevo las que ya pasaron
 	- [x] Si tienes 6 cartas y robas debes descartar una que no quieras o quedarte con las que tienes
 		- [x] Revisar flujo (choca al mostrar las cartas que se inundarán)
-
+## Refactorización y mantenibilidad
 - [ ] Refactorización
 	- [x] Mover
 	- [x] Secar
 		- [x] Secar casillas inundadas
 	- [x] Descartar cartas
-	- [ ] Capturar tesoro
+	- [x] Capturar tesoro
 	- [ ] corregir que se bloquean las acciones después del primer end turn
-
+## Extras
 - [ ] Asignar a cada jugador (aleatoriamente) el rol
 	- [ ] Ingeniero de software
 		- [ ] Una vez por turno puedes obtener una carta de tesoro ya sea de la pila de descarte o de la pila de tesoro (refactor)
