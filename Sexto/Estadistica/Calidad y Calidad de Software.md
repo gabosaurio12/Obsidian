@@ -39,3 +39,8 @@ El software se ha integrado profundamente en casi todos los aspectos de nuestra 
 - _Pérdida de Confianza_: Daño a la reputación y fuga de usuarios
 ## Modelo de Calidad de Software: ISO/IEC 25010
 Es una herramienta fundamental para comprender y evaluar la calidad del software. Proporciona un marco estructurado que define las características y subcaracterísticas esenciales que un software de alta calidad debe poseer.
+Un software puede ejecutarse sin errores aparentes, pero no garantiza su calidad:
+- Puede ejecutarse sin errores, pero ser frustrantemente lento o poco intuitivo
+- Podría ser difícil de usar, requiriendo un esfuerzo excesivo para realizar tareas
+- Quizás sea inseguro, exponiendo información sensible
+- Puede ser lento y afectar la productividad y la satisfacción del usuario
