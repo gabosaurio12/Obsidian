@@ -32,3 +32,6 @@
 ## 8. Gestión de relaciones
 - Las empresas deben identificar y elegir proveedores y otros interesados que pueden afectar a los costos, optimizar recursos y crear valores.
 - Cuando se establecen relaciones, es deseable colaborar para asegurar que ambas partes se concentran en una mejoría continua.
+## Referencias
+https://the9000store.com/iso-9001-2015-requirements/iso-9001-2015-introduction/iso-9000-quality-principles/#:~:text=The%20Quality%20Management%20Principles%20
+https://isotools.org/2012/10/31/principios-basicos-para-la-gestion-de-la-calidad-segun-la-norma-iso-90002005-sistemas-de-gestion-de-la-calidad-fundamentos-y-vocabulario/

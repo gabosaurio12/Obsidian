@@ -46,3 +46,19 @@ A use case is a goal that the actor achieves through the system.
 **Checklist postcondiciones**
 1. Describe el estado estable alcanzado si el caso de uso termina con éxito.
 2. Expresa efectos persistentes, no efectos visibles.
+### Descripciones de CU
+Contenido:
+- ID
+- Nombre
+- Actores
+- Descripción
+- Disparador
+- Precondiciones
+- Postcondiciones
+- Flujos
+	- Normal
+	- Alterno
+	- Excepciones
+- Reglas de negocio
+- Incluciones de CU
+- Extensiones de CU
