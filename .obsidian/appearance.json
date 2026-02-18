@@ -1,5 +1,6 @@
 {
   "cssTheme": "Tokyo Night",
   "theme": "obsidian",
-  "accentColor": "#2771d3"
+  "accentColor": "#2771d3",
+  "textFontFamily": ""
 }

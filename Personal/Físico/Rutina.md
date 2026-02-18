@@ -24,13 +24,18 @@
 | Curl martillo                 | 3      | 10           |
 | Curl con liga                 | 2      | 25           |
 ## Full Body (Fuerza + Definición)
-| Ejercicio                         | Series | Repeticiones |
-| --------------------------------- | ------ | ------------ |
-| Sentadillas                       | 4      | 10           |
-| Zancadas                          | 3      | 10 c/l       |
-| Peso muerto rumano con mancuernas | 3      | 15           |
-| Press de pecho con mancuernas     | 3      | 15           |
-| Remo con mancuernas               | 3      | 15           |
-| Elevaciones laterales             | 3      | 20           |
-| Plancha                           | 3      | 45s          |
-| Elevaciones de piernas            | 3      | 15           |
+| Ejercicio                              | Superset | Repeticiones |
+| -------------------------------------- | -------- | ------------ |
+| Sentadillas                            | 2        | 15           |
+| Zancadas                               | 2        | 10 c/l       |
+| Peso muerto rumano con mancuernas      | 2        | 15           |
+| Remo con mancuernas                    | 2        | 15           |
+| Lagartijas                             | 2        | 10           |
+| Press de pecho con mancuernas          | 2        | 15           |
+| Patada de triceps                      | 2        | 8            |
+| Extensión de triceps overhead acostado | 2        | 8            |
+| Elevaciones laterales                  | 2        | 10           |
+| Plancha                                | 2        | 45s          |
+| Elevaciones de piernas                 | 2        | 10           |
+| Curl de biceps                         | 2        | 8            |
+| Curl martillo                          | 2        | 8            |

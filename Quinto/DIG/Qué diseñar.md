@@ -27,9 +27,4 @@ La usabilidad no es una  cualidad subjetiva o ambigua, ya que puede ser medida y
 ### Pruebas de usabilidad
 - Proceso en el que los usuarios evalúan qué tanto un producto cumple con los requisitos y criterios de usabilidad específicos
 
-
-
-
-
-
 Identificación de necesidades y establecimiento de requerimientos / Desarrollar diseños \\n alternativos que cumplan con esos requerimientos \\n  versiones interactivas de los dise comunicados y evaluados \\n Evaluar lo que se está / construyendo a lo largo del proceso
