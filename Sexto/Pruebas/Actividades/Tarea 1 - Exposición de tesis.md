@@ -1,8 +1,21 @@
-1. **Bitácora de Selección de Stack: Identificar qué herramientas propone el ponente y justificar por qué las eligió (o notar si faltó justificación).**
-2. **Identificación de "Puntos de Fricción": Anotar tres momentos de la automatización que el ponente mencione como difíciles (ej. manejo de esperas, configuración de entornos, mantenimiento de scripts).**
-3. **Propuesta de Valor Agregado: Diseñar un "Anexo Técnico" personal donde el alumno sugiera una herramienta o buena práctica (ej. uso de Page Object Model, integración con Docker) que complemente la guía presentada.**
-## Bitácora de Selección del Stack
-###  Metodología del ciclo de vida de pruebas automatizadas (ATLC)
+- **Ficha de Análisis de la Guía: Resumen ejecutivo de la propuesta del compañero (máximo 1 página).**
+- **Matriz FODA Técnica: Fortalezas, Oportunidades, Debilidades y Amenazas de la guía de automatización expuesta.**
+- **Propuesta de Extensión: Un párrafo técnico detallando una mejora específica que el alumno aportaría a la guía para hacerla más robusta.**
+## Resumen ejecutivo
+### Análisis del problema
+Se presentó que el problema a solucionar era el fallo en objetivos de automatización de pruebas por desconocimiento del proceso, siendo la solución presentada una guía para la automatización de la prueba de software dirigida a estudiantes de la LIS. Los objetivos principales eran analizar, identificar y validar el sofwtware.
+
+La necesidad de la guía nace del descubrimiento de que no se le da la importancia merecida al proceso de pruebas en software. En base a esto se realizaron varias encuentas y se descubrió que las pruebas que más se automatizan son las unitarias mientras que las que menos se automatizaban por su complejidad o falta de guía eran las de integración; esto llevo a la la conclusión de que se necesitaba una guía de planificación.
+
+El tesista comenzó intentando entender el problema y realizó un análisis de requisitos, esto mediante las entrevistas, estudio estadístico, cuestionarios con profesores y todo esto llevó a la especificación de requisitos. Lo cual abrió la puerta para comenzar a diseñar la guía.
+
+Se concluyó que la guía debía tener un enfoque en la automatización, por lo que debía seleccionar una metodología enfocada en la automatización y debía incluír:
+- criterios para la selección de herramientas
+- Pre requisitos para usar la guía
+- Paso para configurar ambientes de prueba. 
+
+El desarrollo de la guía se basó en las siguientes herramientas:
+### Metodología del ciclo de vida de pruebas automatizadas (ATLC)
 #### Justificación
 Es un proceso sistemático que abarca la planificación, el diseño de scripts, la ejecución y el análisis de resultados para mejorar la eficiencia y la calidad del software. Las fases mencionadas son:
 1. Análisis de viabilidad y requisitos
@@ -21,104 +34,19 @@ Se utilizó para que la guía creada tuviera definiciones, procesos, técnicas y
 #### Justificación
 Proporciona vocabulario común aplicable a todos los trabajos de sistemas e ingeniería de software. Se preparó para colectar y estandarizar terminología.
 La guía debía poseer un vocabulario común y no rebuscado para que pudiera ser utilizada en varios proyectos.
-## Puntos de fricción
-### Evaluarlo con estudiantes
-### Ejemplificar el uso de una guía con un lenguaje de programación
-### PF 3
-## Propuesta de Valor Agregado
-## Matriz FODA
+### Conclusiones
+La guía se desarrolló exitosamente con algunas partes faltantes como la ejemplificación de lo mostrado con lenguajes de programación (solicitado por profesores), mejorar el roadmap, cumplir requisitos no funcionales como la independencia tecnológica o un mayor contenido visual. Siendo aclaradas partes que faltan por concluír o desarrollar. Los resultados fueron no concluyentes debido a la falta de prueba con estudiantes, ya que solo la usaron en proyectos 5 siendo una de las principales dificultades del proyecto.
 
-|                   | **Fortalezas**                                                                                                       | **Debilidades** |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------- | --------------- |
-| **Oportunidades** | Guía con un proceso definido, vocabulario sencillo de entender. Guías para diferentes enfoques o procesos de pruebas |                 |
-| **Amenazas**      |                                                                                                                      |                 |
-
-<div class="page-break" style="page-break-before: always;"></div>
-
-### Problema
-- Fallo en objetivos de automatización de pruebas por desconocimiento del proceso
-### Objetivo general
-- Elaborar una guía para la automatización de la prueba de software dirigida a estudiantes de la LIS
-### Objetivos específicos
-- Analizar
-- Identificar
-- Validar
-### Justificación
-- Prueba de software es crucial
-- La prueba manual implica retos significativos
-- Una guía es una oportunidad de apoyo para estudiantes y profesionales
-### Marco teórico
-- Metodología del ciclo de vida de pruebas automatizadas (ATLM)
-	- compuesto de 6 fases
-- Estándar ISO/IEC/IEEE 29119
-	- Estándares para probar
-- Estándar ISO/IEC/IEEE 24765
-	- Términos usados
-### Marco contextual
-- La integración es donde es más complejo probar
-	- Son manuales sin planificación
-### Proceso de investigación
-- Entendimiento del problema y especificación de requisitos
-	- Entrevistas
-	- Estudio estadístico
-	- Cuestionario con profesores
-	- Elaboración de la especificación
-- Diseño de la guía
-	- Definición de enfoque de automatizacióin
-	- Selección de metodología de automatización
-	- Elaboración de DSM
-	- Definición de estructura
-- Desarrollo de la guía
-	- Creación del contenido de la gía
-- Evaluación de la guía
-	- Evaluación con estudiantes
-	- Evaluación de expertos
-### Resultados
-- Percepción de pruebas como tarea secundaria
-- Incluír en la guía:
-	- criterios para la selección de herramientas
-	- Pre requisitos para usar la guía
-	- Paso para configurar ambientes de prueba
-- La prueba de integración es la menos automatizada
-- Las de unidad son las más automatizadas
-- No se sigue un plan de prueba formal
-- Los estudiantes deciden qué y cómo se integra
-#### Especificación
-- 15 funcionales y 6 no funcionales
-#### Diseño
-- Metodología del CDV de las pruebas automatizadas
-- estructura basada en 5 actividades
-- construcción de la dsm con pre requisitos
-#### Evaluación de la guía
-- 6 de 21 estudiantes
-- 5 profesores
-- resultados no concluyentes
-- 5/6 aplicaron la guía
-- Lenguaje sencillo y no ambigüo
-##### Áreas de mejora
-- incluir material complementario para el cumplimiento
-- incluir criterios de cuando automatizar
-##### Evaluación de expertos
-- Promedio de 32/42
-- La más alta 42, la más baja 33
-##### Recomendaciones
-- Ampliar ejemplos: proyectos, tecnologías, arch de web
-- clarificar diferencias entre niveles
-- incluir configuración de herramientas
-##### Conclusiones
-- guía incompleta
-	- 2/5 actividades
-- Limitaciones
-	- Definición inicial del problema poco clara
-##### Trabajo futuro
-- Completar actividades del proceso de automatizacio´n
-- Mejorar roadmap
-- Cumplir requisitos no funcionales
-	- independencia tecnológica
-	- mayor contenido visual
-- evaluar estudiantes que la usan vs los que no
-## Consejos para nosotros
+Al final de su presentación en la sección de preguntas nos realizó estas recomendaciones:
 - Un sistema no está desarrollado hasta que está terminado
 - Pensar en los casos de prueba antes de la construcción
 	- Puede ser desde la parte de los requisitos usando los CU
 - Los defectos pueden ser muy caros para las empresas, las pruebas pueden evitar esos defectos
+## Matriz FODA
+
+|                   | **Fortalezas**                                                                                                                                    | **Debilidades**                                                                                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Oportunidades** | Oportunidades: Guía con un proceso definido, vocabulario sencillo de entender, guías para diferentes enfoques o procesos de pruebas               | Debilidades: No se terminó la guía de desarrollar, no tiene ejemplos con lenguajes de programación ni imágenes                  |
+| **Amenazas**      | Estrategia de neutralización: Constantemente se renuevan y surgen nuevos métodos de automatización, una metodología es menos suceptible al cambio | Estrategia de defensa: la guía debe ser independiente de la tecnología actual, debe funcionar como la guía del proceso a seguir |
+## Propuesta de extensión
+La guía me parece una herramienta muy útil y poderosa, no creo que tenga muchas cosas que solicitar para mejorarla, me gusta mucho el vocabulario y considero que las imágenes son muy descriptivas y útiles. Propondría unos cuantos ejemplos en varios lenguajes para apoyar, aunque considero más importante la guía de un proceso, podría ser un ejemplo a seguir las secciones de código del libro "Fundamentos de programación" de Joyanes.
