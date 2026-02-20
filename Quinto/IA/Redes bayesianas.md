@@ -1,4 +1,4 @@
-Una red bayesiana es un mmodelo probabilístico gráfico que representa variables y sus relaciones de dependencia mediante un grafo dirigido acíclico (DAG).
+Una red bayesiana es un modelo probabilístico gráfico que representa variables y sus relaciones de dependencia mediante un grafo dirigido acíclico (DAG).
 
 Permite:
 - Modelar dependencias y relaciones causales

@@ -1,4 +1,4 @@
-## Historia de .NET
+xz## Historia de .NET
 Es creado por Microsoft como una copia de Java porque no pudo ni comprarlo ni tumbarlo.
 Es una plataforma, no un lenguaje, soporta varios entornos de desarrollo (gracias al runtime).
 ## Comandos de .NET (UNIX)

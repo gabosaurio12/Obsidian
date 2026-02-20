@@ -1,0 +1,32 @@
+- [ ]  Sponsor 20
+	- [ ] Descrito con el nombre y cargo de una persona
+	- [ ] El cargo corresponde a la alta dirección o dirección
+- [ ] Necesidad 20
+	- [ ] Es un problema acotado y viable
+	- [ ] Es pertinente
+- [ ] Funcionalidades del negocio requeridas 20
+	- [ ] Lista de requisitos de requisitos de usuario que resuelvan la necesidad
+	- [ ] Describe acciones o tareas del usuario
+- [ ] Valor generado para el negocio 20
+	- [x] Valor cuantificable que represente una ganancia o beneficio
+	- [ ] Alcanzables en fecha o tiempo con perspectiva a corto o mediano plazo
+- [ ] Restricciones 20
+	- [ ] Describe una limitante relacionada con tiempo, tecnología, leyes, políticas internas, etc.
+	- [ ] Al menos 3 o más
+## Prueba de revisión
+**Proyecto:** Layla
+- [x]  Sponsor 20
+	- [x] Descrito con el nombre y cargo de una persona
+	- [x] El cargo corresponde a la alta dirección o dirección
+- [ ] Necesidad 20 -> no describe la diferencia con otras herramientas o por qué usarlo 
+	- [x] Es un problema acotado y viable
+	- [ ] Es pertinente
+- [x] Funcionalidades del negocio requeridas 20
+	- [x] Lista de requisitos de requisitos de usuario que resuelvan la necesidad
+	- [x] Describe acciones o tareas del usuario
+- [ ] Valor generado para el negocio 20 -> no muestra valores cuantifcables ni una ganancia del negocio, solo atributos deseables para el desarrollo
+	- [ ] Valor cuantificable que represente una ganancia o beneficio
+	- [ ] Alcanzables en fecha o tiempo con perspectiva a corto o mediano plazo
+- [ ] Restricciones 20 -> Muestra funcionalidad, no restricciones
+	- [ ] Describe una limitante relacionada con tiempo, tecnología, leyes, políticas internas, etc.
+	- [ ] Al menos 3 o más

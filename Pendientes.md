@@ -6,7 +6,7 @@ kanban-plugin: board
 
 ## Tareas
 
-- [ ] Despliegue - Lecturas cap 1 y 2
+- [ ] **24-Feb** Programación segura hijacking
 
 
 

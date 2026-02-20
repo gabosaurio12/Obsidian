@@ -1,0 +1,12 @@
+- Son eventos con el potencial de afectar negativamente las operaciones d euna organización pero no es un ataque
+- Comprometen la privacidad de los datos e interrumpen la funcionalidad de los dispositivos
+### Tipos comunes de amenazas
+- **Usuarios:** Es la principal amenaza ya sea porque estos no adoptan buenas prácticas de ciberseguridad y se convierten en blancos fáciles o porque son ellos quienes roban información de forma intencional
+- **Intrusos:** Se trata de personas no autorizadas que se introducen en los programas y archivos para espiar, robar o destruir información
+- **Siniestros:** En este caso se produce pérdida de información o recursos materiales a consecuencia de la negligencia por falta de oficio de los usuarios o mal intención de estos. Dentor de los siniestros más frecuentes están los incendios e inundaciones
+- **Catástrofes naturales**
+- **Fallos electrónicos**
+- **Endpoint security:** A medida que la cultura del trabajo desde casa se arraiga en la comunidad empresarial, la atención de la seguridad se desplaza hacia los dispositivos que los usarios utilizan para acceder a los datos corporativos.
+	- Los dispositivos terminales, como computadoras portátiles, teléfonos móviles o unidades flash, pueden comprometer la red de la organización.
+- **Exposición de terceros:** Las organizaciones pueden oner en riesgo datos confidenciales sin darse cuenta cuando se suscriben a servicios de terceros.
+- **Amenazas internas**
