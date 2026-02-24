@@ -39,3 +39,33 @@
 | Elevaciones de piernas                 | 2        | 10           |
 | Curl de biceps                         | 2        | 8            |
 | Curl martillo                          | 2        | 8            |
+## Rutina rápida superior (2 rondas ~20 minutos)
+
+| Ejercicio                            | Superset | Repeticiones |
+| ------------------------------------ | -------- | ------------ |
+| Press de pecho con mancuernas        | 2        | 12           |
+| Lagartijas                           | 2        | 12           |
+| Press cerrado                        | 2        | 8            |
+| **Descanso**                         | **2**    | **60 seg**   |
+| Curl de biceps                       | 2        | 8            |
+| Curl martillo                        | 2        | 8            |
+| Extensión de triceps sobre la cabeza | 2        | 8            |
+| **Descanso**                         | **2**    | **60 seg**   |
+| Plancha                              | 2        | 30s          |
+| Elevaciones de piernas               | 2        | 10           |
+## Rutina rápida inferior
+| Ejercicio                         | Superset | Repeticiones |
+| --------------------------------- | -------- | ------------ |
+| Sentadillas                       | 2        | 15           |
+| HipThrust                         | 2        | 10           |
+| Peso muerto rumano con mancuernas | 2        | 12           |
+| **Descanso**                      | **2**    | **60 seg**   |
+| Zancadas                          | 2        | 10 c/l       |
+| Remo con mancuernas               | 2        | 15           |
+| Dominadas                         | 2        | 4            |
+| **Descanso**                      | **2**    | **60 seg**   |
+| Elevaciones laterales             | 2        | 10           |
+| Press militar                     | 2        | 8            |
+| **Descanso**                      | **2**    | **60 seg**   |
+| Y Plancha                         | 2        | 45s          |
+| Elevaciones de piernas            | 2        | 10           |

@@ -8,7 +8,7 @@
 	- [ ] Lista de requisitos de requisitos de usuario que resuelvan la necesidad
 	- [ ] Describe acciones o tareas del usuario
 - [ ] Valor generado para el negocio 20
-	- [x] Valor cuantificable que represente una ganancia o beneficio
+	- [ ] Valor cuantificable que represente una ganancia o beneficio
 	- [ ] Alcanzables en fecha o tiempo con perspectiva a corto o mediano plazo
 - [ ] Restricciones 20
 	- [ ] Describe una limitante relacionada con tiempo, tecnología, leyes, políticas internas, etc.

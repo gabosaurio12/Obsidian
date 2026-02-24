@@ -1,0 +1,22 @@
+- La concurrencia es un desafío cuando se desarrollan APIs que modifican datos por diferentes usuarios al mismo tiempo
+- HTTP tiene incorporado un control de concurrencia
+	- Las solicitudes condicionales se utilizan para este fin
+- Combinar ETags o timestamps de última modificación con métodos de cambio de estado como PUT, PATCH o DELETE, puede asegurar que otro cliente no sobrescriba los datos a través de otra solicitud
+- Para aplicar una solicitud condicional:
+	- El cliente agrega una precondición para evitar la modificación si la marca de tiempo de última modificación o ETag del recurso han cambiado
+	- Si la precondición no se cumple, el servidor envía una repsuesta 412 Precondition Failed
+- Los servidores API también pueden imponer el requisito de un encabezado de precondición
+	- 428 Precondition Required si no se encontró ninguno de los encabezados condicionales en la solicitud
+- El control de concurrencia se puede agregar a una API a través de precondiciones HTTP en el encabezado de la solicitud
+	- Si la fecha de última modificación/ETag no ha cambiado, la solicitud se procesa normalmente
+	- Si ha cambiado, se devuelve un código de respuesta 412 y se evita que el cliente sobrescriba los datos como resultado de que dos clientes independientes modifiquen el mismo recurso al mismo tiempo
+## Conclusiones
+- Es versátil
+- Tiene un conjutno sólido de funcionalidades, incluidas alguna que son menos conocidas
+- El uso de la negociación de contenido permite que los clientes y servidores de una API acuerden un tipo de contenido
+- Las directivas de control de caché brindan soporte de almacenamiento en caché intermediario y del lado del cliente
+## Precondiciones de HTTP
+- Se pueden usar para:
+	- Determinar si las memorias caché caducadas siguen siendo válidas
+	- Proteger los recursos para que no se sobrescriban cambios
+- Con estas técnicas se pueden crear APIs robustas
