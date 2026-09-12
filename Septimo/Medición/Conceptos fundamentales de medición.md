@@ -1,0 +1,17 @@
+- Todos hablan del clima pero nadie hace nada al respecto
+- De la misma forma: todos se quejan del mal software pero pocos hacen algo para medirlo y mejorarlo
+- Si no podemos medir el software ¿cómo sabemos si en verdad está mejorando?
+- En la ingeniería de cualquier sistema físico (puentes, autos, etc.) se habla de "mejores prácticas de ingeniería"
+- El núcleo de esas mejores prácticas es la medición y la validación empírica de los resultados de diseño
+- Buscamos una metodología de medición equivalente, pero para sistemas abstractos como el software
+## ¿Qué medimos todos los días?
+- Mencionen 3 unidades de medida que usan en su vida diaría (ej. metros, kg, grados)
+	- FPS
+	- Distancias que caminar con música (canciones o álbumes)
+	- Pesos $
+	- Gramos
+- ¿Qué característica del software creen que sería útil medir? Anoten al menos 2 ideas
+	- Cantidad de código generado con IA
+	- Complejidad ciclomática
+	- Líneas de código
+	- O(n)

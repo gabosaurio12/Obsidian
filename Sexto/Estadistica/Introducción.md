@@ -1,6 +1,5 @@
 Dr. Ángel Juan Sánchez García
 Estadística para la Calidad de Software
-
 ## 1. Fundamentos para la calidad y gestión de Datos
 - Introducción a la calidad de Software
 - Definición de variables y escalas de medición

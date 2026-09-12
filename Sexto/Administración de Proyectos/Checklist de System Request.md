@@ -5,7 +5,7 @@
 	- [ ] Es un problema acotado y viable
 	- [ ] Es pertinente
 - [ ] Funcionalidades del negocio requeridas 20
-	- [ ] Lista de requisitos de requisitos de usuario que resuelvan la necesidad
+	- [ ] Lista de requisitos de usuario que resuelvan la necesidad
 	- [ ] Describe acciones o tareas del usuario
 - [ ] Valor generado para el negocio 20
 	- [ ] Valor cuantificable que represente una ganancia o beneficio
@@ -13,6 +13,9 @@
 - [ ] Restricciones 20
 	- [ ] Describe una limitante relacionada con tiempo, tecnología, leyes, políticas internas, etc.
 	- [ ] Al menos 3 o más
+		- [ ] Costo
+		- [ ] Tiempo
+		- [ ] Calidad
 ## Prueba de revisión
 **Proyecto:** Layla
 - [x]  Sponsor 20

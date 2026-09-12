@@ -4,15 +4,25 @@ kanban-plugin: board
 
 ---
 
-## Tareas
+## Pentesting
 
-- [ ] **24-Feb** Programación segura hijacking
+- [ ] Traer Kali en VM
+
+
+## Empresas
+
+- [ ] Fundación con base tecnológica
+
+
+## Tecno
+
+- [ ] Estándar de codificación
 
 
 
 
 %% kanban:settings
 ```
-{"kanban-plugin":"board","list-collapse":[false]}
+{"kanban-plugin":"board","list-collapse":[false,false,false]}
 ```
 %%

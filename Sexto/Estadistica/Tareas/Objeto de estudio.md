@@ -11,7 +11,7 @@ Se van a análisar las guitarras en mi wishlist de Amazon con la intención de a
 ![[Sexto/Estadistica/Imagenes/image.png]]
 ## Tipos de brazos
 
-![[image 1.png]]
+![[Sexto/Estadistica/Imagenes/image 1.png]]
 ## Variables
 
 | Variable                   | Descripción                                                                                       | Tipo de variable                 | Valores                                                                                                                             |

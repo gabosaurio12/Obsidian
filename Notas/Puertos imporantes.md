@@ -6,5 +6,7 @@ DNS - 53
 SSH - 22
 MYSQL - 3306
 Oracle - 1521
+Telnet - 23
+SQLServer - 1433
 
 Puertos reservados por abajo del 1024
