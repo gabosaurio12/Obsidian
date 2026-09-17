@@ -1218,7 +1218,7 @@ Se deberán probar:
 
 # 35. Plan de 13 semanas
 
-## Semana 1 — Análisis y planificación
+## Semana 1 — Análisis y planificación (17/08 - 23/08)
 
 ### Objetivos
 
@@ -1249,7 +1249,7 @@ docs: add project architecture draft
 ```
 
 ---
-# Semana 2 — Arquitectura y diseño
+# Semana 2 — Arquitectura y diseño (24/08 - 30/08)
 
 ### Objetivos
 
@@ -1259,7 +1259,7 @@ docs: add project architecture draft
 - Diseñar WCF.
 - Diseñar máquina de estados.
 - Definir seguridad.
-- **Descripciones de casos de uso de bajo nivel.**
+- Descripciones de casos de uso de bajo nivel.
 ### Entregables
 
 ```text
@@ -1278,7 +1278,7 @@ Modelo de seguridad
 Arquitectura técnicamente validada antes de construir funcionalidades grandes.
 
 ---
-# Semana 3 — Infraestructura
+# Semana 3 — Infraestructura (31/08 - 6/09)
 
 ### Implementar
 
@@ -1292,8 +1292,8 @@ Arquitectura técnicamente validada antes de construir funcionalidades grandes.
 - WPF básico.
 - Configuración.
 - Logging.
-- **Scripts de base de datos y verificar el charset.**
-- **Todas las etiquetas, botones, modales en los prototipos que la interfaz lanzará.**
+- Scripts de base de datos y verificar el charset.
+- Todas las etiquetas, botones, modales en los prototipos que la interfaz lanzará.
 ### Pruebas objetivo
 
 ```text
@@ -1301,7 +1301,7 @@ Arquitectura técnicamente validada antes de construir funcionalidades grandes.
 ```
 
 ---
-# Semana 4 — Autenticación y usuarios
+# Semana 4 — Autenticación y usuarios (7/09 - 13/09)
 
 ### Implementar
 
@@ -1321,7 +1321,7 @@ Arquitectura técnicamente validada antes de construir funcionalidades grandes.
 ```
 
 ---
-# Semana 5 — Perfil, avatares y amigos
+# Semana 5 — Perfil, avatares y amigos (14/09 - 20/09)
 
 ### Implementar
 
@@ -1338,7 +1338,7 @@ Arquitectura técnicamente validada antes de construir funcionalidades grandes.
 ```
 
 ---
-# Semana 6 — Lobby y chat
+# Semana 6 — Lobby y chat (21/09 - 27/09)
 
 ### Implementar
 
@@ -1357,7 +1357,7 @@ Arquitectura técnicamente validada antes de construir funcionalidades grandes.
 ```
 
 ---
-# Semana 7 — Motor Mastermind
+# Semana 7 — Motor Mastermind (28/09 - 4/10)
 
 ### Implementar
 
@@ -1380,7 +1380,7 @@ No invertir tiempo excesivo en estética.
 ```
 
 ---
-# Semana 8 — Máquina de estados y partidas
+# Semana 8 — Máquina de estados y partidas (5/10 - 11/10)
 
 ### Implementar
 
@@ -1407,7 +1407,7 @@ Además:
 
 ---
 
-# Semana 9 — Multiplayer y sincronización
+# Semana 9 — Multiplayer y sincronización (12/10 - 18/10)
 
 ### Implementar
 
@@ -1441,7 +1441,7 @@ El estado de A nunca debe mezclarse con B.
 ```
 
 ---
-# Semana 10 — UI, localización y personalización
+# Semana 10 — UI, localización y personalización (19/10 - 25/10)
 
 ### Implementar
 
@@ -1463,7 +1463,7 @@ El estado de A nunca debe mezclarse con B.
 ```
 
 ---
-# Semana 11 — Seguridad y pruebas intensivas
+# Semana 11 — Seguridad y pruebas intensivas (26/10 - 1/11)
 
 ### Revisar
 
@@ -1494,7 +1494,7 @@ Objetivo recomendado:
 ```
 
 ---
-# Semana 12 — Integración y estabilización
+# Semana 12 — Integración y estabilización (2/11 - 8/11)
 
 ### Actividades
 
@@ -1514,7 +1514,7 @@ No introducir funcionalidades grandes nuevas.
 Esta semana debe servir para **estabilizar**.
 
 ---
-# Semana 13 — Release y documentación
+# Semana 13 — Release y documentación (9/11 - 15/11)
 
 ### Actividades
 
