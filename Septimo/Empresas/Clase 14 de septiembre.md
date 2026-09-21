@@ -1,0 +1,1 @@
+![[Captura de pantalla 2026-09-14 a la(s) 1.27.36 p.m..png]]![[Captura de pantalla 2026-09-14 a la(s) 2.38.23 p.m..png]]

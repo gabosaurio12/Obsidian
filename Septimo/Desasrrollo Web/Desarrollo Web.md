@@ -65,3 +65,6 @@ En tu servidor MySQL /MariaDB configura una nueva base de datos con las siguient
 - Usuario de acceso: admin_blogpersonal
 - Contraseña de acceso: Admin12345
 *Asegúrate de asignarle los permisos necesarios al nuevo usuario para que tenga control total sobre la base de datos creada.*
+
+
+![[Captura de pantalla 2026-09-14 a la(s) 11.17.11 a.m..png]]![[Captura de pantalla 2026-09-14 a la(s) 11.18.36 a.m..png]]![[Captura de pantalla 2026-09-14 a la(s) 11.19.09 a.m..png]]![[Captura de pantalla 2026-09-14 a la(s) 11.23.08 a.m..png]]![[Captura de pantalla 2026-09-14 a la(s) 11.25.59 a.m..png]]![[Captura de pantalla 2026-09-14 a la(s) 11.27.33 a.m..png]]![[Captura de pantalla 2026-09-14 a la(s) 11.32.57 a.m..png]]![[Captura de pantalla 2026-09-14 a la(s) 11.35.01 a.m..png]]
