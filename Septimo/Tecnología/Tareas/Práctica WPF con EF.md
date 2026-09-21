@@ -77,5 +77,5 @@ Seleccionar cancelar:
 ![[image-3 1.png]]
 
 Editar información:
-![[image.png]]
-![[image-1.png]]
+![[image 47.png]]
+![[image-1 16.png]]

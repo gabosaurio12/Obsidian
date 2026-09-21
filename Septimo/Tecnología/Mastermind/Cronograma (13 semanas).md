@@ -70,34 +70,53 @@ Arquitectura técnicamente validada antes de construir funcionalidades grandes.
 - [x] Usuario limitado de BD.
 - [ ] WCF básico.
 - [ ] WPF básico.
-	- [ ] Signup
-	- [ ] Login
+	- [x] Signup
+	- [x] Login
 	- [ ] MainPage
-	- [ ] Profile
-	- [ ] SuccessModal
-	- [ ] ErrorModal
+	- [x] Profile
+	- [x] SuccessModal
+	- [x] ErrorModal
 	- [ ] RoomsPage
 		- [ ] CreateRoom
-	- [ ] FriendsModal
+	- [x] FriendsModal
 - [ ] Configuración.
-- [ ] Logging.
+- [x] Logging.
 - [x] Scripts de base de datos y verificar el charset.
-- [ ] Todas las etiquetas, botones, modales en los prototipos que la interfaz lanzará.
+- [x] Todas las etiquetas, botones, modales en los prototipos que la interfaz lanzará.
 	- [x] Signup
 	- [x] Login
 	- [x] MainPage
 	- [x] Profile
-	- [ ] SuccessModal
-	- [ ] ErrorModal
+	- [x] SuccessModal (Ubicadas hasta el momento)
+	- [x] ErrorModal (Ubicadas hasta el momento)
 	- [x] RoomsPage
 		- [x] CreateRoom
-	- [ ] FriendsModal
+	- [x] FriendsModal
+- [ ] 30% de interfaces internacionalizadas en WPF
+	- [x] Signup
+	- [x] Login
+	- [x] MainPage
+	- [x] Profile
+	- [x] SuccessModal
+	- [x] ErrorModal
+	- [x] VerificationCodeModal
+	- [x] FriendsModal
+	- [ ] RoomsPage
+		- [ ] CreateRoom
 ### Pruebas objetivo
 
 ```text
 10–15
 ```
 
+### Pruebas realizadas
+
+```text
+
+```
+### Pendientes
+- Agregar la función de cerrar sesión/salir
+- Agregar la opción de recordar el inicio de sesión
 ---
 # Semana 4 — Autenticación y usuarios (7/09 - 13/09)
 
