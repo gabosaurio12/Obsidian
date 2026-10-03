@@ -1,4 +1,7 @@
-> **Empresa analizada:** Apple Inc.  
+**Gabriel Antonio González López**
+20 de septiembre del 2026
+
+**Empresa analizada:** Apple Inc.  
 > **Sector:** Tecnología, electrónica de consumo, software y servicios digitales  
 > **Fundación:** 1 de abril de 1976  
 > **Sede:** Cupertino, California, Estados Unidos  

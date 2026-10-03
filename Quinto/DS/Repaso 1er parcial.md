@@ -180,7 +180,6 @@ Las flechar representan el flujo de **artefactos**: entregables que transportan 
 #### Artefactos
 ![[Captura de pantalla 2025-10-14 a la(s) 12.45.33 a.m..png]]
 #### Evaluación de los artefactos
-![[Gabosaurio/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 12.48.05 a.m..png]]
 #### Flujo de especificación
 ![[Captura de pantalla 2025-10-14 a la(s) 12.49.25 a.m..png]]
 ![[Captura de pantalla 2025-10-14 a la(s) 12.50.02 a.m..png]]
@@ -261,7 +260,7 @@ Las flechar representan el flujo de **artefactos**: entregables que transportan 
 #### Copia del modelo de coneptos de negocio al modelo de tipos de negocio
 ![[Captura de pantalla 2025-10-14 a la(s) 1.23.14 a.m..png]]
 Se ajusta el alcance del *Modelo de Conceptos de Negocio*
-![[Gabosaurio/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 1.24.00 a.m..png]]
+
 Da como resultado el *Modelo de Tipos de Negocio*
 ![[Captura de pantalla 2025-10-14 a la(s) 1.24.41 a.m..png]]
 #### Definición de Reglas de negocio
@@ -303,9 +302,6 @@ Da como resultado el *Modelo de Tipos de Negocio*
 	- Evitar siempre que sea posible, las referencias bidireccionales entre interfaces
 	- Asignar navegabilidad unidireccional a todas las asociaciones entre interfaces
 		- Esto nos dice inmediatamente qué interfaz es responsable de almacenar la referencia
-
-Asignar dirección de la referencia
-![[Gabosaurio/DS/Imágenes/Captura de pantalla 2025-10-14 a la(s) 1.30.54 a.m..png]]
 ### Crear especificaciones de interfaz iniciales
 - Las interfaces del sistema y sus operaciones que se han creado no forman parte del modelo de tipos de negocio
 	- Forman un conjunto inicial de especificaciones de interfaz que se refinarán

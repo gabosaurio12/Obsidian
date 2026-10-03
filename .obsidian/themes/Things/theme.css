@@ -27,7 +27,8 @@ body {
   --accent-l: 60%; /* Accent lightness Light Mode */
 
   --blue: #2e80f2;
-  --pink: #ff82b2;
+  --pinky: #ff82b2;
+  --strong-blue: #1251a8;
   --green: #3eb4bf;
   --yellow: #e5b567;
   --orange: #e87d3e;
@@ -41,8 +42,8 @@ body {
   --h5-color: var(--red);
   --h6-color: var(--text-muted);
 
-  --strong-color: var(--pink);
-  --em-color: var(--pink);
+  --strong-color: var(--strong-blue);
+  --em-color: var(--strong-blue);
   --quote-color: var(--green);
 
   --tag-background-color-l: #bde1d3;
@@ -131,7 +132,7 @@ body.theme-light.is-mobile {
   --color-cyan: #2db7b5;
   --color-blue: #086ddd;
   --color-purple: #876be0;
-  --color-pink: #c32b74;
+  --color-strong-blue: #c32b74;
   --color-base-00: #ffffff;
   --color-base-05: #fcfcfc;
   --color-base-10: #f6f7f8; /* code blocks */
@@ -233,7 +234,7 @@ body.theme-dark.is-mobile {
   --color-cyan: #53dfdd;
   --color-blue: #027aff;
   --color-purple: #a882ff;
-  --color-pink: #fa99cd;
+  --color-strong-blue: #fa99cd;
   --color-base-00: #1c2127; /* main editor window */
   --color-base-10: #282c34; /* code blocks */
   --color-base-20: #181c20; /* top unselected unfocused nav */

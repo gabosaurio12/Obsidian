@@ -18,5 +18,3 @@ Es un framework para diseñar páginas web.
 La página principal de un sitio web es el index, a donde te envía cuando no buscas una página de la web específica.
 
 ## Proceso de comunicación según HTTP
-
-![[Captura de pantalla 2026-02-12 a la(s) 4.50.14 p.m..png]]
