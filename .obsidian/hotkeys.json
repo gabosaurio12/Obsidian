@@ -2,7 +2,8 @@
   "break-page:insert-break-page": [
     {
       "modifiers": [
-        "Ctrl"
+        "Mod",
+        "Shift"
       ],
       "key": "B"
     }

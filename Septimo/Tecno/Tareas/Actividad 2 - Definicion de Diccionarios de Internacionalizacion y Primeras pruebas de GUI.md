@@ -46,7 +46,7 @@ Estas son algunas de las interfaces en ambos idiomas.
 ![[image-2 7.png]]
 ### SignupPage
 **Español**
-![[Septimo/Tecno/image.png]]
+![[image 6.png]]
 
 **Inglés**
 ![[image-1 18.png]]
