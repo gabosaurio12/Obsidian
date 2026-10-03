@@ -12,7 +12,9 @@
 ![[Captura de pantalla 2026-08-31 a la(s) 11.57.23 a.m..png]]
 ![[Captura de pantalla 2026-08-31 a la(s) 11.57.38 a.m..png]]![[Captura de pantalla 2026-08-31 a la(s) 12.04.23 p.m..png]]![[Captura de pantalla 2026-08-31 a la(s) 12.07.43 p.m..png]]![[Captura de pantalla 2026-08-31 a la(s) 12.08.43 p.m..png]]
 
-![[Captura de pantalla 2026-08-31 a la(s) 12.29.11 p.m..png]]![[Captura de pantalla 2026-08-31 a la(s) 12.34.38 p.m..png]]![[Captura de pantalla 2026-08-31 a la(s) 12.36.17 p.m..png]]![[Captura de pantalla 2026-08-31 a la(s) 12.38.58 p.m..png]]
+![[Captura de pantalla 2026-08-31 a la(s) 12.29.11 p.m..png]]
+![[Captura de pantalla 2026-08-31 a la(s) 12.31.12 p.m..png]]
+![[Captura de pantalla 2026-08-31 a la(s) 12.34.38 p.m..png]]![[Captura de pantalla 2026-08-31 a la(s) 12.36.17 p.m..png]]![[Captura de pantalla 2026-08-31 a la(s) 12.38.58 p.m..png]]
 
 ## Ejercicio: 5. Ejecución del contenedor y carga de recursos web
 

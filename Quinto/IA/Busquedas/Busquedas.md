@@ -48,7 +48,7 @@ Una lista de adyacencia es un arreglo donde cada posición (índice) se asocia c
 - Es más eficiente en memoria para grafos **dispersos** (con pocos arcos)
 - La información está organizada de manera que es fácil encontrar los vecinos de un nodo específico
 Ejemplo
-[[[2,3], [1], [1]]]
+`[[[2,3], [1], [1]]]`
 ## Tipos de estrategias de búsqueda
 ### Búsquedas no informadas (ciegas)
 - No utilizan conocimiento adicional del problema

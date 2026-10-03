@@ -25,7 +25,7 @@ Las empresas que adoptan la innovación, cuando se adopta estratégicamente, se 
 
 Según guías internacionales como el Manual del Oslo de la OCDE y la teoría empresarial, la **innovación** se divide en:
 - **Innovación de Producto o Servicio:** Crear un bien nuevo o mejorar de forma notable uno que ya existe (como pasar de un teléfono básico a uno inteligente)
-- **Innovación de Proeso:** Cambiar o mejorar la forma en que se fabrica, distribuye o gestiona un producto para reducir costos o ser más eficiente
+- **Innovación de Proceso:** Cambiar o mejorar la forma en que se fabrica, distribuye o gestiona un producto para reducir costos o ser más eficiente
 - **Innovación de Modelo de Negocio:** Redefinir la manera en que la empresa entrega valor y genera ingresos para los clientes
 - **Innovación Organizativa:** Modificar la estructura interna de trabajo, la cultura de la empresa o las relaciones laborales (como implementar el teletrabajo)
 - **Según su grado de Originalidad:**

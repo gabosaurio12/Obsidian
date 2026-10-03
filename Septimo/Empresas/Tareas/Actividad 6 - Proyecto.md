@@ -1,3 +1,5 @@
+**Gabriel Antonio González López**
+20 de septiembre del 2026
 ## Proyecto de Organización: Plataforma IoT para Mantenimiento Predictivo en PyMEs Industriales
 
 ### Enfoque de la empresa
