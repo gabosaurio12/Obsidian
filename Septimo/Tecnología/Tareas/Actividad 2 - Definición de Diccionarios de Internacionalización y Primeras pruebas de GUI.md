@@ -55,9 +55,9 @@ Estas son algunas de las interfaces en ambos idiomas.
 
 **Inglés**![[image 49.png]]
 ### VerificationCodeModal
-**Español**![[image.png|346]]
+**Español**![[image 54.png|346]]
 
-**Inglés**![[image-1.png|347]]
+**Inglés**![[image-1 24.png|347]]
 ### MainPage
 **Español**
 ![[image 50.png]]
@@ -82,18 +82,18 @@ Estas son algunas de las interfaces en ambos idiomas.
 **Inglés**![[image-1 22.png|305x421]]
 ### RoomsPage
 **Español**
-![[image-4.png]]
+![[image-4 1.png]]
 
 **Inglés**
-![[image-2.png]]
+![[image-2 10.png]]
 
 ### CreateRoomPage
 **Español**
-![[image-5.png]]
-![[image-6.png]]
+![[image-5 1.png]]
+![[image-6 1.png]]
 
 **Inglés**
-![[image-3.png]]![[image-7.png]]
+![[image-3 2.png]]![[image-7 1.png]]
 
 ## Pruebas automatizadas de SignupPage
-![[image-8.png]]
+![[image-8 1.png]]

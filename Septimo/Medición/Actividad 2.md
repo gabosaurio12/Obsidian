@@ -93,10 +93,10 @@ Debido a su arquitectura, tamaño y amplia variedad de subsistemas, el Kernel de
 | Velocity Template Language |          1 |                0 |             0 |             15 |     1.00 |                      15.00 |
 | **SUM**                    | **82,373** |    **5,067,941** | **4,842,110** | **30,519,022** | **0.91** |          **27,811,525.68** |
 ### Commits
-![[image-5.png]]
+![[image-5 1.png]]
 ### Colaboradores
 
-![[image-6.png]]
+![[image-6 1.png]]
 
 Solo se muestra al contribudor con más commits mensuales
 ### Complejidad Ciclomática

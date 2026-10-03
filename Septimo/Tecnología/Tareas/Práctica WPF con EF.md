@@ -23,7 +23,7 @@ En la siguiente página del wizard podemos seleccionar las tablas, procedimiento
 El wizard genera las clases C# que representan el modelo EF y crea los siguientes archivos:
 - El .edmx describe las relaciones y otros metadatos que asocia las clases con objetos y en la base de datos
 - Los .tt son plantillas T4 que generan el código que opera en el modelo y guarda los cambios en la base de datos
-![[image-4.png|227]]
+![[image-4 1.png|227]]
 Para poder trabajar con WPF data binding hay que editar lo siguiente para que ObservableCollection esté disponible. Hay que editar en Northwind_model.tt:
 - Reemplazar las dos ocurrencias de ICollection con ObservableCollectionT. 
 - Reemplazar la primera ocurrencia de HashSetT con ObservableCollectionT cerca de la línea 51, no se debe reemplazar la segunda
@@ -31,15 +31,15 @@ Para poder trabajar con WPF data binding hay que editar lo siguiente para que Ob
 ## Hacer un data bind del modelo a una página XAML
 
 Agregar una nueva fuente de información:
-![[image-5.png]]
+![[image-5 1.png]]
 
 Luego seleccionar el objeto Customer:
-![[image-6.png]]
+![[image-6 1.png]]
 Luego personalizar MainWindow.xaml:
-![[image-7.png]]
+![[image-7 1.png]]
 
 Para mostrar cada propiedad de Customers en cada textbox individual, hay que hacer lo siguiente:
-![[image-8.png]]
+![[image-8 1.png]]
 
 Luego hay que arrastrar la propiedad Order de Customers a la zona inferior del diseñador:
 ![[image 41.png]]
