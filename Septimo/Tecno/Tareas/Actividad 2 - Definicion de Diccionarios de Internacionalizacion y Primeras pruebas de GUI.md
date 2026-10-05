@@ -46,7 +46,7 @@ Estas son algunas de las interfaces en ambos idiomas.
 ![[image-2 7.png]]
 ### SignupPage
 **Español**
-![[Septimo/Tecno/image.png]]
+![[image 6.png]]
 
 **Inglés**
 ![[image-1 18.png]]
@@ -55,9 +55,15 @@ Estas son algunas de las interfaces en ambos idiomas.
 
 **Inglés**![[image 49.png]]
 ### VerificationCodeModal
+<<<<<<< HEAD:Septimo/Tecnología/Tareas/Actividad 2 - Definición de Diccionarios de Internacionalización y Primeras pruebas de GUI.md
+**Español**![[image 54.png|346]]
+
+**Inglés**![[image-1 24.png|347]]
+=======
 **Español**![[Septimo/Pentesting/imgs/image 3.png|346]]
 
 **Inglés**![[Septimo/Pentesting/imgs/image-1 1.png|347]]
+>>>>>>> e9a8db3ef609a509820eda8d6ea8dccb564ce1d2:Septimo/Tecno/Tareas/Actividad 2 - Definición de Diccionarios de Internacionalización y Primeras pruebas de GUI.md
 ### MainPage
 **Español**
 ![[image 50.png]]
@@ -82,6 +88,23 @@ Estas son algunas de las interfaces en ambos idiomas.
 **Inglés**![[image-1 22.png|305x421]]
 ### RoomsPage
 **Español**
+<<<<<<< HEAD:Septimo/Tecnología/Tareas/Actividad 2 - Definición de Diccionarios de Internacionalización y Primeras pruebas de GUI.md
+![[image-4 1.png]]
+
+**Inglés**
+![[image-2 10.png]]
+
+### CreateRoomPage
+**Español**
+![[image-5 1.png]]
+![[image-6 1.png]]
+
+**Inglés**
+![[image-3 2.png]]![[image-7 1.png]]
+
+## Pruebas automatizadas de SignupPage
+![[image-8 1.png]]
+=======
 ![[Septimo/Pentesting/imgs/image-4.png]]
 
 **Inglés**
@@ -97,3 +120,4 @@ Estas son algunas de las interfaces en ambos idiomas.
 
 ## Pruebas automatizadas de SignupPage
 ![[Septimo/Pentesting/imgs/image-8.png]]
+>>>>>>> e9a8db3ef609a509820eda8d6ea8dccb564ce1d2:Septimo/Tecno/Tareas/Actividad 2 - Definición de Diccionarios de Internacionalización y Primeras pruebas de GUI.md

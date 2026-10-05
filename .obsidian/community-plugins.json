@@ -5,9 +5,10 @@
   "obsidian-export-image",
   "image-converter",
   "lovely-mindmap",
-  "obsidian-enhancing-export",
   "drawio-obsidian",
   "obsidian-banners",
   "open-tab-settings",
-  "automatic-table-of-contents"
+  "automatic-table-of-contents",
+  "obsidian-pandoc",
+  "better-export-pdf"
 ]
