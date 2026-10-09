@@ -13,7 +13,7 @@ Quitar el elemento Grid y cambiar las propiedades de Title a "ExpenseIt", Height
 ![[Septimo/Tecno/imgs/image 3.png]]
 
 Abrir el MainWindow.xaml.cs:
-![[image 4.png]]
+![[Septimo/Tecno/imgs/image 4.png]]
 
 Agregar la página ExpenseItHome.xaml:![[image 5.png]]
 
@@ -54,12 +54,12 @@ En ExpenseItHome.xaml agregar un evento **Click** al elemento **Button**:
 ![[image 18.png]]
 
 Agregar la funcionalidad en ExpenseItHome.xaml.cs:
-![[image-1 2.png]]
+![[Septimo/Tecno/imgs/image-1 2.png]]
 
 ## Crear la UI para ExpenseReportPage
 
 Abrir *ExpenseReportPage.xaml* y configurarlo:
-![[image-2 1.png]]
+![[Septimo/Tecno/imgs/image-2 1.png]]
 
 Si compilamos y ejecutamos al dar click en View nos debe reenviar a ExpenseReportPage:
 ![[image 19.png]]
@@ -67,7 +67,7 @@ Si compilamos y ejecutamos al dar click en View nos debe reenviar a ExpenseRepor
 ## Controles de estilo
 
 Abrir Application.xaml y agregar entre las etiquetas *Application.Resources*:
-![[image-2 1.png]]Las etiquetas hacen lo siguiente:
+![[Septimo/Tecno/imgs/image-2 1.png]]Las etiquetas hacen lo siguiente:
 - *headerTextStyle*: Para darle formato a la label del título de la página
 - *labelStyel*: Para darle formato a los controles de las label
 - *columnHeaderStyle*: Para darle formato al **DataGridColumnHeader**

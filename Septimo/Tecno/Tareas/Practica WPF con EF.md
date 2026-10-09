@@ -19,12 +19,12 @@ En el wizard elegir EF Designer from database:
 Luego seleccionamos la conexión que creamos hace rato y damos siguiente:
 ![[image-2 3.png]]
 En la siguiente página del wizard podemos seleccionar las tablas, procedimientos y otros objetos, a incluir en el modelo EF:
-![[image-3 1.png]]
+![[Septimo/Tecno/imgs/image-3 1.png]]
 El wizard genera las clases C# que representan el modelo EF y crea los siguientes archivos:
 - El .edmx describe las relaciones y otros metadatos que asocia las clases con objetos y en la base de datos
 - Los .tt son plantillas T4 que generan el código que opera en el modelo y guarda los cambios en la base de datos
 <<<<<<< HEAD:Septimo/Tecnología/Tareas/Práctica WPF con EF.md
-![[image-4 1.png|227]]
+![[Septimo/Tecno/imgs/image-4 1.png|227]]
 =======
 ![[Septimo/Pentesting/imgs/image-4.png|227]]
 >>>>>>> e9a8db3ef609a509820eda8d6ea8dccb564ce1d2:Septimo/Tecno/Tareas/Práctica WPF con EF.md
@@ -90,7 +90,7 @@ Seleccionamos Commit para agregar un nuevo cliente u ordenar al modelo después 
 
 Seleccionar cancelar:
 ![[image-2 6.png]]
-![[image-3 1.png]]
+![[Septimo/Tecno/imgs/image-3 1.png]]
 
 Editar información:
 ![[image 47.png]]
