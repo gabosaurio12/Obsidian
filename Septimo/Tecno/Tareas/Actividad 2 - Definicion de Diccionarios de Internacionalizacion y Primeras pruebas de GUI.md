@@ -89,7 +89,7 @@ Estas son algunas de las interfaces en ambos idiomas.
 ### RoomsPage
 **Español**
 <<<<<<< HEAD:Septimo/Tecnología/Tareas/Actividad 2 - Definición de Diccionarios de Internacionalización y Primeras pruebas de GUI.md
-![[image-4 1.png]]
+![[Septimo/Tecno/imgs/image-4 1.png]]
 
 **Inglés**
 ![[image-2 10.png]]
