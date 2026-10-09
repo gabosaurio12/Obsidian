@@ -1,2 +1,0 @@
-Window manager:
-- Hyprland

@@ -66,7 +66,7 @@ class Hello {
 # Investigar
 - Métodos de evaluaciones de arquitectura
 
-# ### Software Architecture in Practice - Lenn Bass, Paul Clements, Rick Kazman
+## Software Architecture in Practice - Lenn Bass, Paul Clements, Rick Kazman
 ## Capítulos a leer
 1. Introduction
 2. Quality Attributes

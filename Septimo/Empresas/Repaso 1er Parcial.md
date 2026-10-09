@@ -66,7 +66,7 @@ Permite reducir costos de producción o comercialización cuando se establece en
 
 #### Organización
 
-Puede modificar la organización, sus métodos, formas y gestión, requiriendo una estructura organizativa que facilite el aprendizaje y la explotacio´n del conocimiento.
+Puede modificar la organización, sus métodos, formas y gestión, requiriendo una estructura organizativa que facilite el aprendizaje y la explotación del conocimiento.
 
 #### Marketing
 
@@ -126,9 +126,9 @@ Reguladas por la Ley General de Sociedades Mercantiles (LGSM) y el SAT 👹
 
 - **Persona física con actividad empresarial:** Un solo dueño responde con su patrimonio.
 - **Sociedad Anónima (SA o SAB):** El capital se divide en acciones y la responsabilidad de los socios se limita a sus aportaciones. Se utiliza en empresas de mayor tamaño o que buscan captar inversión pública o priavda. El capital mínimo varía según el país.
-- **Sociedad de Responsabilidad LImitada (S de RL):** Los socioes responden solo por su aportación social; muy común en empresas familiares y medianas. El capital social suele ser bajo o incluso no obligatiorio al inicio.
+- **Sociedad de Responsabilidad Limitada (S de RL):** Los socioes responden solo por su aportación social; muy común en empresas familiares y medianas. El capital social suele ser bajo o incluso no obligatiorio al inicio.
 - **Sociedad Cooperativa:** Los trabajadores son al mismo tiempo dueños de la organización. Se gestionan bajo el principio de "un socio, un voto" y el capital suele ser variable.
-- **Comunidades de bienes:** Asociación dentre autónomos, que comparten la propiedad de un bien o negocio. No tienen personalidad jurídica propia y los socios responden con su patrimonio personal
+- **Comunidades de bienes:** Asociación entre autónomos, que comparten la propiedad de un bien o negocio. No tienen personalidad jurídica propia y los socios responden con su patrimonio personal
 
 #### Por el origen de su capital
 
@@ -168,7 +168,7 @@ Se clasifican principalmente en cuatro tipos:
 - **Recursos humanos:** Corresponden al talento, conocimiento y habilidades de los empleados, directivos y asesores que constituyen la fuerza de trabajo de la organización
 - **Recursos financieros:** Incluyen el capital disponible para las operaciones, como efectivo, depósitos, créditos, inversiones y utilidades, tanto propios como ajenos
 - **Recursos materiales:** Son los bienes tangibles como maquinaria, herramientas, edificios, vehículos, materias primas y mobiliario necesarios para la producción
-- **Recursos tecnológicos:** Abarcan el hardware, software, sistemas de información y redes que optimizan los procesos y aopyan la toma de decisiones
+- **Recursos tecnológicos:** Abarcan el hardware, software, sistemas de información y redes que optimizan los procesos y apoyan la toma de decisiones
 
 Existen recursos externos a la empresa:
 - Agua, luz, internet, etc.
