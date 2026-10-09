@@ -26,6 +26,7 @@ MasterMind_Client.sln
 MasterMind_Server.sln
 |- MasterMind_Server
 |-- DataModel
+|--- Entities/
 |--- MasterMindModel.edmx
 |-- Assets
 |--- Avatars
@@ -42,7 +43,7 @@ MasterMind_Server.sln
 
 ## Diagrama de componentes
 
-![[image 9.png]]
+![[image-1 14.png]]
 
 <div class="page-break" style="page-break-before: always;"></div>
 
@@ -54,16 +55,18 @@ MasterMind_Server.sln
 
 ## Diagrama de despliegue
 
-### Vista físico
+### Vista física
 
-![[image-1 14.png]]
+![[image-2 11.png]]
 
 ### Vista de artefactos
 
 #### Cliente
-![[Septimo/Tecno/imgs/image-2.png]]
+
+![[Septimo/Tecno/imgs/image-6.png]]
 
 <div class="page-break" style="page-break-before: always;"></div>
 
 #### Servidor
-![[Septimo/Tecno/imgs/image-3.png]]
+
+![[Septimo/Tecno/imgs/image-5.png]]
