@@ -67,25 +67,25 @@
 
 ## Resumen por clase
 
-| Prefijo | Clase | ¿Quién tiene el problema? | Acción típica del cliente |
-|---|---|---|---|
-| **1xx** | Respuesta provisional | — | Esperar a la respuesta final |
-| **2xx** | Éxito | — | Procesar el resultado |
-| **3xx** | Redirección | — | Seguir el encabezado `Location` |
-| **4xx** | Error del cliente | El cliente | Corregir la petición y reintentar |
-| **5xx** | Error del servidor | El servidor | Esperar y reintentar más tarde |
+| Prefijo | Clase                 | ¿Quién tiene el problema? | Acción típica del cliente         |
+| ------- | --------------------- | ------------------------- | --------------------------------- |
+| **1xx** | Respuesta provisional | —                         | Esperar a la respuesta final      |
+| **2xx** | Éxito                 | —                         | Procesar el resultado             |
+| **3xx** | Redirección           | —                         | Seguir el encabezado `Location`   |
+| **4xx** | Error del cliente     | El cliente                | Corregir la petición y reintentar |
+| **5xx** | Error del servidor    | El servidor               | Esperar y reintentar más tarde    |
 
 ---
 
 ## Diferencias entre los códigos de redirección
 
-| Código | ¿Cambio permanente? | ¿Puede cambiar el método HTTP? |
-|---|---|---|
-| **301** | Sí | Sí (puede convertirse en `GET`) |
-| **302** | No | Sí (puede convertirse en `GET`) |
-| **303** | No | Sí, **siempre** a `GET` |
-| **307** | No | **No**, conserva el método original |
-| **308** | Sí | **No**, conserva el método original |
+| Código  | ¿Cambio permanente? | ¿Puede cambiar el método HTTP?      |
+| ------- | ------------------- | ----------------------------------- |
+| **301** | Sí                  | Sí (puede convertirse en `GET`)     |
+| **302** | No                  | Sí (puede convertirse en `GET`)     |
+| **303** | No                  | Sí, **siempre** a `GET`             |
+| **307** | No                  | **No**, conserva el método original |
+| **308** | Sí                  | **No**, conserva el método original |
 
 ---
 

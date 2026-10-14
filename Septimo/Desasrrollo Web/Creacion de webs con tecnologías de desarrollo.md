@@ -35,7 +35,7 @@ El flujo básico de comunicación entre cliente y servidor se puede definir como
 - Los URI y URL constan de las siguientes partes:
 	- **Protocolo:** Identifica el protocolo de acceso al recurso, por ejemplo http:, mailto:, ftp:, etc.
 	- **Autoridad o host:** Elemento jerárquico que identifica la autoridad de nombres de dominio (por ejemplo //www.example.com)
-	- **Puerto (opcional):** PUerto de escucha asignado de lado del servidor entre el 0 y el 65,535, el puerto solo especifica si se tiene asignado un puerto diferente al default para HTTP y HTTPS (443)
+	- **Puerto (opcional):** Puerto de escucha asignado de lado del servidor entre el 0 y el 65,535, el puerto solo especifica si se tiene asignado un puerto diferente al default para HTTP y HTTPS (443)
 	- **Ruta (opcional):** Información usualmente organizada en forma jerárquica, que identifica al recurso en el ámbito del esquema URI y la autoridad de nombres (e.g. /domains/example)
 	- **Consulta (opcional):** Información con estructura no jerárquica (usualmente pares "clave=valor") que identifica al recurso en el ámbito del esquema URI y la autoridad de nombres. El comienzo de este componente se indica mediante el caracter '?'
 	- **Fragmento (opcional) (exclusivo para las URI):** Permite identificar una parte del recurso principal, o vista de una representación del mismo. El comienzo de este componente se indica mediante el carácter '#'. Es una secuencia de caracteres, de acuerdo a un formato estándar, que se se usa para identificar los recursos de una red de forma unívoca.
@@ -82,7 +82,7 @@ Normalmente podemos confundir URL con URI aunque a nivel funcional sirven para l
 
 Las peticiones son el punto de partida para establecer la comunicación entre cliente y servidor, las peticiones están formadas por los siguientes elementos:
 - **Línea Inicial:**
-	- **Método HTTP:** INforma al servidor el tipo de intereacción que el cliente desea solicitar
+	- **Método HTTP:** Informa al servidor el tipo de intereacción que el cliente desea solicitar
 	- **Ruta:** Indica la ruta donde se encuentra el recurso
 	- **Protocolo y versión:** Indica que protocolo se utilizará (HTTP o HTTPS) así como la versión del mismo. La más común es la 1.1
 - **Cabeceras**
@@ -90,14 +90,14 @@ Las peticiones son el punto de partida para establecer la comunicación entre cl
 ## Métodos HTTP
 
 - **GET:** Devuelve el recurso identificado en la URL pedida
-- **HEAD:** Funciona como el GET, pero sin que el servidor devuelva el cuerop del mensaje. Es decir, solo se devuelve la información de cabecera
+- **HEAD:** Funciona como el GET, pero sin que el servidor devuelva el cuerpo del mensaje. Es decir, solo se devuelve la información de cabecera
 - **POST:** Indica al servidor que se prepare para recibir información del cliente. Suele usarse para registrar **nuevos recursos**
 - **PUT:** Envía el recurso identificado en la URL desde el cliente hacia el servidor. Suele usarse para **actualizar recursos** existentes
 - **PATH:** Envía el recurso identificado en la URL desde el cliente hacia el servidor. Suele usarse para actualizar recursos existentes de **forma parcial**
-- **DELETE:** Solciita al servidor que borre el recurso identificado con el URL
-- **OPTIONS:** Pide información sobre las características de comunicación proporcionadas por el servidor. Le permite al cliente neogociar los parámetros de comunicación
+- **DELETE:** Solicita al servidor que borre el recurso identificado con el URL
+- **OPTIONS:** Pide información sobre las características de comunicación proporcionadas por el servidor. Le permite al cliente negociar los parámetros de comunicación
 - **TRACE:** Inicia un ciclo de mensajes de petición. Se usa para depuración y permite al cliente ver lo que el servidor recibe en el otro lado
-- **CONNECT:** Este método se reserva para uso con proxys. Permitirá que un proxy pueda dinámicamente convertirse en un túnerl. Por ejemplo para comunicaciones con SSL
+- **CONNECT:** Este método se reserva para uso con proxys. Permitirá que un proxy pueda dinámicamente convertirse en un túnel. Por ejemplo para comunicaciones con SSL
 ## Cabeceras HTTP
 
 Las cabeceras (headers) HTTP permiten al cliente y al servidor enviar información adicional junto a una petición o respuesta. Una cabecera de petición está compuesta por:
@@ -111,7 +111,7 @@ Ejemplo:
 **Content-Length:** 345
 **Connection:** keep-alive
 
-Algunas de las cabeceras HTTP más importantes:
+### Cabeceras más importantes
 
 **Host:** Especifica el nombre de dominio del servidor (para alojamiento virtual) y (opcionalmente) el número de puerto TCP en el que está escuchando el servidor.
 
@@ -121,11 +121,9 @@ Algunas de las cabeceras HTTP más importantes:
 
 **Connection:** Controla si la conexión a la red se mantiene activa después de que la transacción en curso haya finalizado, valores posibles (Keep-Alive o Close).
 
-### Cabeceras más importantes
-
 **Keep-Alive:** En caso de utilizar la cabecera Connection con valor keep-alive, es necesario indicar el tiempo en segundos durante el cual una conexión persistente debe permanecer abierta, ejemplo: Keep-Alive: timeout=5
 
-**Content-Type:** indica el tipo de contenido que contendrá el cuerpo de la petición. Paraformar la cavecera se utilizan 3 parámentros (MIMI Type, Charset, Boundary). Por ejemplo:
+**Content-Type:** indica el tipo de contenido que contendrá el cuerpo de la petición. Para formar la cabecera se utilizan 3 parámentros (MIMI Type, Charset, Boundary). Por ejemplo:
 
 > Content-Type: text/html; charset=utf-8
 > Content Type: mulitpart/form-data; boundary=something
@@ -147,7 +145,7 @@ Algunas de las cabeceras HTTP más importantes:
 
 - Se recomienda quitarla o rellenarla de información no muy específica ya que se ha llegado a utilizar para realizar exploits
 
-**Access-Control-Allow-Origin:** Es una cabecera agregada por el servidor que indica si los recursos de la respuesta peuden ser compartidos con el origen dado. Por ejemplo:
+**Access-Control-Allow-Origin:** Es una cabecera agregada por el servidor que indica si los recursos de la respuesta pueden ser compartidos con el origen dado. Por ejemplo:
 
 > Access-Control-Allow-Origin: * (Cualquier origen puede procesar la respuesta)
 > Access-Control-Allow-Origin: https://mipagina.com.mx (solo las peticiones que tengan el origien dado pueden procesar la respuesta, en estos casos se dispara una excepción de la política CORS( Cross-Origin Resource Sharing))
