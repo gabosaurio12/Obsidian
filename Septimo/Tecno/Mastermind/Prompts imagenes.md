@@ -8,7 +8,17 @@ La propuesta debe poderse implementar sencillamente con WPF.
 
 **Obtener el fondo de pantalla:**
 ```
-Tomando esta propuesta como referencia, extrae únicamente el fondo de pantalla.
+Tomando esta propuesta como referencia, extrae únicamente el fondo de pantalla. Respeta todos los detalles.
+```
+
+**Obtener un panel:**
+```
+Tomando esta propuesta como referencia, extrae únicamente el fondo de pantalla del panel izquierdo, respetando todos los detalles.
+```
+
+**Obtener un item:**
+```
+Tomando esta imagen como referencia, extrae únicamente el item xxx, respetando todos los detalles.
 ```
 
 **Extraer diseño de botones:**
@@ -27,3 +37,12 @@ Respeta los botones, labels, textboxes, textblocks y demás elementos. Deben man
 La propuesta debe poderse implementar sencillamente con WPF.
 ```
 
+**Cambiar el color de un elemento:**
+```
+Toma como referencia este elemento y cambia su xx a xx respetando y conservando los detalles y estilo actuales.
+```
+
+**Cambiar color de un botón:**
+```
+Toma como referencia este botón y cambia su color a verde respetando y conservando los detalles y estilo actuales.
+```

@@ -32,7 +32,7 @@ Algunos ejemplos son:
 
 ## Metodologías ágiles
 
-Las metodologías ágiles tienen como principal característica el ser flexibles y que puedden ser fácilmente modificadas en el caso que el equipo desarrollador o el proyecto lo requiera.
+Las metodologías ágiles tienen como principal característica el ser flexibles y que pueden ser fácilmente modificadas en el caso que el equipo desarrollador o el proyecto lo requiera.
 
 Estas metodologías permiten subdividir el proyecto en pequeñas fracciones y mediante esto ser desarrollado de manera autónoma en un corto lapso de tiempo estimado entre dos a seis semanas.
 
@@ -76,7 +76,7 @@ Algunos ejemplos para proyectos ya de buen tamaño:
 
 Es una metodología netamente para apps web, hoy en día las apps deben desarrollarse en un lapos corto de tiempo siguiendo su estructura semántica del contenido y funcionalidad.
 
-Es por esto que se le considera apropiada para apps web sencillas. SIn embargo, no es recomendada para la gestión de proyectos extensos o complejos, para lo cual se debe utilizar una metodología adicional que facilite el ciclo de vida del software.
+Es por esto que se le considera apropiada para apps web sencillas. Sin embargo, no es recomendada para la gestión de proyectos extensos o complejos, para lo cual se debe utilizar una metodología adicional que facilite el ciclo de vida del software.
 
 ### Fases
 
@@ -100,7 +100,7 @@ Las funcionalidades que cubren UWE abarcan áreas relacionadas con la web como l
 
 En este modelo es importante expresar qué usuario o usuarios interactúan con determinada información.
 
-**Modelo de estructura:** en el cual se encuentra la presentación del sistema y el modelo de flujo de navegación. Este modelo se puede crear con un *modelo de componentes* que expresn la navegación entre las páginas o módulos del sistema.
+**Modelo de estructura:** en el cual se encuentra la presentación del sistema y el modelo de flujo de navegación. Este modelo se puede crear con un *modelo de componentes* que expresan la navegación entre las páginas o módulos del sistema.
 
 Al ser una extención a nivel de modelado UWE se puede combinar también con metodologías más robustas que permitan establecer un flujo de trabajo como una metodología tradicional adoptando las fases de Requisitos, Análisis, Diseño, Codificación y Pruebas. O con metodologías ágiles como Scrum, donde la organización del flujo de trabajo se da con base en los Sprints.
 
@@ -116,6 +116,8 @@ Los modelos anteriormente mencionados se enmarcan en 5 etapas de desarrollo que 
 - obtención de requisitos
 - diseño conceptual
 - diseño navegacional
+- Diseño de interfaz abstracta
+- Implementación
 
 ### Obtención de requisitos
 
@@ -251,18 +253,24 @@ Los artefactos que se pueden implementar son:
 
 ### Análisis
 
-Se deben establecer los requisitos de diseño y técnicos, también se analiza el contenido del mismo, su iteración, funcionalida y configuración.
+Se deben establecer los requisitos de diseño y técnicos, también se analiza el contenido del mismo, su iteración, funcionalidad y configuración.
 
 Los artefactos que se pueden implementar son:
 - ERS (SRS)
 - Casos de uso o historias de usuario
-- Diagramas de clases (en queso de que se utilice POO)
+- Diagramas de clases (en caso de que se utilice POO)
 
 ### Ingeniería
 
 Es la fase con mayor peso dentro de la metodología, en sí misma se encarga de definir diferentes niveles de diseño.
 
-- **Diseño arquitectónico:** Este diseñ se realiza en paralelo con el contenido, en los cuales se centra en el diseño de la estructura global del sistema, así como en las configuraciones del diseño y planitllas
+- **Diseño de la interfaz:** En este diseño se realizan todos los ajustes para que la interfaz de usuario sea la ideal, evitando factores como que el usuario abandone el sitio web, el tamaño del texto, etc.
+    
+    Artefactos que pueden generarse en esta etapa:
+    
+    - Diseño de interfaz de usuario de alta fidelidad. (Utilizando los recursos generados en la etapa de diseño y producción de contenido)
+
+- **Diseño arquitectónico:** Este diseño se realiza en paralelo con el contenido, en los cuales se centra en el diseño de la estructura global del sistema, así como en las configuraciones del diseño y planitllas
 
 Los artefactos que se pueden iplementar son:
 - Diagrama de Componentes
@@ -274,16 +282,6 @@ Los artefactos que se pueden iplementar son:
 - Guía de estilo
 - Imágenes o recursos audiovisuales
 
-### 4. Ingeniería
-
-Es la fase con mayor peso dentro de la metodología, en si misma se encarga de definir diferentes niveles de diseño:
-
-- **Diseño de la interfaz:** En este diseño se realizan todos los ajuestes para que la interfaz de usuario sea la ideal, evitando factores como que el usuario abandone el sitio web, el tamaño del texto, etc.
-    
-    Artefactos que pueden generarse en esta etapa:
-    
-    - Diseño de interfaz de usuario de alta fidelidad. (Utilizando los recursos generados en la etapa de diseño y producción de contenido)
-
 ### Generación de páginas
 
 Se integran los diseños de la etapa anterior a través de herramientas como lenguajes de programación y etiquetado que sirvan como base la construcción de la aplicación Web. También es importante que las páginas ssigan el diseño arquitectónico definido, y representen la navegación sobre todo en la elaboración de webs dinámicas.
@@ -291,7 +289,7 @@ Se integran los diseños de la etapa anterior a través de herramientas como len
 Artefactos que pueden generarse en esta etapa:
 
 - Código fuente
-- Scriptas de base de datos
+- Scripts de base de datos
 - Pruebas unitarias automatizadas
 - Documentación técnica del código
 
@@ -320,7 +318,7 @@ Artefactos que pueden generarse en esta etapa:
 
 Es una de las primeras metodologías especializadas en apps web, ofrece un marco de trabajo estructurado y con muchos elementos de diseño y control para garantizar aplicaciones con alta calidad.
 
-SIn embargo, puede resultar compleja de implementar en equipos de trabajo poco experimentado o que tienen recursos limitados (humanos y/o materiales).
+Sin embargo, puede resultar compleja de implementar en equipos de trabajo poco experimentado o que tienen recursos limitados (humanos y/o materiales).
 
 Puede ser muy útil en proyectos donde se necesita rigor, calidad y organización, por ejemplo:
 - Aplicaciones web empresariales
