@@ -13,7 +13,7 @@ Tomando esta propuesta como referencia, extrae únicamente el fondo de pantalla.
 
 **Extraer diseño de botones:**
 ```
-Tomando esta propuesta como referencia, extrae el diseño de los botones para poderlos utilizar como elemento individual en WPF como image.
+Tomando esta propuesta como referencia, extrae el diseño de los botones para poder utilizarlos como elemento individual en WPF como imagen.
 ```
 
 **Crear una propueta basándose en otra página:**

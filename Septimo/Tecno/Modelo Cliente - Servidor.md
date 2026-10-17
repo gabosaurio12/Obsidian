@@ -51,3 +51,6 @@ Utilizar un hardware especial, dejando que los procesos elijan su dirección en 
 - El servidor pide algo y deja un segmento para recibir una respuesta pero no se queda esprando
 - Como los callbacks
 - son asíncronas, pero hay que tener cuidado porque algunas operaciones son secuencias
+
+## Servidor de nombres
+

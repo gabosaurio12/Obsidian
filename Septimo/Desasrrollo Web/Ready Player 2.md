@@ -24,7 +24,7 @@
 
 ### 1. Nombre o alias del proyecto
 
-**Let's Play (Switch 2 Live Station vita x64 TWO) S2LSvx64T - GameLink**  
+**Ready Player 2**  
 _Red social especializada para jugadores y comunidades gaming._
 
 ---

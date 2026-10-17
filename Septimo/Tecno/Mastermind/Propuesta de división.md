@@ -70,3 +70,11 @@ MasterMind_Server.sln
 #### Servidor
 
 ![[Septimo/Tecno/imgs/image-5.png]]
+
+
+Agrupar dtos, utilizar repos
+- Deben estar separados los servicios expuestos de la funcionalidad
+
+## Para imagenes
+
+SVG
