@@ -1,4 +1,4 @@
-[Link de YouTube][https://www.youtube.com/live/hzQNE092cW0]
+[Link de YouTube](https://www.youtube.com/live/hzQNE092cW0)
 
 ## Harness engineering avanzado
 
@@ -51,9 +51,9 @@ La diferencia entre una *skill* y un *command* es que los comandos nunca son eje
 2. Añade un archivo `SKILL.md` con instrucciones
 3. Reinicia **OpenCode** y ejecuta el comando `/skills` para ver los skills instalados
 
-[Documentación de Agent Skills][https://agentskills.io]
+[Documentación de Agent Skills](https://agentskills.io)
 
-[Documentación de skills de OpenCode][https://opencode.ai/v2/docs/skills]
+[Documentación de skills de OpenCode](https://opencode.ai/v2/docs/skills)
 
 **Ejemplo de skill de manejo de fechas (`.agents/skills/local-dates/SKILL.md`):**
 
@@ -96,7 +96,7 @@ Utilizar plataformas como [skills.sh][https://www.skills.sh/], podemos dotar al 
 npx skills add vercel-labs/agent-skills
 ```
 
-Una vez instalado podremos instalar skills de la misma web, como **frontend-design** (https://www.skills.sh/anthropics/skills/frontend-design)
+Una vez instalado podremos instalar skills de la misma web, como [**frontend-design**](https://www.skills.sh/anthropics/skills/frontend-design)
 
 ```
 npx skills add https://github.com/anthropics/skills --skill frontend-design
@@ -111,11 +111,11 @@ Durante la instalación se pueden elegir los agentes para los cuales se instalar
 ```
 
 ### Skills básicas y útiles
-- [find-skills (Vercel)][https://www.skills.sh/vercel-labs/skills/find-skills]: busca e instala skills del ecosistema cuando necesitas una capacidad nueva
-- [grill-me (Matt Pocock)][https://www.skills.sh/mattpocock/skills/grill-me]: te hace preguntas sobre tu plan hasta cubrir todos los casos antes de implementar
-- [frontend-design (Anthropic)][https://www.skills.sh/anthropics/skills/frontend-design]: crea interfaces con un diseño cuidado y profesional
-- [web-design-guidelines (Vercel)][https://www.skills.sh/vercel-labs/agent-skills/web-design-guidelines]: revisa la interfaz y detecta problemas de accesibilidad, UX y diseño
-- [systematic-debugging (Jesse Vincent / obra)][https://www.skills.sh/obra/superpowers/systematic-debugging]: depura con método: reproducir, aislar, formular hipótesis y verificar
+- [find-skills (Vercel)](https://www.skills.sh/vercel-labs/skills/find-skills): busca e instala skills del ecosistema cuando necesitas una capacidad nueva
+- [grill-me (Matt Pocock)](https://www.skills.sh/mattpocock/skills/grill-me): te hace preguntas sobre tu plan hasta cubrir todos los casos antes de implementar
+- [frontend-design (Anthropic)](https://www.skills.sh/anthropics/skills/frontend-design): crea interfaces con un diseño cuidado y profesional
+- [web-design-guidelines (Vercel)](https://www.skills.sh/vercel-labs/agent-skills/web-design-guidelines): revisa la interfaz y detecta problemas de accesibilidad, UX y diseño
+- [systematic-debugging (Jesse Vincent / obra)](https://www.skills.sh/obra/superpowers/systematic-debugging): depura con método: reproducir, aislar, formular hipótesis y verificar
 
 ---
 
