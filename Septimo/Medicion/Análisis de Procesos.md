@@ -78,7 +78,7 @@ La relación lineal entre *Horas_Espera_Revision* y *Tiempo_Ciclo_Horas* es casi
 
 ### Histograma del tiempo de ciclo
 
-![[Septimo/Medición/imgs/image.png]]
+![[Septimo/Medicion/imgs/image.png]]
 
 > **Patrón observado:** los tiempos se concentran alrededor de 25 y 50 horas con una cola hacia la derecha (valores altos)
 > **Evidencia:** una medianda de 36.95 h, la media de 38.72 h y máximo de 69.80 h
@@ -90,7 +90,7 @@ La relación lineal entre *Horas_Espera_Revision* y *Tiempo_Ciclo_Horas* es casi
 
 ### Dispersión entre tamaño y revisión
 
-![[Septimo/Medición/imgs/image-1.png]]
+![[Septimo/Medicion/imgs/image-1.png]]
 
 > **Patrón observado:** se aprecia una asociación positiva entre líneas modificadas y horas de revisión
 > **Evidencia:** la correlación lineal calculada es aproximadamente de 0.68
@@ -102,7 +102,7 @@ La relación lineal entre *Horas_Espera_Revision* y *Tiempo_Ciclo_Horas* es casi
 
 ### Gráfica de corrida semanal
 
-![[Septimo/Medición/imgs/image-2.png]]
+![[Septimo/Medicion/imgs/image-2.png]]
 
 > **Patrón observado:** la mediana semanal aumenta de manera visible en la semana 13 y alcanza 55.40 horas, despúes llega a 45.05 en la semana 19
 > **Evidencia:** la mediana global es 36.95 h, la semana 13 coincide con la observación contextual de que un revisor senior salió de vacaciones
@@ -114,7 +114,7 @@ La relación lineal entre *Horas_Espera_Revision* y *Tiempo_Ciclo_Horas* es casi
 
 ### Diagrama de Pareto de defectos
 
-![[Septimo/Medición/imgs/image-3.png]]
+![[Septimo/Medicion/imgs/image-3.png]]
 
 > Se excluyó la categoría *Sin_defecto*. Las frecuencias principales fueron: *Interfaz* 23, *Validación* 22, *Datos* 16, *Inicialización* 10, *Cálculo* 9 y *Configuración* 3.
 > **Patrón observado:** Interfaz y Validación concentran 45 de 83 registros con una causa de deecto, más o menos 52.2%
@@ -127,7 +127,7 @@ La relación lineal entre *Horas_Espera_Revision* y *Tiempo_Ciclo_Horas* es casi
 
 ### Gráficas X y R
 
-![[Septimo/Medición/imgs/image-4.png]]
+![[Septimo/Medicion/imgs/image-4.png]]
 
 > Para esta gráfica R: *R = 3.57 min*, *LIC = 0.00 min* y *LSC = 8.15 min*.
 > **Patrón observado:** el día 16 tiene un rango de *19.50 min*, por encima del límite superior y los días 15 y 18 también tienen rangos elevados, pero están dentro del límite
@@ -138,7 +138,7 @@ La relación lineal entre *Horas_Espera_Revision* y *Tiempo_Ciclo_Horas* es casi
 ---
 <div class="page-break" style="page-break-before: always;"></div>
 
-![[Septimo/Medición/imgs/image-5.png]]
+![[Septimo/Medicion/imgs/image-5.png]]
 
 > Para la gráfica X: *X = 21.01 min*, *LIC = 18.41 min* y *LSC = 23.61 min*.
 > **Patrón observado:** el día 13 (*34.70 min*) y el día 19 (*24.43 min*) rebasan el límite superior y el día 1 (*18.35 min*) queda ligeramente por debajo del límite inferior
