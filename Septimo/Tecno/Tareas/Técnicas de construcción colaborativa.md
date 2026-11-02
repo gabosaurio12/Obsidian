@@ -1,26 +1,3 @@
-## Programación en pares (Pair Programming)
-
-
-## Inspección formal de código (Formal Code Inspection)
-
-
-
-## Revisión de código (Code Review)
-
-
-
-## Walkthrough
-
-
-
-## Revisión Over-the-shoulder
-
-
-
-## Técnicas modernas de inspección de código
-
-
-
 ## Comparación
 
 | Técnica                                                               | Propósito                                                                                                                            | Momento de aplicación                                                                                                                 | Participantes                                                                                                                           | Roles                                                                                                                                                              | Procedimiento                                                                                                                                                                                                                 | Formalidad                                                                                                                             | Preparación                                                                                                                                                                                        | Evidencia                                                                                                                             | Ventajas                                                                                                                                        | Limitaciones                                                                                                                                                                                               | Escenario recomendado                                                                                                                                              |
