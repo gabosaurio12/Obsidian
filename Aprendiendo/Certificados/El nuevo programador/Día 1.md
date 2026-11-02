@@ -91,14 +91,14 @@ Entiende > Planifica > Actúa > Evalúa > Ajusta
 
 Es un agente de código de IA de código abierto. Está disponible en terminal, aplicación de escritorio o extensión de IDE. Es la alternativa a Claude Code.
 
-[Web Oficial][https://opencode.ai]
-[Repositorio Oficial][https://github.com/anomalyco/opencode]
-[OpenCode Zen:][https://opencode.ai/es/zen]
-[OpenCode Go][https://opencode.ai/es/go]
+[Web Oficial](https://opencode.ai)
+[Repositorio Oficial](https://github.com/anomalyco/opencode)
+[OpenCode Zen:](https://opencode.ai/es/zen)
+[OpenCode Go](https://opencode.ai/es/go)
 
 **Instalación**
-- [Descarga e instalación][https://opencode.ai/es/download]
-- [Documentación oficial][https://opencode.ai/docs]
+- [Descarga e instalación](https://opencode.ai/es/download)
+- [Documentación oficial](https://opencode.ai/docs)
 - Inicar OpenCode: desde la terminal escribir el comando `opencode`
 
 **Comandos y atajos más utilizados**

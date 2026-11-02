@@ -64,11 +64,11 @@ Puntuación final:
 - [ ] Las actualizaciones se instalaron sin problemas.
 - [ ] Las herramientas de integración con Parallels funcionan correctamente.
 
-**Tiempo de instalación:** 
+**Tiempo de instalación:** 1 hora aprox
 
-**Principales dificultades:**
+**Principales dificultades:** Ninguna
 
-**Aspectos positivos:**
+**Aspectos positivos:** Muy fácil de instalar, next-next
 
 ---
 
@@ -105,6 +105,9 @@ Puntuación final:
 
 **¿Qué limitaciones encontré?**
 
+**Aplicaciones que instalé porque no me gustaron las default:**
+- Nautilus: Trae por defecto thunar, pero se me olvidaba como se llamaba, por lo que instalé nautilus (aparte de que se ve más bonito)
+
 ---
 
 ## 5. Instalación y gestión de programas
@@ -117,19 +120,19 @@ Puntuación final:
 - [ ] Los formatos universales (Flatpak, Snap, AppImage u otros) funcionan según corresponda.
 - [ ] Las actualizaciones de aplicaciones son fáciles de gestionar.
 
-**Gestor de paquetes principal:** 
+**Gestor de paquetes principal:** Zypper
 
 **Métodos de instalación probados:**
 
 - [ ] Gestor gráfico
 - [ ] Repositorios oficiales
-- [ ] Terminal
-- [ ] Flatpak
+- [x] Terminal
+- [x] Flatpak
 - [ ] Snap
 - [ ] AppImage
 - [ ] Otro: 
 
-**¿Qué tan sencillo fue instalar las aplicaciones necesarias?**
+**¿Qué tan sencillo fue instalar las aplicaciones necesarias?** Sencillo, algunas un poco más difícil porque había que utilizar comandos específicos
 
 ---
 
@@ -137,9 +140,9 @@ Puntuación final:
 
 ### Herramientas
 
-- [ ] Git
-- [ ] Visual Studio Code o editor equivalente
-- [ ] Node.js y npm
+- [x] Git
+- [x] Visual Studio Code o editor equivalente
+- [x] Node.js y npm
 - [ ] Python y pip
 - [ ] Java y su JDK
 - [ ] Docker o alternativa compatible
@@ -150,11 +153,11 @@ Puntuación final:
 
 ### Pruebas prácticas
 
-- [ ] Clonar un repositorio.
+- [x] Clonar un repositorio.
 - [ ] Configurar un proyecto existente.
 - [ ] Instalar dependencias.
 - [ ] Ejecutar y depurar una aplicación.
-- [ ] Realizar un commit con Git.
+- [x] Realizar un commit con Git.
 - [ ] Ejecutar pruebas automatizadas.
 - [ ] Configurar variables de entorno.
 - [ ] Ejecutar una aplicación local en un puerto de desarrollo.
