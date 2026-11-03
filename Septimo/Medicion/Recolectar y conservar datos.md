@@ -16,7 +16,7 @@ Un análisis convincente puede fracasar si los registros mezclan reglas, periodo
 ### Revisar
 - Corregir el método si genera errores
 
-> La calidad del inidcador depende también de la calidad del proceso que lo produce
+> La calidad del indicador depende también de la calidad del proceso que lo produce
 
 ## Cuatro fallas comunes cambian la historia que cuentan los datos
 
@@ -30,7 +30,7 @@ Mezclar versiones o equipos crea comparaciones injustas
 Convertir 1.4 y 1.6 horas en 2 elimina variación útil
 
 **Método**
-Cmabiar la regla a mitad del proyecto crea un falso cambio
+Cambiar la regla a mitad del proyecto crea un falso cambio
 
 ## Cuatro criterios antes de analizar
 
