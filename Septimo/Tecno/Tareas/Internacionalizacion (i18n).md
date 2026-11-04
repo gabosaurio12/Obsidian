@@ -42,4 +42,4 @@ En resumen, un *Locale* ayuda a identificar el idioma y la región que determina
 
 En esta página se pueden encontrar varios locales e información interesante:
 
-> https://unicode.org/cldr/charts/49/supplemental/language_territory_information.html?utm_source=chatgpt.com
+> https://unicode.org/cldr/charts/49/supplemental/language_territory_information.html?utm

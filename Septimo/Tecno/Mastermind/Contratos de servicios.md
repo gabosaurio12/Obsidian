@@ -1,4 +1,3 @@
-
 | Contrato                    | De qué se encarga                                                   | Métodos                                                                   |
 | --------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | **ICodeService**            | Enviar y autenticar códigos de verificación                         | `void SendVerificationCode(int playerId)`                                 |
@@ -35,3 +34,4 @@
 |                             |                                                                     | `void SumAPoint(string username)`                                         |
 | **IMatchCallbackService**   | Realizar las funciones callback de la partida                       | `void InSumAPointCallback(string username)`                               |
 |                             |                                                                     | `void OnSetWinnerCallback(string username)`                               |
+
