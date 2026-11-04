@@ -32,4 +32,4 @@
 - La revisión integrada con CI combina la evaluación humana con comprobaciones automatizadas
 	- La integración continua no sustituye la revisión por pares
 - La revisión asistida por IA es una práctica complementaria
-	- Las sugerencias generadas deben verificarse mediante razonamiento técnico, revisión humana y pruebas apropiadas
+	- Las sugerencias generadas deben verificarse mediante razonamiento técnico, revisión humana y pruebas apropiadasw
