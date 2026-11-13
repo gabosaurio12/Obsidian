@@ -31,7 +31,7 @@ Representar de forma simple el flujo y las pantallas clave del motor No-Code/Low
 
 **Pantalla 1 — Dashboard principal**
 
-![[image-6.png]]
+![[Septimo/Empresas/imgs/image-6.png]]
 
 **Pantalla 2 — Editor visual de Hitboxes / Frame Data**
 
