@@ -18,7 +18,7 @@ Tomando esta propuesta como referencia, extrae únicamente el fondo de pantalla 
 
 **Obtener un item:**
 ```
-Tomando esta imagen como referencia, extrae únicamente el item xxx, respetando todos los detalles.
+Tomando esta imagen como referencia, extrae únicamente el item, respetando todos los detalles.
 ```
 
 **Extraer diseño de botones:**

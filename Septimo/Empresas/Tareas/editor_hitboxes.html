@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORGEFIGHT — Motor No-Code de Videojuegos de Pelea</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            engine: {
+              bg: '#0f1115',
+              surface: '#161920',
+              elevated: '#1d222b',
+              border: '#282e3b',
+              crimson: '#ff3b30',
+              ember: '#ff6b00',
+              cyan: '#00d2ff',
+              emerald: '#10b981'
+            }
+          },
+          fontFamily: {
+            display: ['"Chakra Petch"', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* Estética industrial arcade y utilidades visuales del motor */
+    body {
+      background-color: #0b0e14;
+      color: #f3f4f6;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(239, 68, 68, 0.07) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.06) 0%, transparent 45%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+    }
+
+    .engine-panel {
+      background: linear-gradient(180deg, #131822 0%, #0f131b 100%);
+      border: 1px solid #262e3d;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-primary-forge {
+      background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+      box-shadow: 0 4px 18px rgba(239, 68, 68, 0.35);
+      transition: all 0.18s ease;
+    }
+    .btn-primary-forge:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(249, 115, 22, 0.48);
+    }
+    .btn-primary-forge:active {
+      transform: translateY(0);
+    }
+
+    .hitbox-pulse {
+      animation: hitboxGlow 1.4s infinite alternate;
+    }
+    @keyframes hitboxGlow {
+      from { box-shadow: 0 0 8px rgba(239, 68, 68, 0.55), inset 0 0 8px rgba(239, 68, 68, 0.3); }
+      to { box-shadow: 0 0 18px rgba(239, 68, 68, 0.95), inset 0 0 14px rgba(239, 68, 68, 0.5); }
+    }
+
+    .hurtbox-grid {
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(59, 130, 246, 0.22),
+        rgba(59, 130, 246, 0.22) 6px,
+        rgba(59, 130, 246, 0.06) 6px,
+        rgba(59, 130, 246, 0.06) 12px
+      );
+    }
+
+    .hitbox-grid {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(239, 68, 68, 0.30),
+        rgba(239, 68, 68, 0.30) 6px,
+        rgba(239, 68, 68, 0.10) 6px,
+        rgba(239, 68, 68, 0.10) 12px
+      );
+    }
+
+    .active-stripe-cell {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(239, 68, 68, 0.55),
+        rgba(239, 68, 68, 0.55) 4px,
+        rgba(249, 115, 22, 0.35) 4px,
+        rgba(249, 115, 22, 0.35) 8px
+      );
+    }
+
+    /* Scrollbar sutil estilo herramienta pro */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0e14; }
+    ::-webkit-scrollbar-thumb { background: #2d3444; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #465066; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-[#ef4444] selection:text-white">
+
+  <!-- Toast / Notificación flotante no intrusiva -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- CONTENEDOR PRINCIPAL DEL MOTOR -->
+  <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 py-5 sm:py-8 flex-1 flex flex-col justify-center">
+    
+    <!-- VENTANA MAESTRA -->
+    <main class="engine-panel rounded-2xl overflow-hidden transition-all duration-300">
+      
+      <!-- 1. BARRA SUPERIOR (HEADER) -->
+      <header class="bg-[#0e121a] border-b border-[#262e3d] px-5 sm:px-7 py-3.5 flex flex-wrap items-center justify-between gap-3">
+        <!-- Título contextual dinámico + Identidad FORGEFIGHT -->
+        <div class="flex items-center gap-3">
+          <button onclick="switchView('dashboard')" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#ef4444] to-[#f97316] p-[1px] shadow-lg shadow-[#ef4444]/20 hover:scale-105 transition-transform cursor-pointer" title="Ir al Hub de Proyectos FORGEFIGHT">
+            <div class="w-full h-full bg-[#131822] rounded-[11px] flex items-center justify-center">
+              <svg class="w-5 h-5 text-[#f97316]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" />
+              </svg>
+            </div>
+          </button>
+
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-[10px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded bg-[#1a202c] text-[#f97316] border border-[#f97316]/30">FORGEFIGHT</span>
+              <h1 id="header-main-title" class="font-display font-bold text-lg sm:text-xl tracking-wide text-white">
+                Editor de combate — <span class="text-[#f97316]">"Puñetazo fuerte"</span>
+              </h1>
+            </div>
+            <p id="header-subtitle" class="text-[11px] text-gray-400 font-mono">Proyecto "Dragón Puño" • Luchador: Ryujin • 60 FPS Frame Data</p>
+          </div>
+        </div>
+
+        <!-- Botones de navegación rápida en cabecera -->
+        <div class="flex items-center gap-2">
+          <button id="btn-toggle-hub" onclick="toggleMainHub()" class="bg-[#1a202c] hover:bg-[#232b3b] border border-[#2d3748] text-gray-200 px-3 py-1.5 rounded-xl text-xs font-mono transition-colors flex items-center gap-1.5 cursor-pointer">
+            <span>☰</span>
+            <span id="btn-toggle-hub-label">Mis proyectos</span>
+          </button>
+          <button id="btn-account" onclick="openModal('modal-account')" class="flex items-center gap-2 bg-[#1a202c] hover:bg-[#232b3b] border border-[#2d3748] text-gray-200 px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer">
+            <span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+            <span>Mi cuenta</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- =================================================================== -->
+      <!-- VISTA PRINCIPAL POR DEFECTO: EDITOR DE COMBATE — "PUÑETAZO FUERTE"   -->
+      <!-- =================================================================== -->
+      <div id="view-combat-editor" class="p-5 sm:p-7 space-y-6">
+        
+        <!-- ÁREA PRINCIPAL DIVIDIDA EN DOS COLUMNAS (Wireframe exacto) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          
+          <!-- COLUMNA IZQUIERDA (7 cols): VISOR INTERACTIVO DEL SPRITE DEL GOLPE -->
+          <div class="lg:col-span-7 flex flex-col justify-between bg-[#090c11] border border-[#262e3d] rounded-2xl p-4 relative overflow-hidden">
+            
+            <!-- Barra superior del visor -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#1e2533] z-10">
+              <div class="flex items-center gap-3 text-[11px] font-mono">
+                <span class="flex items-center gap-1.5 text-[#ef4444]">
+                  <span class="w-2.5 h-2.5 bg-[#ef4444]/40 border border-[#ef4444] inline-block rounded-[2px]"></span> Hit (Ataque)
+                </span>
+                <span class="flex items-center gap-1.5 text-[#3b82f6]">
+                  <span class="w-2.5 h-2.5 bg-[#3b82f6]/30 border border-[#3b82f6] inline-block rounded-[2px]"></span> Hurt (Cuerpo)
+                </span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="draw-mode-badge" class="hidden text-[10px] font-mono px-2 py-0.5 rounded bg-[#f97316]/20 text-[#f97316] border border-[#f97316]/50 animate-pulse">
+                  MODO DIBUJO: ARRASTRA EN EL VISOR
+                </span>
+                <span id="viewport-phase-badge" class="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-[#ef4444]/20 text-[#ef4444] border border-[#ef4444]/40 font-bold">
+                  FASE ACTIVA
+                </span>
+              </div>
+            </div>
+
+            <!-- LIENZO INTERACTIVO DEL SPRITE Y CAJAS HIT/HURT -->
+            <div id="sprite-stage" class="relative w-full h-72 sm:h-80 my-3 rounded-xl border border-[#1f2736] bg-[linear-gradient(to_right,#131823_1px,transparent_1px),linear-gradient(to_bottom,#131823_1px,transparent_1px)] bg-[size:24px_24px] flex items-end justify-center overflow-hidden select-none">
+              
+              <!-- Eje central y suelo del escenario -->
+              <div class="absolute inset-y-0 left-1/2 w-[1px] bg-white/5 pointer-events-none"></div>
+              <div class="absolute bottom-7 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#3b82f6]/50 to-transparent pointer-events-none"></div>
+              <span class="absolute bottom-2 left-3 text-[10px] font-mono text-gray-500 pointer-events-none">ORIGEN (0,0) • ESCALA 1:1</span>
+              <span id="cursor-coords" class="absolute bottom-2 right-3 text-[10px] font-mono text-gray-500 pointer-events-none">X: 0, Y: 0</span>
+
+              <!-- SPRITE DINÁMICO DEL LUCHADOR (Cambia pose según Startup, Activo, Recovery) -->
+              <div id="fighter-sprite-container" class="relative mb-7 pointer-events-none transition-transform duration-150">
+                <!-- Pose 1: STARTUP (Frames 1-10) - Guardia cargando el puño hacia atrás -->
+                <svg id="pose-startup" class="hidden w-48 h-52 text-gray-200 drop-shadow-[0_6px_16px_rgba(0,0,0,0.8)]" viewBox="0 0 180 180" fill="none">
+                  <!-- Aura de carga -->
+                  <circle cx="52" cy="76" r="18" fill="rgba(249,115,22,0.18)" />
+                  <!-- Cinta -->
+                  <path d="M74 36 L48 28 L52 38 L74 41 Z" fill="#ef4444" />
+                  <!-- Cabeza -->
+                  <circle cx="84" cy="38" r="15" fill="#e5e7eb" />
+                  <!-- Torso inclinado atrás -->
+                  <path d="M70 55 L98 55 L94 106 L64 106 Z" fill="#cbd5e1" />
+                  <!-- Cinturón negro -->
+                  <rect x="64" y="96" width="31" height="8" rx="2" fill="#1e293b" />
+                  <!-- Piernas flexionadas -->
+                  <path d="M66 106 L44 162 L60 162 L78 114 Z" fill="#94a3b8" />
+                  <path d="M88 106 L112 162 L128 162 L96 106 Z" fill="#cbd5e1" />
+                  <!-- Brazo derecho cargado atrás (Puño envuelto en energía naranja) -->
+                  <path d="M72 62 L44 76 L54 88 L78 74 Z" fill="#f97316" />
+                  <circle cx="44" cy="78" r="9" fill="#fb923c" />
+                  <!-- Brazo izquierdo en guardia frontal -->
+                  <path d="M96 60 L118 72 L110 84 L92 72 Z" fill="#e2e8f0" />
+                </svg>
+
+                <!-- Pose 2: ACTIVO (Frames 11-14, incluye Frame 12 por defecto) - Puñetazo fuerte totalmente extendido -->
+                <svg id="pose-active" class="w-56 h-52 text-gray-100 drop-shadow-[0_6px_20px_rgba(239,68,68,0.25)]" viewBox="0 0 210 180" fill="none">
+                  <!-- Estela de impacto y ondas de choque -->
+                  <path d="M128 54 L196 66 L128 78 Z" fill="url(#punchTrail)" opacity="0.85" />
+                  <path d="M174 44 Q194 66 174 88" stroke="#f97316" stroke-width="3" stroke-linecap="round" fill="none" />
+                  <path d="M184 38 Q206 66 184 94" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                  <defs>
+                    <linearGradient id="punchTrail" x1="120" y1="66" x2="198" y2="66" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#f97316" stop-opacity="0.1" />
+                      <stop offset="100%" stop-color="#ef4444" stop-opacity="0.95" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Cinta ondeando -->
+                  <path d="M74 36 L34 24 L40 36 L74 42 Z" fill="#ef4444" />
+                  <!-- Cabeza -->
+                  <circle cx="88" cy="38" r="15" fill="#f8fafc" />
+                  <!-- Torso lanzado hacia adelante -->
+                  <path d="M74 55 L108 55 L102 106 L68 106 Z" fill="#e2e8f0" />
+                  <rect x="68" y="96" width="35" height="8" rx="2" fill="#0f172a" />
+                  <!-- Piernas en zancada ofensiva -->
+                  <path d="M70 106 L36 162 L54 162 L84 114 Z" fill="#94a3b8" />
+                  <path d="M96 106 L128 162 L144 162 L104 106 Z" fill="#e2e8f0" />
+                  <!-- Brazo derecho extendido al máximo (Puñetazo Fuerte) -->
+                  <path d="M102 58 L174 58 L174 74 L100 74 Z" fill="#f97316" />
+                  <circle cx="176" cy="66" r="11" fill="#ef4444" stroke="#fef08a" stroke-width="2" />
+                </svg>
+
+                <!-- Pose 3: RECOVERY (Frames 15-24) - Retracción y recuperación de guardia -->
+                <svg id="pose-recovery" class="hidden w-48 h-52 text-gray-300 drop-shadow-[0_6px_14px_rgba(0,0,0,0.7)]" viewBox="0 0 180 180" fill="none">
+                  <!-- Cinta cayendo -->
+                  <path d="M76 38 L54 44 L58 52 L76 44 Z" fill="#ef4444" opacity="0.8" />
+                  <!-- Cabeza -->
+                  <circle cx="86" cy="42" r="15" fill="#cbd5e1" />
+                  <!-- Torso erguido recuperando balance -->
+                  <path d="M72 59 L102 59 L98 108 L68 108 Z" fill="#94a3b8" />
+                  <rect x="68" y="98" width="31" height="8" rx="2" fill="#1e293b" />
+                  <!-- Piernas neutras -->
+                  <path d="M70 108 L54 162 L70 162 L82 114 Z" fill="#64748b" />
+                  <path d="M92 108 L108 162 L124 162 L98 108 Z" fill="#94a3b8" />
+                  <!-- Brazo recogiéndose -->
+                  <path d="M98 64 L124 78 L116 90 L92 76 Z" fill="#cbd5e1" />
+                </svg>
+              </div>
+
+              <!-- CAPA DE CAJAS DE COLISIÓN (HITBOXES Y HURTBOXES INTERACTIVAS) -->
+              <div id="boxes-layer" class="absolute inset-0">
+                <!-- Se renderizan dinámicamente las cajas del frame actual -->
+              </div>
+
+              <!-- Caja temporal mientras el usuario arrastra con el ratón -->
+              <div id="temp-draw-box" class="hidden absolute border-2 border-dashed pointer-events-none z-30"></div>
+            </div>
+
+            <!-- Leyenda rápida de interacción en el visor -->
+            <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-gray-400">
+              <span>Clic en una caja para seleccionarla y arrastrarla</span>
+              <span id="selected-box-info" class="text-gray-300">Caja seleccionada: HIT_01 (134×52 px)</span>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA (5 cols): CONTROLES DEL FRAME Y CAJAS -->
+          <div class="lg:col-span-5 flex flex-col justify-between bg-[#0e121a] border border-[#262e3d] rounded-2xl p-5 space-y-5">
+            
+            <div class="space-y-5">
+              <!-- Control 1: Frame actual: [12] ◀ ▶ -->
+              <div class="bg-[#131822] border border-[#262e3d] rounded-xl p-4">
+                <div class="flex items-center justify-between mb-2.5">
+                  <label for="frame-number-input" class="font-display font-bold text-sm uppercase tracking-wide text-gray-200">
+                    Frame actual:
+                  </label>
+                  <button id="btn-play-anim" onclick="togglePlayAnimation()" class="text-xs font-mono px-2.5 py-1 rounded-lg bg-[#1c2331] hover:bg-[#263042] text-[#10b981] border border-[#10b981]/30 transition-colors cursor-pointer flex items-center gap-1.5">
+                    <span id="play-anim-icon">▶</span>
+                    <span id="play-anim-text">Reproducir</span>
+                  </button>
+                </div>
+
+                <div class="flex items-center gap-2.5">
+                  <button onclick="stepFrame(-1)" title="Frame anterior (◀)" class="w-11 h-11 rounded-xl bg-[#1a202c] hover:bg-[#252e3f] active:scale-95 border border-[#2d3748] text-white font-bold text-base flex items-center justify-center transition-all cursor-pointer">
+                    ◀
+                  </button>
+                  
+                  <div class="flex-1 relative">
+                    <input id="frame-number-input" type="number" min="1" max="24" value="12" onchange="setFrame(parseInt(this.value) || 1)" class="w-full h-11 bg-[#090c11] border-2 border-[#f97316]/70 focus:border-[#f97316] rounded-xl text-center font-mono font-bold text-xl text-white focus:outline-none" />
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-gray-500">/ 24</span>
+                  </div>
+
+                  <button onclick="stepFrame(1)" title="Siguiente frame (▶)" class="w-11 h-11 rounded-xl bg-[#1a202c] hover:bg-[#252e3f] active:scale-95 border border-[#2d3748] text-white font-bold text-base flex items-center justify-center transition-all cursor-pointer">
+                    ▶
+                  </button>
+                </div>
+              </div>
+
+              <!-- Control 2: Tipo de caja: (Hit) (Hurt) -->
+              <div class="bg-[#131822] border border-[#262e3d] rounded-xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="font-display font-bold text-sm uppercase tracking-wide text-gray-200">Tipo de caja:</span>
+                  <span id="box-type-hint" class="text-[11px] font-mono text-[#ef4444]">Inflige daño al rival</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5">
+                  <!-- Opción (Hit) -->
+                  <button id="radio-hit" type="button" onclick="setBoxType('hit')" class="py-2.5 px-3 rounded-xl border-2 border-[#ef4444] bg-[#ef4444]/20 text-white font-display font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer">
+                    <span class="w-3 h-3 rounded-full bg-[#ef4444] ring-2 ring-white/40"></span>
+                    <span>(Hit)</span>
+                  </button>
+
+                  <!-- Opción (Hurt) -->
+                  <button id="radio-hurt" type="button" onclick="setBoxType('hurt')" class="py-2.5 px-3 rounded-xl border border-[#2d3748] bg-[#181f2c] text-gray-400 hover:text-white font-display font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer">
+                    <span class="w-3 h-3 rounded-full bg-[#3b82f6]/50"></span>
+                    <span>(Hurt)</span>
+                  </button>
+                </div>
+
+                <!-- Botones [Dibujar caja] y [Borrar] -->
+                <div class="grid grid-cols-2 gap-2.5 pt-2">
+                  <button id="btn-draw-box" type="button" onclick="toggleDrawMode()" class="py-2.5 px-3 rounded-xl bg-[#1c2433] hover:bg-[#263145] border border-[#3b475e] text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer">
+                    <svg class="w-4 h-4 text-[#f97316]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                    </svg>
+                    <span id="btn-draw-box-label">Dibujar caja</span>
+                  </button>
+
+                  <button type="button" onclick="deleteSelectedBox()" class="py-2.5 px-3 rounded-xl bg-[#1c2433] hover:bg-[#ef4444]/20 border border-[#3b475e] hover:border-[#ef4444]/60 text-gray-200 hover:text-[#ef4444] font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                    <span>Borrar</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Panel compacto de propiedades rápidas de Frame Data -->
+              <div class="bg-[#131822] border border-[#262e3d] rounded-xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono uppercase text-gray-400">Propiedades de "Puñetazo fuerte"</span>
+                  <span class="text-[11px] font-mono text-[#10b981] font-bold">5HP • Heavy</span>
+                </div>
+
+                <div class="grid grid-cols-4 gap-2 text-center">
+                  <div class="bg-[#090c11] p-2 rounded-lg border border-[#222938]">
+                    <div class="text-[10px] font-mono text-gray-400">DAÑO</div>
+                    <input id="prop-damage" type="number" value="120" min="10" max="500" step="5" class="w-full bg-transparent text-center font-display font-bold text-sm text-[#f97316] focus:outline-none" />
+                  </div>
+                  <div class="bg-[#090c11] p-2 rounded-lg border border-[#222938]">
+                    <div class="text-[10px] font-mono text-gray-400">HITSTUN</div>
+                    <div id="prop-hitstun" class="font-display font-bold text-sm text-white">18f</div>
+                  </div>
+                  <div class="bg-[#090c11] p-2 rounded-lg border border-[#222938]">
+                    <div class="text-[10px] font-mono text-gray-400">BLKSTUN</div>
+                    <div id="prop-blockstun" class="font-display font-bold text-sm text-white">14f</div>
+                  </div>
+                  <div class="bg-[#090c11] p-2 rounded-lg border border-[#222938]">
+                    <div class="text-[10px] font-mono text-gray-400">VENTAJA</div>
+                    <div id="prop-advantage" class="font-display font-bold text-sm text-[#10b981]">+2f</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3. SECCIÓN LÍNEA DE TIEMPO (Wireframe exacto: [■][■][▦][▦][▦][ ][ ][ ] + Startup / Activo / Recovery) -->
+        <section class="bg-[#0e121a] border border-[#262e3d] rounded-2xl p-4 sm:p-5 space-y-3" aria-label="Línea de tiempo de frames">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-4 rounded-full bg-[#f97316]"></span>
+              <h2 class="font-display font-bold text-sm sm:text-base uppercase tracking-wide text-white">Línea de tiempo:</h2>
+            </div>
+            <div class="text-xs font-mono text-gray-400">
+              <span class="text-[#f97316] font-bold">10f</span> Startup · 
+              <span class="text-[#ef4444] font-bold">4f</span> Activo · 
+              <span class="text-[#3b82f6] font-bold">10f</span> Recovery 
+              <span class="text-gray-500">(Total: 24f)</span>
+            </div>
+          </div>
+
+          <!-- Celdas de los 24 frames interactivos -->
+          <div id="timeline-cells-container" class="grid grid-cols-12 sm:grid-cols-24 gap-1 sm:gap-1.5 bg-[#090c11] p-2.5 rounded-xl border border-[#1f2736]" style="grid-template-columns: repeat(24, minmax(0, 1fr));">
+            <!-- Generado por JavaScript -->
+          </div>
+
+          <!-- Etiquetas claras debajo de cada tramo: Startup | Activo | Recovery -->
+          <div class="grid grid-cols-12 gap-2 text-center text-xs font-mono pt-0.5">
+            <div class="col-span-5 bg-[#f97316]/10 border border-[#f97316]/30 text-[#f97316] py-1 rounded-lg font-bold tracking-wide">
+              Startup <span class="hidden sm:inline font-normal text-orange-300/80">(1–10)</span>
+            </div>
+            <div class="col-span-2 bg-[#ef4444]/15 border border-[#ef4444]/40 text-[#ef4444] py-1 rounded-lg font-bold tracking-wide">
+              Activo <span class="hidden sm:inline font-normal text-red-300/80">(11–14)</span>
+            </div>
+            <div class="col-span-5 bg-[#3b82f6]/10 border border-[#3b82f6]/30 text-[#3b82f6] py-1 rounded-lg font-bold tracking-wide">
+              Recovery <span class="hidden sm:inline font-normal text-blue-300/80">(15–24)</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. BARRA INFERIOR DE ACCIONES (Wireframe exacto: [Guardar] [Probar en vivo] [Exportar]) -->
+        <footer class="pt-1 flex flex-wrap items-center justify-between gap-3">
+          <div class="text-xs font-mono text-gray-500 hidden md:block">
+            Atajos: <kbd class="px-1.5 py-0.5 bg-[#1a202c] border border-gray-700 rounded text-gray-300">←</kbd> <kbd class="px-1.5 py-0.5 bg-[#1a202c] border border-gray-700 rounded text-gray-300">→</kbd> Frame • <kbd class="px-1.5 py-0.5 bg-[#1a202c] border border-gray-700 rounded text-gray-300">Espacio</kbd> Play
+          </div>
+
+          <div class="w-full md:w-auto grid grid-cols-3 sm:flex items-center gap-2.5 sm:gap-3">
+            <!-- [Guardar] -->
+            <button onclick="saveCombatMove()" class="bg-[#1a202c] hover:bg-[#252e3f] border border-[#334155] hover:border-[#10b981]/60 text-white font-display font-bold text-xs sm:text-sm px-4 sm:px-5 py-3 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4 text-[#10b981]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span>Guardar</span>
+            </button>
+
+            <!-- [Probar en vivo] -->
+            <button onclick="openLiveTestModal()" class="btn-primary-forge text-white font-display font-bold text-xs sm:text-sm px-4 sm:px-6 py-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer">
+              <span>▶</span>
+              <span>Probar en vivo</span>
+            </button>
+
+            <!-- [Exportar] -->
+            <button onclick="openExportModal()" class="bg-[#1a202c] hover:bg-[#252e3f] border border-[#334155] hover:border-[#3b82f6]/60 text-white font-display font-bold text-xs sm:text-sm px-4 sm:px-5 py-3 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4 text-[#3b82f6]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+              </svg>
+              <span>Exportar</span>
+            </button>
+          </div>
+        </footer>
+
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- VISTA SECUNDARIA: DASHBOARD DE PROYECTOS FORGEFIGHT                 -->
+      <!-- =================================================================== -->
+      <div id="view-dashboard" class="hidden p-5 sm:p-8 space-y-7">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#262e3d]">
+          <div>
+            <h2 class="font-display text-xl font-bold text-white uppercase">Mis proyectos:</h2>
+            <p class="text-xs text-gray-400 font-mono">Selecciona un proyecto para editar sus movimientos o probarlo en vivo</p>
+          </div>
+          <button onclick="switchView('combat-editor')" class="btn-primary-forge text-white font-display font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer">
+            ← Volver a "Puñetazo fuerte"
+          </button>
+        </div>
+
+        <div id="projects-list" class="space-y-3"></div>
+      </div>
+
+      <!-- Pie de estado técnico -->
+      <div class="bg-[#090c11] border-t border-[#1f2736] px-5 sm:px-7 py-2 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-gray-500">
+        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2 h-2 rounded-full bg-[#10b981]"></span> FORGEFIGHT Engine • Hitbox Solver v2.4</span>
+        <span>60.0 FPS • Rollback Sync</span>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: PROBAR EN VIVO (Dummy de Entrenamiento con Frame Data real)    -->
+  <!-- ===================================================================== -->
+  <div id="modal-live-test" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="engine-panel w-full max-w-3xl rounded-2xl overflow-hidden border border-gray-700 shadow-2xl">
+      <div class="bg-[#0e121a] px-5 py-3.5 border-b border-[#262e3d] flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="px-2 py-0.5 rounded bg-[#ef4444] text-white text-[10px] font-mono font-bold uppercase animate-pulse">TRAINING ROOM</span>
+          <h3 class="font-display font-bold text-white text-base sm:text-lg">Prueba en vivo — "Puñetazo fuerte"</h3>
+        </div>
+        <button onclick="closeModal('modal-live-test')" class="text-gray-400 hover:text-white bg-[#1a202c] px-2.5 py-1 rounded-lg text-xs font-mono cursor-pointer">✕ CERRAR</button>
+      </div>
+
+      <div class="p-5 sm:p-6 bg-gradient-to-b from-[#131824] to-[#0b0e14] space-y-4">
+        <!-- HUD de entrenamiento -->
+        <div class="grid grid-cols-3 gap-3 items-center">
+          <div>
+            <div class="flex justify-between text-xs font-display font-bold mb-1">
+              <span class="text-white">RYUJIN (P1)</span>
+              <span class="font-mono text-[#10b981]">ACTIVO</span>
+            </div>
+            <div class="h-3 bg-gray-900 rounded overflow-hidden border border-gray-700">
+              <div class="h-full bg-[#10b981] w-full"></div>
+            </div>
+          </div>
+
+          <div class="text-center bg-[#090c11] border border-[#262e3d] rounded-xl py-1.5 px-2">
+            <div class="text-[10px] font-mono text-gray-400">FRAME DATA EN VIVO</div>
+            <div id="live-framedata-readout" class="font-mono font-bold text-xs text-[#f97316]">10f Start | +2f OnBlock</div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-display font-bold mb-1">
+              <span id="dummy-hp-label" class="font-mono text-[#ef4444]">1000 HP</span>
+              <span class="text-white">DUMMY CPU</span>
+            </div>
+            <div class="h-3 bg-gray-900 rounded overflow-hidden border border-gray-700 flex justify-end">
+              <div id="dummy-hp-bar" class="h-full bg-[#ef4444] transition-all duration-200" style="width: 100%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arena del Dummy -->
+        <div class="relative h-56 rounded-xl border border-[#262e3d] bg-[linear-gradient(to_right,#151b26_1px,transparent_1px),linear-gradient(to_bottom,#151b26_1px,transparent_1px)] bg-[size:24px_24px] flex items-end justify-center gap-24 pb-8 overflow-hidden">
+          <!-- Telemetría flotante -->
+          <div id="live-telemetry" class="absolute top-3 left-3 bg-black/75 border border-[#262e3d] rounded-lg px-3 py-2 text-[11px] font-mono space-y-0.5">
+            <div class="text-gray-400">Último impacto: <span id="tele-hit" class="text-white">—</span></div>
+            <div class="text-gray-400">Daño aplicado: <span id="tele-dmg" class="text-[#f97316]">0</span></div>
+            <div class="text-gray-400">Ventaja: <span id="tele-adv" class="text-[#10b981]">+2f</span></div>
+          </div>
+
+          <!-- Atacante -->
+          <div id="live-attacker" class="transition-transform duration-100 flex flex-col items-center relative">
+            <div class="w-16 h-28 rounded-t-2xl bg-gradient-to-b from-[#f97316] to-[#ef4444] border-2 border-white/40 flex items-center justify-center font-display font-bold text-white shadow-lg">
+              P1
+            </div>
+            <!-- Hitbox visual al golpear -->
+            <div id="live-hitbox-flash" class="hidden absolute -right-16 top-6 w-16 h-10 bg-[#ef4444]/40 border-2 border-[#ef4444] rounded-sm"></div>
+          </div>
+
+          <!-- Dummy -->
+          <div id="live-dummy" class="transition-transform duration-100 flex flex-col items-center">
+            <div id="live-dummy-body" class="w-16 h-28 rounded-t-2xl bg-gradient-to-b from-[#3b82f6] to-blue-900 border-2 border-white/30 flex items-center justify-center font-display font-bold text-white shadow-lg">
+              DUMMY
+            </div>
+          </div>
+
+          <div class="absolute bottom-0 inset-x-0 h-8 bg-[#0e121a] border-t border-[#262e3d] flex items-center justify-center text-[10px] font-mono text-gray-500">
+            VISOR DE HITBOXES EN TIEMPO REAL ACTIVADO
+          </div>
+        </div>
+
+        <!-- Controles del Test en vivo -->
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-[#0e121a] p-3.5 rounded-xl border border-[#262e3d]">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button onclick="executeLiveHeavyPunch(false)" class="btn-primary-forge text-white font-display font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl cursor-pointer active:scale-95 transition">
+              👊 Ejecutar "Puñetazo fuerte" [HIT]
+            </button>
+            <button onclick="executeLiveHeavyPunch(true)" class="bg-[#1a202c] hover:bg-[#252e3f] border border-[#3b82f6]/50 text-[#3b82f6] font-display font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl cursor-pointer active:scale-95 transition">
+              🛡️ Probar en Bloqueo [GUARD]
+            </button>
+          </div>
+          <button onclick="resetLiveDummy()" class="text-xs font-mono text-gray-400 hover:text-white underline cursor-pointer">
+            Restaurar Dummy (1000 HP)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: EXPORTAR FRAME DATA & HITBOXES ([Exportar])                    -->
+  <!-- ===================================================================== -->
+  <div id="modal-export" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="engine-panel w-full max-w-2xl rounded-2xl overflow-hidden border border-gray-700">
+      <div class="bg-[#0e121a] px-6 py-4 border-b border-[#262e3d] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#3b82f6]"></span>
+          <h3 class="font-display font-bold text-lg text-white uppercase">Exportar Movimiento — "Puñetazo fuerte"</h3>
+        </div>
+        <button onclick="closeModal('modal-export')" class="text-gray-400 hover:text-white font-mono cursor-pointer">✕</button>
+      </div>
+      <div class="p-6 space-y-4">
+        <p class="text-xs text-gray-400">Datos estructurados listos para el runtime de FORGEFIGHT, Unity o Godot sin escribir código manual.</p>
+        <pre id="export-json-output" class="bg-[#090c11] border border-[#262e3d] rounded-xl p-4 text-xs font-mono text-emerald-300 overflow-x-auto max-h-64"></pre>
+        <div class="flex items-center justify-end gap-2.5">
+          <button onclick="copyExportCode()" class="bg-[#1a202c] hover:bg-[#252e3f] border border-[#334155] text-white font-display font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer">
+            Copiar JSON
+          </button>
+          <button onclick="downloadExportFile()" class="btn-primary-forge text-white font-display font-bold text-xs px-5 py-2.5 rounded-xl cursor-pointer">
+            Descargar .json
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: MI CUENTA ([Mi cuenta])                                        -->
+  <!-- ===================================================================== -->
+  <div id="modal-account" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="engine-panel w-full max-w-md rounded-2xl overflow-hidden border border-gray-700">
+      <div class="bg-[#0e121a] px-6 py-4 border-b border-[#262e3d] flex items-center justify-between">
+        <h3 class="font-display font-bold text-lg text-white">Perfil de Creador</h3>
+        <button onclick="closeModal('modal-account')" class="text-gray-400 hover:text-white font-mono cursor-pointer">✕</button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#ef4444] to-[#f97316] flex items-center justify-center font-display font-bold text-lg text-white">DEV</div>
+          <div>
+            <div class="font-display font-bold text-white">Estudio Indie Arcade</div>
+            <div class="text-xs font-mono text-[#10b981]">FORGEFIGHT PRO • Rollback Ready</div>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-account')" class="w-full py-2.5 rounded-xl bg-[#1a202c] hover:bg-[#252e3f] text-white text-xs font-mono border border-[#2d3748] cursor-pointer">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // ESTADO CENTRAL DEL EDITOR DE COMBATE — "PUÑETAZO FUERTE"
+    // =========================================================================
+    const TOTAL_FRAMES = 24;
+    let currentFrame = 12; // Inicia en el Frame 12 (Fase Activa) según wireframe
+    let activeBoxType = 'hit'; // 'hit' | 'hurt'
+    let isDrawMode = false;
+    let selectedBoxId = 'hit-12-main';
+    let playInterval = null;
+
+    // Cajas de colisión almacenadas por frame (Hit = rojo, Hurt = azul)
+    // Coordenadas en porcentajes relativos al visor para ser 100% responsivas
+    const frameBoxes = {};
+
+    function initDefaultFrameData() {
+      for (let f = 1; f <= TOTAL_FRAMES; f++) {
+        // Hurtbox base del cuerpo presente en todos los frames
+        frameBoxes[f] = [
+          {
+            id: `hurt-${f}-body`,
+            type: 'hurt',
+            label: 'HURT_BODY',
+            x: f >= 11 && f <= 14 ? 36 : 34,
+            y: 22,
+            w: 22,
+            h: 66
+          }
+        ];
+
+        // En frames activos (11 al 14) existe la Hitbox del puñetazo fuerte
+        if (f >= 11 && f <= 14) {
+          frameBoxes[f].push({
+            id: f === 12 ? 'hit-12-main' : `hit-${f}-main`,
+            type: 'hit',
+            label: 'HIT_01',
+            x: f === 12 ? 56 : 54,
+            y: 30,
+            w: f === 12 ? 25 : 22,
+            h: 18
+          });
+          // Hurtbox extendida del brazo
+          frameBoxes[f].push({
+            id: `hurt-${f}-arm`,
+            type: 'hurt',
+            label: 'HURT_ARM',
+            x: 52,
+            y: 32,
+            w: 18,
+            h: 14
+          });
+        }
+      }
+    }
+
+    // Obtener fase del frame: 'startup' (1-10), 'active' (11-14), 'recovery' (15-24)
+    function getFramePhase(frame) {
+      if (frame <= 10) return 'startup';
+      if (frame <= 14) return 'active';
+      return 'recovery';
+    }
+
+    // Renderizar la línea de tiempo con estilo [■][■][▦][▦][▦][ ][ ][ ]
+    function renderTimeline() {
+      const container = document.getElementById('timeline-cells-container');
+      let html = '';
+
+      for (let f = 1; f <= TOTAL_FRAMES; f++) {
+        const phase = getFramePhase(f);
+        const isCurrent = f === currentFrame;
+        let cellStyle = '';
+        let symbol = '';
+
+        if (phase === 'startup') {
+          cellStyle = 'bg-[#f97316]/30 border-[#f97316]/60 text-[#f97316]';
+          symbol = '■';
+        } else if (phase === 'active') {
+          cellStyle = 'active-stripe-cell border-[#ef4444] text-white';
+          symbol = '▦';
+        } else {
+          cellStyle = 'bg-[#131822] border-[#262e3d] text-gray-500';
+          symbol = '';
+        }
+
+        const currentRing = isCurrent
+          ? 'ring-2 ring-white scale-110 z-10 shadow-[0_0_12px_rgba(255,255,255,0.5)] font-bold'
+          : 'opacity-85 hover:opacity-100';
+
+        html += `
+          <button type="button" onclick="setFrame(${f})" title="Frame ${f} (${phase.toUpperCase()})"
+            class="h-9 rounded-md border ${cellStyle} ${currentRing} flex flex-col items-center justify-center transition-all cursor-pointer select-none">
+            <span class="text-[9px] font-mono leading-none">${f}</span>
+            <span class="text-[10px] leading-none mt-0.5">${symbol}</span>
+          </button>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    // Actualizar pose del sprite según Startup / Activo / Recovery
+    function updateSpritePose(phase) {
+      const pStartup = document.getElementById('pose-startup');
+      const pActive = document.getElementById('pose-active');
+      const pRecovery = document.getElementById('pose-recovery');
+      const phaseBadge = document.getElementById('viewport-phase-badge');
+
+      pStartup.classList.add('hidden');
+      pActive.classList.add('hidden');
+      pRecovery.classList.add('hidden');
+
+      if (phase === 'startup') {
+        pStartup.classList.remove('hidden');
+        phaseBadge.textContent = `FRAME ${currentFrame} • STARTUP`;
+        phaseBadge.className = 'text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-[#f97316]/20 text-[#f97316] border border-[#f97316]/40 font-bold';
+      } else if (phase === 'active') {
+        pActive.classList.remove('hidden');
+        phaseBadge.textContent = `FRAME ${currentFrame} • ACTIVO`;
+        phaseBadge.className = 'text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-[#ef4444]/20 text-[#ef4444] border border-[#ef4444]/40 font-bold';
+      } else {
+        pRecovery.classList.remove('hidden');
+        phaseBadge.textContent = `FRAME ${currentFrame} • RECOVERY`;
+        phaseBadge.className = 'text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-[#3b82f6]/20 text-[#3b82f6] border border-[#3b82f6]/40 font-bold';
+      }
+    }
+
+    // Renderizar las cajas Hit y Hurt del frame actual sobre el visor
+    function renderBoxes() {
+      const layer = document.getElementById('boxes-layer');
+      const boxes = frameBoxes[currentFrame] || [];
+
+      // Verificar si la caja seleccionada sigue en este frame
+      if (!boxes.some(b => b.id === selectedBoxId)) {
+        selectedBoxId = boxes.length > 0 ? boxes[boxes.length - 1].id : null;
+      }
+
+      layer.innerHTML = boxes.map(box => {
+        const isHit = box.type === 'hit';
+        const isSelected = box.id === selectedBoxId;
+        const colorClasses = isHit
+          ? 'hitbox-grid border-[#ef4444] text-[#ef4444]'
+          : 'hurtbox-grid border-[#3b82f6] text-[#3b82f6]';
+        const selectedClass = isSelected ? 'ring-2 ring-white z-20' : 'z-10 opacity-90 hover:opacity-100';
+        const pulseClass = isHit ? 'hitbox-pulse' : '';
+
+        return `
+          <div data-box-id="${box.id}"
+            onmousedown="startDragExistingBox(event, '${box.id}')"
+            style="left: ${box.x}%; top: ${box.y}%; width: ${box.w}%; height: ${box.h}%;"
+            class="absolute border-2 ${colorClasses} ${selectedClass} ${pulseClass} rounded-sm cursor-move transition-shadow">
+            <span class="absolute -top-4 left-0 text-[9px] font-mono px-1 bg-[#090c11]/90 border border-current rounded-[2px] leading-tight pointer-events-none">
+              ${box.label}
+            </span>
+          </div>
+        `;
+      }).join('');
+
+      updateSelectedBoxInfo();
+    }
+
+    function updateSelectedBoxInfo() {
+      const info = document.getElementById('selected-box-info');
+      const boxes = frameBoxes[currentFrame] || [];
+      const box = boxes.find(b => b.id === selectedBoxId);
+      if (box) {
+        const pxW = Math.round(box.w * 5.2);
+        const pxH = Math.round(box.h * 3.1);
+        info.textContent = `Caja activa: ${box.label} (${pxW}×${pxH} px)`;
+      } else {
+        info.textContent = 'Sin cajas en este frame';
+      }
+    }
+
+    // Cambiar Frame actual
+    function setFrame(frameNum) {
+      currentFrame = Math.max(1, Math.min(TOTAL_FRAMES, frameNum));
+      document.getElementById('frame-number-input').value = currentFrame;
+      const phase = getFramePhase(currentFrame);
+      updateSpritePose(phase);
+      renderTimeline();
+      renderBoxes();
+    }
+
+    function stepFrame(delta) {
+      let next = currentFrame + delta;
+      if (next > TOTAL_FRAMES) next = 1;
+      if (next < 1) next = TOTAL_FRAMES;
+      setFrame(next);
+    }
+
+    // Reproducción continua a 12 FPS para inspeccionar animación
+    function togglePlayAnimation() {
+      const icon = document.getElementById('play-anim-icon');
+      const text = document.getElementById('play-anim-text');
+      if (playInterval) {
+        clearInterval(playInterval);
+        playInterval = null;
+        icon.textContent = '▶';
+        text.textContent = 'Reproducir';
+      } else {
+        icon.textContent = '⏸';
+        text.textContent = 'Pausar';
+        playInterval = setInterval(() => stepFrame(1), 95);
+      }
+    }
+
+    // Selector Tipo de caja: (Hit) (Hurt)
+    function setBoxType(type) {
+      activeBoxType = type;
+      const btnHit = document.getElementById('radio-hit');
+      const btnHurt = document.getElementById('radio-hurt');
+      const hint = document.getElementById('box-type-hint');
+
+      if (type === 'hit') {
+        btnHit.className = 'py-2.5 px-3 rounded-xl border-2 border-[#ef4444] bg-[#ef4444]/20 text-white font-display font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer';
+        btnHurt.className = 'py-2.5 px-3 rounded-xl border border-[#2d3748] bg-[#181f2c] text-gray-400 hover:text-white font-display font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer';
+        hint.textContent = 'Inflige daño al rival';
+        hint.className = 'text-[11px] font-mono text-[#ef4444]';
+      } else {
+        btnHurt.className = 'py-2.5 px-3 rounded-xl border-2 border-[#3b82f6] bg-[#3b82f6]/20 text-white font-display font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer';
+        btnHit.className = 'py-2.5 px-3 rounded-xl border border-[#2d3748] bg-[#181f2c] text-gray-400 hover:text-white font-display font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer';
+        hint.textContent = 'Zona vulnerable del luchador';
+        hint.className = 'text-[11px] font-mono text-[#3b82f6]';
+      }
+    }
+
+    // Activar / desactivar modo [Dibujar caja]
+    function toggleDrawMode() {
+      isDrawMode = !isDrawMode;
+      const btn = document.getElementById('btn-draw-box');
+      const label = document.getElementById('btn-draw-box-label');
+      const badge = document.getElementById('draw-mode-badge');
+      const stage = document.getElementById('sprite-stage');
+
+      if (isDrawMode) {
+        btn.className = 'py-2.5 px-3 rounded-xl bg-[#f97316] text-white border border-[#f97316] font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#f97316]/30 cursor-pointer';
+        label.textContent = 'Dibujando...';
+        badge.classList.remove('hidden');
+        stage.classList.add('cursor-crosshair');
+        showToast(`Arrastra sobre el visor para crear caja ${activeBoxType.toUpperCase()}`, 'info');
+      } else {
+        btn.className = 'py-2.5 px-3 rounded-xl bg-[#1c2433] hover:bg-[#263145] border border-[#3b475e] text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer';
+        label.textContent = 'Dibujar caja';
+        badge.classList.add('hidden');
+        stage.classList.remove('cursor-crosshair');
+      }
+    }
+
+    // Borrar caja seleccionada en el frame actual
+    function deleteSelectedBox() {
+      const boxes = frameBoxes[currentFrame] || [];
+      if (boxes.length === 0) {
+        showToast('No hay cajas que borrar en este frame', 'info');
+        return;
+      }
+      const idx = boxes.findIndex(b => b.id === selectedBoxId);
+      const removed = idx !== -1 ? boxes.splice(idx, 1)[0] : boxes.pop();
+      selectedBoxId = boxes.length > 0 ? boxes[boxes.length - 1].id : null;
+      renderBoxes();
+      showToast(`Caja ${removed.label} eliminada del Frame ${currentFrame}`, 'info');
+    }
+
+    // =========================================================================
+    // INTERACCIÓN DE RATÓN EN EL VISOR (Dibujar nuevas cajas y mover existentes)
+    // =========================================================================
+    let dragState = null;
+
+    function initStageInteractions() {
+      const stage = document.getElementById('sprite-stage');
+      const tempBox = document.getElementById('temp-draw-box');
+      const coordsLabel = document.getElementById('cursor-coords');
+
+      stage.addEventListener('mousemove', (e) => {
+        const rect = stage.getBoundingClientRect();
+        const relX = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+        const relY = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+        coordsLabel.textContent = `X: ${Math.round(relX * 5)}, Y: ${Math.round((100 - relY) * 3)}`;
+
+        if (!dragState) return;
+
+        if (dragState.mode === 'draw') {
+          const left = Math.min(dragState.startX, relX);
+          const top = Math.min(dragState.startY, relY);
+          const width = Math.abs(relX - dragState.startX);
+          const height = Math.abs(relY - dragState.startY);
+
+          tempBox.style.left = `${left}%`;
+          tempBox.style.top = `${top}%`;
+          tempBox.style.width = `${width}%`;
+          tempBox.style.height = `${height}%`;
+        } else if (dragState.mode === 'move') {
+          const dx = relX - dragState.startX;
+          const dy = relY - dragState.startY;
+          const box = dragState.box;
+          box.x = Math.max(0, Math.min(100 - box.w, dragState.origX + dx));
+          box.y = Math.max(0, Math.min(100 - box.h, dragState.origY + dy));
+          renderBoxes();
+        }
+      });
+
+      stage.addEventListener('mousedown', (e) => {
+        if (!isDrawMode) return;
+        const rect = stage.getBoundingClientRect();
+        const startX = ((e.clientX - rect.left) / rect.width) * 100;
+        const startY = ((e.clientY - rect.top) / rect.height) * 100;
+
+        dragState = { mode: 'draw', startX, startY };
+        tempBox.classList.remove('hidden');
+        tempBox.className = `absolute border-2 border-dashed pointer-events-none z-30 ${
+          activeBoxType === 'hit' ? 'border-[#ef4444] bg-[#ef4444]/20' : 'border-[#3b82f6] bg-[#3b82f6]/20'
+        }`;
+        tempBox.style.left = `${startX}%`;
+        tempBox.style.top = `${startY}%`;
+        tempBox.style.width = '0%';
+        tempBox.style.height = '0%';
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (!dragState) return;
+
+        if (dragState.mode === 'draw') {
+          const w = parseFloat(tempBox.style.width);
+          const h = parseFloat(tempBox.style.height);
+          const x = parseFloat(tempBox.style.left);
+          const y = parseFloat(tempBox.style.top);
+          tempBox.classList.add('hidden');
+
+          if (w > 3 && h > 3) {
+            const newId = `${activeBoxType}-${currentFrame}-${Date.now().toString().slice(-3)}`;
+            const count = (frameBoxes[currentFrame] || []).filter(b => b.type === activeBoxType).length + 1;
+            const newBox = {
+              id: newId,
+              type: activeBoxType,
+              label: `${activeBoxType.toUpperCase()}_0${count}`,
+              x: Math.round(x),
+              y: Math.round(y),
+              w: Math.round(w),
+              h: Math.round(h)
+            };
+            frameBoxes[currentFrame].push(newBox);
+            selectedBoxId = newId;
+            renderBoxes();
+            showToast(`Nueva caja ${newBox.label} añadida al Frame ${currentFrame}`, 'success');
+          }
+          if (isDrawMode) toggleDrawMode();
+        }
+        dragState = null;
+      });
+    }
+
+    function startDragExistingBox(e, boxId) {
+      if (isDrawMode) return;
+      e.stopPropagation();
+      selectedBoxId = boxId;
+      renderBoxes();
+
+      const stage = document.getElementById('sprite-stage');
+      const rect = stage.getBoundingClientRect();
+      const box = (frameBoxes[currentFrame] || []).find(b => b.id === boxId);
+      if (!box) return;
+
+      dragState = {
+        mode: 'move',
+        box,
+        startX: ((e.clientX - rect.left) / rect.width) * 100,
+        startY: ((e.clientY - rect.top) / rect.height) * 100,
+        origX: box.x,
+        origY: box.y
+      };
+    }
+
+    // =========================================================================
+    // ACCIONES INFERIORES: [Guardar] [Probar en vivo] [Exportar]
+    // =========================================================================
+    function saveCombatMove() {
+      const dmg = document.getElementById('prop-damage').value;
+      showToast(`"Puñetazo fuerte" guardado (${dmg} DMG • ${frameBoxes[currentFrame].length} cajas en F${currentFrame})`, 'success');
+    }
+
+    // Modal [Probar en vivo]
+    let dummyHp = 1000;
+    function openLiveTestModal() {
+      const dmg = document.getElementById('prop-damage').value;
+      document.getElementById('live-framedata-readout').textContent = `10f Start | 4f Act | ${dmg} DMG`;
+      resetLiveDummy();
+      openModal('modal-live-test');
+    }
+
+    function resetLiveDummy() {
+      dummyHp = 1000;
+      document.getElementById('dummy-hp-bar').style.width = '100%';
+      document.getElementById('dummy-hp-label').textContent = '1000 HP';
+      document.getElementById('tele-hit').textContent = '—';
+      document.getElementById('tele-dmg').textContent = '0';
+    }
+
+    function executeLiveHeavyPunch(isBlocked) {
+      const attacker = document.getElementById('live-attacker');
+      const dummy = document.getElementById('live-dummy');
+      const hitboxFlash = document.getElementById('live-hitbox-flash');
+      const rawDmg = parseInt(document.getElementById('prop-damage').value) || 120;
+      const finalDmg = isBlocked ? Math.round(rawDmg * 0.15) : rawDmg;
+
+      attacker.style.transform = 'translateX(44px)';
+      hitboxFlash.classList.remove('hidden');
+
+      setTimeout(() => {
+        dummyHp = Math.max(0, dummyHp - finalDmg);
+        document.getElementById('dummy-hp-bar').style.width = `${(dummyHp / 1000) * 100}%`;
+        document.getElementById('dummy-hp-label').textContent = `${dummyHp} HP`;
+        dummy.style.transform = isBlocked ? 'translateX(10px)' : 'translateX(22px) rotate(6deg)';
+
+        document.getElementById('tele-hit').textContent = isBlocked ? 'GUARDIA (Chip Damage)' : 'COUNTER HIT!';
+        document.getElementById('tele-dmg').textContent = `${finalDmg} HP`;
+        document.getElementById('tele-adv').textContent = isBlocked ? '+2f (Seguro)' : '+6f (Combo Link)';
+      }, 90);
+
+      setTimeout(() => {
+        attacker.style.transform = 'translateX(0)';
+        dummy.style.transform = 'translateX(0) rotate(0deg)';
+        hitboxFlash.classList.add('hidden');
+      }, 280);
+    }
+
+    // Modal [Exportar]
+    function buildExportPayload() {
+      return {
+        engine: 'FORGEFIGHT v2.4',
+        moveName: 'Puñetazo fuerte',
+        input: '5HP',
+        totalFrames: TOTAL_FRAMES,
+        phases: { startup: [1, 10], active: [11, 14], recovery: [15, 24] },
+        damage: parseInt(document.getElementById('prop-damage').value) || 120,
+        advantageOnBlock: '+2',
+        currentFrameSnapshot: {
+          frame: currentFrame,
+          boxes: frameBoxes[currentFrame]
+        }
+      };
+    }
+
+    function openExportModal() {
+      const jsonStr = JSON.stringify(buildExportPayload(), null, 2);
+      document.getElementById('export-json-output').textContent = jsonStr;
+      openModal('modal-export');
+    }
+
+    function copyExportCode() {
+      const text = document.getElementById('export-json-output').textContent;
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast('JSON de Frame Data copiado al portapapeles', 'success');
+    }
+
+    function downloadExportFile() {
+      const text = document.getElementById('export-json-output').textContent;
+      const blob = new Blob([text], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'punetazo_fuerte_framedata.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Descargando punetazo_fuerte_framedata.json', 'success');
+    }
+
+    // Navegación entre Editor de Combate y Hub de Proyectos
+    function switchView(view) {
+      const editorView = document.getElementById('view-combat-editor');
+      const dashView = document.getElementById('view-dashboard');
+      const toggleLabel = document.getElementById('btn-toggle-hub-label');
+
+      if (view === 'dashboard') {
+        editorView.classList.add('hidden');
+        dashView.classList.remove('hidden');
+        toggleLabel.textContent = 'Editor combate';
+        renderDashboardProjects();
+      } else {
+        dashView.classList.add('hidden');
+        editorView.classList.remove('hidden');
+        toggleLabel.textContent = 'Mis proyectos';
+      }
+    }
+
+    function toggleMainHub() {
+      const isDashHidden = document.getElementById('view-dashboard').classList.contains('hidden');
+      switchView(isDashHidden ? 'dashboard' : 'combat-editor');
+    }
+
+    function renderDashboardProjects() {
+      const list = document.getElementById('projects-list');
+      list.innerHTML = `
+        <div class="bg-[#131822] border border-[#262e3d] rounded-xl p-4 flex items-center justify-between">
+          <div>
+            <div class="font-display font-bold text-white">• Proyecto "Dragón Puño"</div>
+            <div class="text-xs font-mono text-gray-400 mt-0.5">Movimiento activo: "Puñetazo fuerte" (24 frames)</div>
+          </div>
+          <button onclick="switchView('combat-editor')" class="btn-primary-forge text-white font-display font-bold text-xs px-4 py-2 rounded-xl cursor-pointer">Editar Combate</button>
+        </div>
+        <div class="bg-[#131822] border border-[#262e3d] rounded-xl p-4 flex items-center justify-between">
+          <div>
+            <div class="font-display font-bold text-white">• Proyecto "Samurai X"</div>
+            <div class="text-xs font-mono text-gray-400 mt-0.5">12 luchadores • 6 escenarios</div>
+          </div>
+          <button onclick="switchView('combat-editor')" class="bg-[#1a202c] border border-[#2d3748] text-gray-200 font-display font-bold text-xs px-4 py-2 rounded-xl cursor-pointer">Abrir</button>
+        </div>
+      `;
+    }
+
+    // Utilidades de Modales, Toasts y Teclado
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const borderCol = type === 'success' ? 'border-[#10b981] text-emerald-200' : 'border-[#f97316] text-orange-200';
+      toast.className = `bg-[#131822] border ${borderCol} px-4 py-2.5 rounded-xl shadow-xl text-xs font-mono flex items-center gap-2 transition-all duration-300`;
+      toast.innerHTML = `<span>${type === 'success' ? '✓' : '⚡'}</span><span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key === 'ArrowLeft') stepFrame(-1);
+      if (e.key === 'ArrowRight') stepFrame(1);
+      if (e.key === ' ') {
+        e.preventDefault();
+        togglePlayAnimation();
+      }
+      if (e.key === 'Escape') {
+        ['modal-live-test', 'modal-export', 'modal-account'].forEach(closeModal);
+      }
+    });
+
+    // Inicialización
+    window.addEventListener('DOMContentLoaded', () => {
+      initDefaultFrameData();
+      initStageInteractions();
+      setFrame(12);
+    });
+  </script>
+</body>
+</html>

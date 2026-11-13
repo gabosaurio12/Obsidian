@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORGEFIGHT — Marketplace de Assets & Motor No-Code</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            forge: {
+              bg: '#0B0D12',
+              panel: '#12161F',
+              card: '#181E2B',
+              border: '#252E42',
+              accent: '#FF3355',
+              amber: '#FF8A00',
+              cyan: '#00E5FF',
+              green: '#00E676'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html, body {
+      min-height: 100%;
+      background-color: #0B0D12;
+      color: #F3F4F6;
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(255, 51, 85, 0.14) 0%, transparent 42%),
+        radial-gradient(circle at 85% 18%, rgba(0, 229, 255, 0.11) 0%, transparent 45%),
+        radial-gradient(circle at 50% 95%, rgba(255, 138, 0, 0.09) 0%, transparent 48%),
+        linear-gradient(rgba(37, 46, 66, 0.24) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 46, 66, 0.24) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      background-attachment: fixed;
+    }
+
+    .engine-shell {
+      background: linear-gradient(180deg, rgba(18, 22, 31, 0.96) 0%, rgba(12, 15, 22, 0.98) 100%);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+    }
+
+    .btn-primary-forge {
+      background: linear-gradient(135deg, #FF3355 0%, #FF8A00 100%);
+      box-shadow: 0 6px 20px rgba(255, 51, 85, 0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+    .btn-primary-forge:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .stage-grid {
+      background-color: #090C11;
+      background-image:
+        linear-gradient(to right, rgba(36, 43, 61, 0.45) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(36, 43, 61, 0.45) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-[#FF3355] selection:text-white">
+  <div class="min-h-screen flex items-center justify-center p-3 sm:p-6 lg:p-8">
+    <main class="engine-shell w-full max-w-5xl rounded-3xl border border-[#242B3D] overflow-hidden">
+
+      <!-- 1. BARRA SUPERIOR (HEADER) CON NAVEGACIÓN ENTRE LAS 4 VISTAS -->
+      <header class="bg-[#0E1119] border-b border-[#242B3D] px-5 sm:px-7 py-3.5 flex flex-wrap items-center justify-between gap-3">
+        <!-- Identidad FORGEFIGHT + Título contextual dinámico -->
+        <div class="flex items-center gap-3">
+          <button onclick="switchView('marketplace')" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF3355] to-[#FF8A00] p-[1px] shadow-lg shadow-[#FF3355]/25 hover:scale-105 transition-transform cursor-pointer" title="FORGEFIGHT Engine">
+            <div class="w-full h-full bg-[#141822] rounded-[11px] flex items-center justify-center">
+              <svg class="w-5 h-5 text-[#FF8A00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" />
+              </svg>
+            </div>
+          </button>
+
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-[10px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded bg-[#1A202E] text-[#FF8A00] border border-[#FF8A00]/30 font-bold">FORGEFIGHT</span>
+              <h1 id="header-main-title" class="font-display font-bold text-lg sm:text-xl tracking-wide text-white">
+                Marketplace de Assets
+              </h1>
+            </div>
+            <p id="header-subtitle" class="text-[11px] text-gray-400 font-mono">Tienda Oficial de Recursos 2D/VFX • Compatibilidad Instantánea No-Code</p>
+          </div>
+        </div>
+
+        <!-- Selector de vistas unificado + Inventario + Mi cuenta -->
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <nav class="flex flex-wrap items-center bg-[#0B0D12] p-1 rounded-xl border border-[#242B3D]" aria-label="Vistas del motor">
+            <button id="nav-marketplace" onclick="switchView('marketplace')" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold bg-[#1B2232] text-[#00E5FF] border border-[#00E5FF]/40 shadow-sm transition-all cursor-pointer">
+              Marketplace
+            </button>
+            <button id="nav-multiplayer" onclick="switchView('multiplayer')" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold text-gray-400 hover:text-white border border-transparent transition-all cursor-pointer">
+              Multijugador
+            </button>
+            <button id="nav-combat" onclick="switchView('combat-editor')" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold text-gray-400 hover:text-white border border-transparent transition-all cursor-pointer">
+              Editor combate
+            </button>
+            <button id="nav-dashboard" onclick="switchView('dashboard')" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold text-gray-400 hover:text-white border border-transparent transition-all cursor-pointer">
+              Mis proyectos
+            </button>
+          </nav>
+
+          <!-- Indicador de inventario / assets importados -->
+          <button onclick="openInventoryModal()" class="flex items-center gap-1.5 bg-[#141822] hover:bg-[#1B2232] border border-[#2D364C] text-gray-200 px-2.5 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer" title="Assets importados en tu proyecto">
+            <svg class="w-4 h-4 text-[#f59e0b]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            <span id="inventory-count-badge" class="font-bold text-[#00E5FF]">0</span>
+          </button>
+
+          <button id="btn-account" onclick="openModal('modal-account')" class="flex items-center gap-2 bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-gray-200 px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer">
+            <span class="w-2 h-2 rounded-full bg-[#00E676] animate-pulse"></span>
+            <span class="hidden sm:inline">Mi cuenta</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- =================================================================== -->
+      <!-- VISTA PRINCIPAL (POR DEFECTO): MARKETPLACE DE ASSETS                -->
+      <!-- =================================================================== -->
+      <div id="view-marketplace" class="p-5 sm:p-8 space-y-6">
+        
+        <!-- Encabezado de sección fiel al wireframe -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#242B3D]">
+          <div class="flex items-center gap-2.5">
+            <span class="w-2.5 h-6 rounded-full bg-gradient-to-b from-[#FF3355] to-[#FF8A00]"></span>
+            <h2 class="font-display font-bold text-xl sm:text-2xl text-white tracking-tight">Marketplace de Assets</h2>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <span class="px-2.5 py-1 rounded-lg bg-[#141822] border border-[#242B3D] text-gray-300">
+              Proyecto destino: <strong class="text-[#f59e0b]">"Samurai X"</strong>
+            </span>
+          </div>
+        </div>
+
+        <!-- Barra de búsqueda interactiva precargada con "sprites samurai" + filtros -->
+        <div class="bg-[#0E1119] border border-[#242B3D] rounded-2xl p-4 sm:p-5 space-y-4">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div class="relative flex-1">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-mono text-[#00E5FF] font-semibold select-none">
+                Buscar:
+              </span>
+              <input
+                id="marketplace-search-input"
+                type="text"
+                value="sprites samurai"
+                placeholder='Buscar: "sprites samurai"'
+                oninput="filterMarketplaceAssets()"
+                class="w-full bg-[#141822] border border-[#2D364C] focus:border-[#00E5FF] rounded-xl pl-20 pr-24 py-3 font-mono text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
+              />
+              <div class="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                <button
+                  id="btn-clear-search"
+                  type="button"
+                  onclick="clearMarketplaceSearch()"
+                  class="px-2 py-1 rounded-lg bg-[#1E2536] hover:bg-[#2A334A] text-gray-300 text-[11px] font-mono transition-colors cursor-pointer"
+                  title="Limpiar búsqueda"
+                >
+                  Limpiar
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onclick="resetSamuraiSearch()"
+              class="px-4 py-3 rounded-xl bg-[#141822] hover:bg-[#1B2232] border border-[#2D364C] text-xs font-mono text-[#f59e0b] whitespace-nowrap transition-colors cursor-pointer"
+            >
+              ↺ "sprites samurai"
+            </button>
+          </div>
+
+          <!-- Píldoras de categoría rápida + contador de resultados -->
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+            <div class="flex flex-wrap items-center gap-1.5" id="marketplace-category-pills">
+              <button type="button" onclick="setMarketplaceCategory('all')" data-cat="all" class="mp-cat-btn px-3 py-1 rounded-lg text-xs font-mono bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/40 font-semibold cursor-pointer">
+                Todos
+              </button>
+              <button type="button" onclick="setMarketplaceCategory('sprites')" data-cat="sprites" class="mp-cat-btn px-3 py-1 rounded-lg text-xs font-mono bg-[#141822] text-gray-400 hover:text-white border border-[#242B3D] cursor-pointer">
+                Sprites
+              </button>
+              <button type="button" onclick="setMarketplaceCategory('vfx')" data-cat="vfx" class="mp-cat-btn px-3 py-1 rounded-lg text-xs font-mono bg-[#141822] text-gray-400 hover:text-white border border-[#242B3D] cursor-pointer">
+                Hitboxes / VFX
+              </button>
+              <button type="button" onclick="setMarketplaceCategory('stages')" data-cat="stages" class="mp-cat-btn px-3 py-1 rounded-lg text-xs font-mono bg-[#141822] text-gray-400 hover:text-white border border-[#242B3D] cursor-pointer">
+                Escenarios
+              </button>
+              <button type="button" onclick="setMarketplaceCategory('audio')" data-cat="audio" class="mp-cat-btn px-3 py-1 rounded-lg text-xs font-mono bg-[#141822] text-gray-400 hover:text-white border border-[#242B3D] cursor-pointer">
+                Audio SFX
+              </button>
+            </div>
+
+            <span id="marketplace-results-count" class="text-xs font-mono text-gray-400">
+              Mostrando 3 paquetes para "sprites samurai"
+            </span>
+          </div>
+        </div>
+
+        <!-- Cuadrícula principal con Set A ($4.99), Set B (Gratis), Set C ($2.50) y catálogo dinámico -->
+        <div id="marketplace-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Renderizado dinámicamente por renderMarketplaceCards() -->
+        </div>
+
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 2: MULTIJUGADOR EN LÍNEA                                      -->
+      <!-- =================================================================== -->
+      <div id="view-multiplayer" class="hidden p-5 sm:p-8 space-y-6">
+<!-- ... existing code ... -->
+      <!-- Pie de estado técnico -->
+      <div class="bg-[#090c11] border-t border-[#1f2736] px-5 sm:px-7 py-2 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-gray-500">
+        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2 h-2 rounded-full bg-[#00E676]"></span> FORGEFIGHT Engine • Asset Pipeline, GGPO Rollback & Hitbox Solver v2.4</span>
+        <span>60.0 FPS • Determinista</span>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL DETALLE Y VISTA PREVIA DE ANIMACIONES DE ASSET -->
+  <div id="modal-asset-preview" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#12161f] border border-[#2D364C] rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl">
+      <div class="bg-[#0E1119] px-5 py-4 border-b border-[#242B3D] flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span id="modal-asset-code" class="px-2 py-0.5 rounded bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[#f59e0b] font-mono text-xs font-bold">Set A</span>
+          <h3 id="modal-asset-title" class="font-display font-bold text-white text-base sm:text-lg">Ronin Carmesí — Sprites 60FPS</h3>
+        </div>
+        <button onclick="closeAssetPreviewModal()" class="text-gray-400 hover:text-white font-mono text-sm px-2 py-1 rounded-lg hover:bg-[#1E2536] cursor-pointer">✕</button>
+      </div>
+
+      <div class="p-5 space-y-5">
+        <!-- Escenario animado de previsualización de frames -->
+        <div class="relative bg-[#0B0D12] border border-[#242B3D] rounded-xl p-4 flex flex-col items-center justify-center min-h-[210px] overflow-hidden">
+          <div class="absolute top-2.5 left-3 flex items-center gap-2 text-[10px] font-mono text-gray-400">
+            <span class="w-2 h-2 rounded-full bg-[#00E5FF] animate-ping"></span>
+            <span id="modal-preview-frame-label">Pose 1/3 · Guardia Baja (Idle)</span>
+          </div>
+          <div class="absolute top-2.5 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30">
+            Hitbox + Hurtbox Ready
+          </div>
+
+          <div id="modal-preview-artwork" class="my-3 transition-transform duration-200">
+            <!-- SVG dinámico del pose/frame actual -->
+          </div>
+
+          <!-- Controles de frame dentro del modal -->
+          <div class="flex items-center gap-2 mt-2">
+            <button type="button" onclick="cyclePreviewFrame(-1)" class="px-2.5 py-1 rounded-lg bg-[#181d28] hover:bg-[#232b3b] border border-[#2D364C] text-xs font-mono text-gray-200 cursor-pointer">◀ Frame</button>
+            <button type="button" id="btn-toggle-modal-anim" onclick="togglePreviewPlayback()" class="px-3 py-1 rounded-lg bg-[#00E5FF]/15 border border-[#00E5FF]/40 text-xs font-mono text-[#00E5FF] font-bold cursor-pointer">⏸ Pausar Loop</button>
+            <button type="button" onclick="cyclePreviewFrame(1)" class="px-2.5 py-1 rounded-lg bg-[#181d28] hover:bg-[#232b3b] border border-[#2D364C] text-xs font-mono text-gray-200 cursor-pointer">Frame ▶</button>
+          </div>
+        </div>
+
+        <!-- Metadatos técnicos y compatibilidad -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+          <div class="bg-[#181d28] border border-[#242B3D] rounded-xl p-3">
+            <div class="text-gray-400 text-[10px] uppercase">Contenido incluido</div>
+            <div id="modal-asset-specs" class="text-white font-semibold mt-1">24 animaciones, hitboxes pre-mapeadas</div>
+          </div>
+          <div class="bg-[#181d28] border border-[#242B3D] rounded-xl p-3">
+            <div class="text-gray-400 text-[10px] uppercase">Compatibilidad directa</div>
+            <div class="text-[#10b981] font-semibold mt-1">✓ Proyecto "Samurai X" & "Dragón Puño"</div>
+          </div>
+        </div>
+
+        <p id="modal-asset-desc" class="text-xs text-gray-300 leading-relaxed">
+          Hoja de sprites optimizada a 60 FPS con capas separadas de Hurtbox (azul) y Hitbox (rojo) listas para arrastrar al editor de combate sin código.
+        </p>
+
+        <!-- Barra de acción inferior del modal -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#242B3D]">
+          <div>
+            <span class="text-[11px] font-mono text-gray-400 block">Licencia comercial motor FORGEFIGHT</span>
+            <span id="modal-asset-price" class="font-display font-bold text-xl text-[#f59e0b]">$4.99</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeAssetPreviewModal()" class="px-4 py-2.5 rounded-xl bg-[#181d28] hover:bg-[#222938] border border-[#2D364C] text-xs font-display font-bold text-gray-300 cursor-pointer">
+              Cerrar
+            </button>
+            <button id="modal-asset-import-btn" type="button" onclick="importCurrentPreviewAsset()" class="btn-primary-forge text-white font-display font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl cursor-pointer">
+              Importar a "Samurai X"
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL INVENTARIO DE ASSETS IMPORTADOS -->
+  <div id="modal-inventory" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#12161f] border border-[#2D364C] rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl">
+      <div class="bg-[#0E1119] px-5 py-4 border-b border-[#242B3D] flex items-center justify-between">
+        <h3 class="font-display font-bold text-white text-base sm:text-lg">Assets importados al proyecto</h3>
+        <button onclick="closeModal('modal-inventory')" class="text-gray-400 hover:text-white font-mono text-sm px-2 py-1 rounded-lg hover:bg-[#1E2536] cursor-pointer">✕</button>
+      </div>
+      <div class="p-5 space-y-4">
+        <div id="inventory-list-container" class="space-y-2.5 max-h-64 overflow-y-auto">
+          <!-- Lista dinámica de assets adquiridos/importados -->
+        </div>
+        <div class="flex justify-end gap-2 pt-3 border-t border-[#242B3D]">
+          <button onclick="closeModal('modal-inventory'); switchView('combat-editor')" class="btn-primary-forge text-white font-display font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer">
+            Abrir en Editor de Combate
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CUENTA DEL CREADOR -->
+  <div id="modal-account" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#12161f] border border-[#2D364C] rounded-2xl max-w-md w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-[#242B3D] pb-3">
+        <h3 class="font-display font-bold text-white text-lg">Cuenta de Creador · FORGEFIGHT</h3>
+        <button onclick="closeModal('modal-account')" class="text-gray-400 hover:text-white font-mono text-sm cursor-pointer">✕</button>
+      </div>
+      <div class="space-y-2 text-xs font-mono text-gray-300">
+        <div class="flex justify-between py-1 border-b border-[#1E2536]">
+          <span class="text-gray-400">Estudio Indie:</span>
+          <span class="text-white font-bold">Kusanagi Pixel Works</span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-[#1E2536]">
+          <span class="text-gray-400">Plan Motor:</span>
+          <span class="text-[#10b981] font-bold">PRO + Rollback Cloud</span>
+        </div>
+        <div class="flex justify-between py-1">
+          <span class="text-gray-400">Créditos Marketplace:</span>
+          <span class="text-[#f59e0b] font-bold">$25.00 USD</span>
+        </div>
+      </div>
+      <div class="flex justify-end pt-2">
+        <button onclick="closeModal('modal-account')" class="px-4 py-2 rounded-xl bg-[#181d28] border border-[#2D364C] text-xs font-display font-bold text-white cursor-pointer">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR DE NOTIFICACIONES TOAST -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+<!-- ... existing code ... -->
+  <script>
+    // =========================================================================
+    // NAVEGACIÓN ENTRE LAS 4 VISTAS UNIFICADAS DE FORGEFIGHT
+    // =========================================================================
+    function switchView(view) {
+      const marketView = document.getElementById('view-marketplace');
+      const mpView = document.getElementById('view-multiplayer');
+      const editorView = document.getElementById('view-combat-editor');
+      const dashView = document.getElementById('view-dashboard');
+
+      const navMarket = document.getElementById('nav-marketplace');
+      const navMp = document.getElementById('nav-multiplayer');
+      const navCombat = document.getElementById('nav-combat');
+      const navDash = document.getElementById('nav-dashboard');
+
+      const headerTitle = document.getElementById('header-main-title');
+      const headerSubtitle = document.getElementById('header-subtitle');
+
+      const inactiveBtnClass = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold text-gray-400 hover:text-white border border-transparent transition-all cursor-pointer';
+      const activeBtnClass = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold bg-[#1B2232] text-[#00E5FF] border border-[#00E5FF]/40 shadow-sm transition-all cursor-pointer';
+
+      if (marketView) marketView.classList.add('hidden');
+      if (mpView) mpView.classList.add('hidden');
+      if (editorView) editorView.classList.add('hidden');
+      if (dashView) dashView.classList.add('hidden');
+
+      if (navMarket) navMarket.className = inactiveBtnClass;
+      if (navMp) navMp.className = inactiveBtnClass;
+      if (navCombat) navCombat.className = inactiveBtnClass;
+      if (navDash) navDash.className = inactiveBtnClass;
+
+      if (view === 'marketplace') {
+        if (marketView) marketView.classList.remove('hidden');
+        if (navMarket) navMarket.className = activeBtnClass;
+        if (headerTitle) headerTitle.innerHTML = 'Marketplace de Assets';
+        if (headerSubtitle) headerSubtitle.textContent = 'Tienda Oficial de Recursos 2D/VFX • Compatibilidad Instantánea No-Code';
+        renderMarketplaceCards();
+      } else if (view === 'multiplayer') {
+        if (mpView) mpView.classList.remove('hidden');
+        if (navMp) navMp.className = activeBtnClass;
+        if (headerTitle) headerTitle.innerHTML = 'Multijugador en línea';
+        if (headerSubtitle) headerSubtitle.textContent = 'GGPO-CORE v2.4 · Listo · Sincronización Determinista 60 FPS';
+        if (typeof netSimInterval !== 'undefined' && netSimInterval && typeof resizeOscilloscope === 'function') {
+          resizeOscilloscope();
+        }
+      } else if (view === 'combat-editor') {
+        if (editorView) editorView.classList.remove('hidden');
+        if (navCombat) navCombat.className = activeBtnClass;
+        if (headerTitle) headerTitle.innerHTML = 'Editor de combate — <span class="text-[#FF8A00]">"Puñetazo fuerte"</span>';
+        if (headerSubtitle) headerSubtitle.textContent = 'Proyecto "Dragón Puño" • Luchador: Ryujin • 60 FPS Frame Data';
+      } else if (view === 'dashboard') {
+        if (dashView) dashView.classList.remove('hidden');
+        if (navDash) navDash.className = activeBtnClass;
+        if (headerTitle) headerTitle.innerHTML = 'Mis proyectos';
+        if (headerSubtitle) headerSubtitle.textContent = 'Hub de desarrollo No-Code • 2 proyectos activos';
+        if (typeof renderDashboardProjects === 'function') renderDashboardProjects();
+      }
+    }
+
+    // =========================================================================
+    // DATOS Y LÓGICA DEL MARKETPLACE DE ASSETS (Set A, Set B, Set C + Catálogo)
+    // =========================================================================
+    const marketplaceCatalog = [
+      {
+        id: 'set-a',
+        code: 'Set A',
+        title: 'Ronin Carmesí — Sprites 60FPS',
+        category: 'sprites',
+        price: 4.99,
+        priceLabel: '$4.99',
+        isFree: false,
+        tags: ['sprites', 'samurai', 'ronin', 'katana', '60fps', 'hitbox'],
+        specs: '24 animaciones, hitboxes pre-mapeadas',
+        desc: 'Hoja de sprites optimizada a 60 FPS con capas separadas de Hurtbox (azul) y Hitbox (rojo) listas para arrastrar al editor de combate sin código.',
+        accent: '#FF3355',
+        frames: [
+          {
+            label: 'Pose 1/3 · Guardia Baja (Idle)',
+            svg: `<svg width="160" height="140" viewBox="0 0 160 140" fill="none">
+              <rect x="48" y="24" width="54" height="96" rx="6" fill="rgba(0,229,255,0.12)" stroke="#00E5FF" stroke-dasharray="4 3" stroke-width="1.5"/>
+              <path d="M55 120 L70 72 L92 72 L104 120" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+              <rect x="64" y="42" width="32" height="36" rx="8" fill="#1e293b" stroke="#FF3355" stroke-width="2"/>
+              <circle cx="80" cy="28" r="13" fill="#f8fafc"/>
+              <path d="M62 24 L98 24 L80 12 Z" fill="#FF3355"/>
+              <line x1="45" y1="68" x2="122" y2="54" stroke="#e2e8f0" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>`
+          },
+          {
+            label: 'Pose 2/3 · Corte Iaijutsu (Activo)',
+            svg: `<svg width="160" height="140" viewBox="0 0 160 140" fill="none">
+              <rect x="38" y="34" width="52" height="86" rx="6" fill="rgba(0,229,255,0.12)" stroke="#00E5FF" stroke-dasharray="4 3" stroke-width="1.5"/>
+              <rect x="86" y="38" width="64" height="38" rx="6" fill="rgba(255,51,85,0.22)" stroke="#FF3355" stroke-width="2"/>
+              <path d="M44 120 L60 76 L84 78 L98 120" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+              <rect x="54" y="48" width="32" height="34" rx="8" fill="#1e293b" stroke="#FF3355" stroke-width="2"/>
+              <circle cx="72" cy="34" r="13" fill="#f8fafc"/>
+              <path d="M54 30 L90 30 L72 18 Z" fill="#FF3355"/>
+              <path d="M84 56 Q128 32 148 58 Q122 72 84 62 Z" fill="rgba(255,51,85,0.55)" stroke="#FF8A00" stroke-width="2"/>
+            </svg>`
+          },
+          {
+            label: 'Pose 3/3 · Enfunde & Recovery',
+            svg: `<svg width="160" height="140" viewBox="0 0 160 140" fill="none">
+              <rect x="46" y="28" width="54" height="92" rx="6" fill="rgba(0,229,255,0.12)" stroke="#00E5FF" stroke-dasharray="4 3" stroke-width="1.5"/>
+              <path d="M52 120 L68 74 L90 74 L102 120" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+              <rect x="62" y="44" width="32" height="36" rx="8" fill="#1e293b" stroke="#FF3355" stroke-width="2"/>
+              <circle cx="78" cy="30" r="13" fill="#f8fafc"/>
+              <path d="M60 26 L96 26 L78 14 Z" fill="#FF3355"/>
+              <line x1="42" y1="76" x2="110" y2="82" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>`
+          }
+        ]
+      },
+      {
+        id: 'set-b',
+        code: 'Set B',
+        title: 'Shogun Ronin — Starter Pack',
+        category: 'sprites',
+        price: 0,
+        priceLabel: 'Gratis',
+        isFree: true,
+        tags: ['sprites', 'samurai', 'shogun', 'starter', 'gratis'],
+        specs: '12 animaciones base • Licencia CC0',
+        desc: 'Paquete inicial gratuito con postura de combate, desplazamiento lateral, bloqueo alto/bajo y tajo vertical listo para prototipado rápido.',
+        accent: '#10b981',
+        frames: [
+          {
+            label: 'Pose 1/2 · Postura Shogun',
+            svg: `<svg width="160" height="140" viewBox="0 0 160 140" fill="none">
+              <rect x="48" y="24" width="56" height="96" rx="6" fill="rgba(0,229,255,0.12)" stroke="#00E5FF" stroke-dasharray="4 3" stroke-width="1.5"/>
+              <path d="M54 120 L68 74 L92 74 L106 120" stroke="#64748b" stroke-width="9" stroke-linecap="round"/>
+              <rect x="60" y="40" width="38" height="38" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
+              <circle cx="79" cy="27" r="12" fill="#e2e8f0"/>
+              <path d="M63 20 L68 10 L79 18 L90 10 L95 20 Z" fill="#f59e0b"/>
+              <line x1="94" y1="30" x2="94" y2="108" stroke="#cbd5e1" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>`
+          },
+          {
+            label: 'Pose 2/2 · Tajo Vertical',
+            svg: `<svg width="160" height="140" viewBox="0 0 160 140" fill="none">
+              <rect x="44" y="28" width="54" height="92" rx="6" fill="rgba(0,229,255,0.12)" stroke="#00E5FF" stroke-dasharray="4 3" stroke-width="1.5"/>
+              <rect x="92" y="22" width="48" height="74" rx="6" fill="rgba(255,51,85,0.2)" stroke="#FF3355" stroke-width="2"/>
+              <path d="M50 120 L66 76 L88 76 L102 120" stroke="#64748b" stroke-width="9" stroke-linecap="round"/>
+              <rect x="58" y="44" width="36" height="36" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
+              <circle cx="76" cy="30" r="12" fill="#e2e8f0"/>
+              <path d="M96 24 C132 34 136 74 96 92" stroke="#10b981" stroke-width="5" stroke-linecap="round"/>
+            </svg>`
+          }
+        ]
+      },
+      {
+        id: 'set-c',
+        code: 'Set C',
+        title: 'Kunoichi & Katana VFX Pack',
+        category: 'vfx',
+        price: 2.50,
+        priceLabel: '$2.50',
+        isFree: false,
+        tags: ['sprites', 'samurai', 'kunoichi', 'katana', 'vfx', 'hitboxes'],
+        specs: '16 frames de desenfunde + estelas VFX',
+        desc: 'Sprites ágiles de estilo sombra con estelas de corte energético en cian y violeta, ideales para combos aéreos y cancels.',
+        accent: '#00E5FF',
+        frames: [
+          {
+            label: 'Pose 1/2 · Paso Sombra',
+            svg: `<svg width="160" height="140" viewBox="0 0 160 140" fill="none">
+              <rect x="48" y="28" width="52" height="92" rx="6" fill="rgba(0,229,255,0.12)" stroke="#00E5FF" stroke-dasharray="4 3" stroke-width="1.5"/>
+              <path d="M52 120 L70 76 L88 76 L104 120" stroke="#475569" stroke-width="7" stroke-linecap="round"/>
+              <rect x="64" y="46" width="28" height="34" rx="8" fill="#1e1b4b" stroke="#00E5FF" stroke-width="2"/>
+              <circle cx="78" cy="32" r="12" fill="#e2e8f0"/>
+              <path d="M66 30 H90" stroke="#00E5FF" stroke-width="4" stroke-linecap="round"/>
+              <line x1="40" y1="62" x2="116" y2="48" stroke="#00E5FF" stroke-width="3" stroke-linecap="round"/>
+            </svg>`
+          },
+          {
+            label: 'Pose 2/2 · Estela Relámpago',
+            svg: `<svg width="160" height="140" viewBox="0 0 160 140" fill="none">
+              <rect x="82" y="34" width="66" height="42" rx="6" fill="rgba(255,51,85,0.22)" stroke="#FF3355" stroke-width="2"/>
+              <path d="M46 120 L66 78 L86 78 L102 120" stroke="#475569" stroke-width="7" stroke-linecap="round"/>
+              <rect x="60" y="48" width="28" height="34" rx="8" fill="#1e1b4b" stroke="#00E5FF" stroke-width="2"/>
+              <circle cx="74" cy="34" r="12" fill="#e2e8f0"/>
+              <path d="M84 52 L144 44 L120 66 L146 68 L84 62 Z" fill="rgba(0,229,255,0.5)" stroke="#00E5FF" stroke-width="1.8"/>
+            </svg>`
+          }
+        ]
+      }
+    ];
+
+    let currentMarketplaceCategory = 'all';
+    let importedAssetIds = new Set();
+    let currentPreviewAsset = null;
+    let currentPreviewFrameIdx = 0;
+    let previewAnimTimer = null;
+    let isPreviewPlaying = true;
+
+    function renderMarketplaceCards() {
+      const grid = document.getElementById('marketplace-grid');
+      const searchInput = document.getElementById('marketplace-search-input');
+      const countLabel = document.getElementById('marketplace-results-count');
+      if (!grid) return;
+
+      const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+
+      const filtered = marketplaceCatalog.filter((item) => {
+        const matchesCategory =
+          currentMarketplaceCategory === 'all' || item.category === currentMarketplaceCategory;
+        if (!matchesCategory) return false;
+        if (!query) return true;
+
+        const terms = query.split(/\s+/);
+        const haystack = `${item.code} ${item.title} ${item.specs} ${item.tags.join(' ')}`.toLowerCase();
+        return terms.every((t) => haystack.includes(t));
+      });
+
+      if (countLabel) {
+        countLabel.textContent = query
+          ? `Mostrando ${filtered.length} paquete${filtered.length === 1 ? '' : 's'} para "${searchInput.value.trim()}"`
+          : `Mostrando ${filtered.length} paquete${filtered.length === 1 ? '' : 's'} disponibles`;
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-[#0E1119] border border-[#242B3D] rounded-2xl p-8 text-center space-y-3">
+            <p class="font-display font-bold text-white text-base">No se encontraron paquetes para esa búsqueda</p>
+            <p class="text-xs font-mono text-gray-400">Prueba restaurar la búsqueda recomendada para ver Set A, Set B y Set C.</p>
+            <button type="button" onclick="resetSamuraiSearch()" class="px-4 py-2 rounded-xl bg-[#181d28] hover:bg-[#232b3b] border border-[#2D364C] text-xs font-mono text-[#00E5FF] cursor-pointer">
+              Restaurar "sprites samurai"
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered
+        .map((item) => {
+          const isImported = importedAssetIds.has(item.id);
+          const priceBadgeClass = item.isFree
+            ? 'bg-[#10b981]/15 text-[#10b981] border-[#10b981]/40'
+            : 'bg-[#f59e0b]/15 text-[#f59e0b] border-[#f59e0b]/40';
+
+          return `
+            <article class="group bg-[#0E1119] hover:bg-[#131824] border border-[#242B3D] hover:border-[#00E5FF]/50 rounded-2xl p-4 flex flex-col justify-between transition-all shadow-lg">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <span class="px-2.5 py-1 rounded-lg bg-[#181d28] border border-[#2D364C] font-mono text-xs font-bold text-white">
+                    ${item.code}
+                  </span>
+                  <span class="px-2.5 py-1 rounded-lg border font-mono text-xs font-bold ${priceBadgeClass}">
+                    ${item.priceLabel}
+                  </span>
+                </div>
+
+                <div onclick="openAssetPreviewModal('${item.id}')" class="relative bg-[#090c11] border border-[#1f2736] rounded-xl p-3 flex items-center justify-center h-36 mb-3 overflow-hidden cursor-pointer">
+                  <div class="transform group-hover:scale-105 transition-transform duration-200">
+                    ${item.frames[0].svg}
+                  </div>
+                  <span class="absolute bottom-2 right-2 text-[10px] font-mono px-2 py-0.5 rounded bg-black/70 text-gray-300 border border-[#242B3D]">
+                    ${item.frames.length} poses
+                  </span>
+                </div>
+
+                <h3 class="font-display font-bold text-white text-base leading-snug mb-1">
+                  ${item.title}
+                </h3>
+                <p class="text-[11px] font-mono text-gray-400 mb-4">
+                  ${item.specs}
+                </p>
+              </div>
+
+              <div class="flex items-center gap-2 pt-3 border-t border-[#1e2536]">
+                <button
+                  type="button"
+                  onclick="openAssetPreviewModal('${item.id}')"
+                  class="flex-1 py-2 px-3 rounded-xl bg-[#181d28] hover:bg-[#222938] border border-[#2D364C] text-xs font-display font-bold text-gray-200 transition-colors cursor-pointer"
+                >
+                  Vista previa
+                </button>
+                <button
+                  type="button"
+                  onclick="quickImportAsset('${item.id}')"
+                  class="py-2 px-3 rounded-xl text-xs font-display font-bold transition-all cursor-pointer ${
+                    isImported
+                      ? 'bg-[#10b981]/20 border border-[#10b981]/50 text-[#10b981]'
+                      : 'bg-gradient-to-r from-[#FF3355] to-[#FF8A00] text-white shadow-md shadow-[#FF3355]/20 hover:opacity-95'
+                  }"
+                >
+                  ${isImported ? '✓ Importado' : 'Importar'}
+                </button>
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    function filterMarketplaceAssets() {
+      renderMarketplaceCards();
+    }
+
+    function clearMarketplaceSearch() {
+      const input = document.getElementById('marketplace-search-input');
+      if (input) input.value = '';
+      renderMarketplaceCards();
+    }
+
+    function resetSamuraiSearch() {
+      const input = document.getElementById('marketplace-search-input');
+      if (input) input.value = 'sprites samurai';
+      setMarketplaceCategory('all');
+    }
+
+    function setMarketplaceCategory(category) {
+      currentMarketplaceCategory = category;
+      document.querySelectorAll('.mp-cat-btn').forEach((btn) => {
+        const isActive = btn.getAttribute('data-cat') === category;
+        btn.className = isActive
+          ? 'mp-cat-btn px-3 py-1 rounded-lg text-xs font-mono bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/40 font-semibold cursor-pointer'
+          : 'mp-cat-btn px-3 py-1 rounded-lg text-xs font-mono bg-[#141822] text-gray-400 hover:text-white border border-[#242B3D] cursor-pointer';
+      });
+      renderMarketplaceCards();
+    }
+
+    function updateInventoryBadge() {
+      const badge = document.getElementById('inventory-count-badge');
+      if (badge) badge.textContent = String(importedAssetIds.size);
+    }
+
+    function quickImportAsset(assetId) {
+      const asset = marketplaceCatalog.find((a) => a.id === assetId);
+      if (!asset) return;
+      if (importedAssetIds.has(assetId)) {
+        showToast(`${asset.code} ya está vinculado a "Samurai X"`, 'info');
+        return;
+      }
+      importedAssetIds.add(assetId);
+      updateInventoryBadge();
+      renderMarketplaceCards();
+      showToast(`✓ ${asset.code} (${asset.title}) importado a "Samurai X"`, 'success');
+    }
+
+    function openAssetPreviewModal(assetId) {
+      const asset = marketplaceCatalog.find((a) => a.id === assetId);
+      if (!asset) return;
+
+      currentPreviewAsset = asset;
+      currentPreviewFrameIdx = 0;
+      isPreviewPlaying = true;
+
+      const codeEl = document.getElementById('modal-asset-code');
+      const titleEl = document.getElementById('modal-asset-title');
+      const specsEl = document.getElementById('modal-asset-specs');
+      const descEl = document.getElementById('modal-asset-desc');
+      const priceEl = document.getElementById('modal-asset-price');
+      const importBtn = document.getElementById('modal-asset-import-btn');
+      const toggleBtn = document.getElementById('btn-toggle-modal-anim');
+
+      if (codeEl) codeEl.textContent = asset.code;
+      if (titleEl) titleEl.textContent = asset.title;
+      if (specsEl) specsEl.textContent = asset.specs;
+      if (descEl) descEl.textContent = asset.desc;
+      if (priceEl) priceEl.textContent = asset.priceLabel;
+      if (toggleBtn) toggleBtn.textContent = '⏸ Pausar Loop';
+
+      if (importBtn) {
+        const already = importedAssetIds.has(asset.id);
+        importBtn.textContent = already ? '✓ Ya importado en "Samurai X"' : 'Importar a "Samurai X"';
+      }
+
+      renderPreviewFrame();
+      openModal('modal-asset-preview');
+
+      if (previewAnimTimer) clearInterval(previewAnimTimer);
+      previewAnimTimer = setInterval(() => {
+        if (isPreviewPlaying && currentPreviewAsset) {
+          currentPreviewFrameIdx = (currentPreviewFrameIdx + 1) % currentPreviewAsset.frames.length;
+          renderPreviewFrame();
+        }
+      }, 650);
+    }
+
+    function renderPreviewFrame() {
+      if (!currentPreviewAsset) return;
+      const frame = currentPreviewAsset.frames[currentPreviewFrameIdx];
+      const artworkEl = document.getElementById('modal-preview-artwork');
+      const labelEl = document.getElementById('modal-preview-frame-label');
+      if (artworkEl && frame) artworkEl.innerHTML = frame.svg;
+      if (labelEl && frame) labelEl.textContent = frame.label;
+    }
+
+    function cyclePreviewFrame(step) {
+      if (!currentPreviewAsset) return;
+      const len = currentPreviewAsset.frames.length;
+      currentPreviewFrameIdx = (currentPreviewFrameIdx + step + len) % len;
+      renderPreviewFrame();
+    }
+
+    function togglePreviewPlayback() {
+      isPreviewPlaying = !isPreviewPlaying;
+      const toggleBtn = document.getElementById('btn-toggle-modal-anim');
+      if (toggleBtn) {
+        toggleBtn.textContent = isPreviewPlaying ? '⏸ Pausar Loop' : '▶ Reproducir Loop';
+      }
+    }
+
+    function closeAssetPreviewModal() {
+      if (previewAnimTimer) {
+        clearInterval(previewAnimTimer);
+        previewAnimTimer = null;
+      }
+      closeModal('modal-asset-preview');
+    }
+
+    function importCurrentPreviewAsset() {
+      if (!currentPreviewAsset) return;
+      quickImportAsset(currentPreviewAsset.id);
+      const importBtn = document.getElementById('modal-asset-import-btn');
+      if (importBtn) importBtn.textContent = '✓ Ya importado en "Samurai X"';
+    }
+
+    function openInventoryModal() {
+      const container = document.getElementById('inventory-list-container');
+      if (container) {
+        if (importedAssetIds.size === 0) {
+          container.innerHTML = `
+            <div class="bg-[#0E1119] border border-[#242B3D] rounded-xl p-4 text-center text-xs font-mono text-gray-400">
+              Aún no has importado paquetes. Haz clic en "Importar" en Set A, Set B o Set C.
+            </div>
+          `;
+        } else {
+          container.innerHTML = Array.from(importedAssetIds)
+            .map((id) => {
+              const item = marketplaceCatalog.find((a) => a.id === id);
+              if (!item) return '';
+              return `
+                <div class="flex items-center justify-between bg-[#0E1119] border border-[#242B3D] rounded-xl px-3.5 py-2.5">
+                  <div>
+                    <div class="font-display font-bold text-white text-xs">${item.code} · ${item.title}</div>
+                    <div class="text-[11px] font-mono text-[#10b981]">Vinculado a "Samurai X"</div>
+                  </div>
+                  <span class="text-xs font-mono text-gray-400">${item.priceLabel}</span>
+                </div>
+              `;
+            })
+            .join('');
+        }
+      }
+      openModal('modal-inventory');
+    }
+
+    // =========================================================================
+    // UTILIDADES DE MODALES, NOTIFICACIONES Y TECLADO
+    // =========================================================================
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const colors = {
+        success: 'border-[#10b981]/50 bg-[#0d1f18] text-[#10b981]',
+        error: 'border-[#ff3b30]/50 bg-[#231012] text-[#ff3b30]',
+        info: 'border-[#00E5FF]/50 bg-[#0e1b26] text-[#00E5FF]'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto px-4 py-2.5 rounded-xl border text-xs font-mono shadow-xl transition-all duration-300 ${colors[type] || colors.info}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(6px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeAssetPreviewModal();
+        ['modal-inventory', 'modal-live-test', 'modal-export', 'modal-account'].forEach(closeModal);
+      }
+    });
+
+    // Inicialización segura al cargar el DOM
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof initDefaultFrameData === 'function') initDefaultFrameData();
+      if (typeof initStageInteractions === 'function') initStageInteractions();
+      if (typeof setFrame === 'function') setFrame(12);
+      if (typeof updateLatencyTolerance === 'function') updateLatencyTolerance(60);
+      renderMarketplaceCards();
+      switchView('marketplace');
+    });
+  </script>
+</body>
+</html>
