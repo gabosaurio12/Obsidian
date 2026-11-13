@@ -1,26 +1,3 @@
-## Programación en pares (Pair Programming)
-
-
-## Inspección formal de código (Formal Code Inspection)
-
-
-
-## Revisión de código (Code Review)
-
-
-
-## Walkthrough
-
-
-
-## Revisión Over-the-shoulder
-
-
-
-## Técnicas modernas de inspección de código
-
-
-
 ## Comparación
 
 | Técnica                                                               | Propósito                                                                                                                            | Momento de aplicación                                                                                                                 | Participantes                                                                                                                           | Roles                                                                                                                                                              | Procedimiento                                                                                                                                                                                                                 | Formalidad                                                                                                                             | Preparación                                                                                                                                                                                        | Evidencia                                                                                                                             | Ventajas                                                                                                                                        | Limitaciones                                                                                                                                                                                               | Escenario recomendado                                                                                                                                              |
@@ -55,4 +32,4 @@
 - La revisión integrada con CI combina la evaluación humana con comprobaciones automatizadas
 	- La integración continua no sustituye la revisión por pares
 - La revisión asistida por IA es una práctica complementaria
-	- Las sugerencias generadas deben verificarse mediante razonamiento técnico, revisión humana y pruebas apropiadas
+	- Las sugerencias generadas deben verificarse mediante razonamiento técnico, revisión humana y pruebas apropiadasw
