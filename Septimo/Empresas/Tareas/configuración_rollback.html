@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORGEFIGHT — Motor No-Code de Videojuegos de Pelea</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <script>
+    if (typeof tailwind !== 'undefined') {
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              engine: {
+                bg: '#0B0D12',
+                surface: '#141822',
+                elevated: '#1B202E',
+                border: '#242B3D',
+                crimson: '#FF3355',
+                ember: '#FF8A00',
+                cyan: '#00E5FF',
+                emerald: '#00E676'
+              }
+            },
+            fontFamily: {
+              display: ['"Space Grotesk"', '"Chakra Petch"', 'sans-serif'],
+              sans: ['Inter', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace']
+            }
+          }
+        }
+      };
+    }
+  </script>
+  <style>
+    /* Estética industrial arcade y utilidades visuales del motor */
+    body {
+      background-color: #0B0D12;
+      color: #f3f4f6;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(255, 51, 85, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.07) 0%, transparent 45%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+    }
+
+    .engine-panel {
+      background: linear-gradient(180deg, #141822 0%, #0E1119 100%);
+      border: 1px solid #242B3D;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-primary-forge {
+      background: linear-gradient(135deg, #FF3355 0%, #FF8A00 100%);
+      box-shadow: 0 4px 20px rgba(255, 51, 85, 0.35);
+      transition: all 0.18s ease;
+    }
+    .btn-primary-forge:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 26px rgba(255, 138, 0, 0.45);
+    }
+    .btn-primary-forge:active {
+      transform: translateY(0);
+    }
+
+    /* Slider personalizado para Tolerancia de latencia (0-150ms) */
+    input[type="range"].forge-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    input[type="range"].forge-slider::-webkit-slider-runnable-track {
+      height: 8px;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #00E676 0%, #00E5FF 40%, #FF8A00 75%, #FF3355 100%);
+      border: 1px solid #242B3D;
+    }
+    input[type="range"].forge-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 9999px;
+      background: #ffffff;
+      border: 3px solid #00E5FF;
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.8);
+      margin-top: -7px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    input[type="range"].forge-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.12);
+      box-shadow: 0 0 18px rgba(0, 229, 255, 1);
+    }
+    input[type="range"].forge-slider::-moz-range-track {
+      height: 8px;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #00E676 0%, #00E5FF 40%, #FF8A00 75%, #FF3355 100%);
+      border: 1px solid #242B3D;
+    }
+    input[type="range"].forge-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 9999px;
+      background: #ffffff;
+      border: 3px solid #00E5FF;
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.8);
+    }
+
+    @keyframes hitboxGlow {
+      from { box-shadow: 0 0 8px rgba(255, 51, 85, 0.45); }
+      to { box-shadow: 0 0 18px rgba(255, 51, 85, 0.85); }
+    }
+    .hitbox-pulse {
+      animation: hitboxGlow 1.4s infinite alternate;
+    }
+
+    /* Scrollbar sutil estilo herramienta pro */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0B0D12; }
+    ::-webkit-scrollbar-thumb { background: #242B3D; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #374151; }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col items-center justify-center p-3 sm:p-6 selection:bg-[#FF3355] selection:text-white">
+
+  <!-- Notificación Toast flotante -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Contenedor principal centrado tipo Ventana de Motor -->
+  <div class="w-full max-w-4xl">
+    <main class="engine-panel rounded-2xl overflow-hidden transition-all duration-300">
+      
+      <!-- 1. BARRA SUPERIOR (HEADER) CON NAVEGACIÓN ENTRE LAS 3 VISTAS -->
+      <header class="bg-[#0E1119] border-b border-[#242B3D] px-5 sm:px-7 py-3.5 flex flex-wrap items-center justify-between gap-3">
+        <!-- Identidad FORGEFIGHT + Título contextual dinámico -->
+        <div class="flex items-center gap-3">
+          <button onclick="switchView('multiplayer')" class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF3355] to-[#FF8A00] p-[1px] shadow-lg shadow-[#FF3355]/25 hover:scale-105 transition-transform cursor-pointer" title="FORGEFIGHT Engine">
+            <div class="w-full h-full bg-[#141822] rounded-[11px] flex items-center justify-center">
+              <svg class="w-5 h-5 text-[#FF8A00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" />
+              </svg>
+            </div>
+          </button>
+
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-[10px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded bg-[#1A202E] text-[#FF8A00] border border-[#FF8A00]/30 font-bold">FORGEFIGHT</span>
+              <h1 id="header-main-title" class="font-display font-bold text-lg sm:text-xl tracking-wide text-white">
+                Multijugador en línea
+              </h1>
+            </div>
+            <p id="header-subtitle" class="text-[11px] text-gray-400 font-mono">GGPO-CORE v2.4 · Listo · Sincronización Determinista 60 FPS</p>
+          </div>
+        </div>
+
+        <!-- Selector de vistas unificado + Mi cuenta -->
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <nav class="flex items-center bg-[#0B0D12] p-1 rounded-xl border border-[#242B3D]" aria-label="Vistas del motor">
+            <button id="nav-multiplayer" onclick="switchView('multiplayer')" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold bg-[#1B2232] text-[#00E5FF] border border-[#00E5FF]/40 shadow-sm transition-all cursor-pointer">
+              Multijugador
+            </button>
+            <button id="nav-combat" onclick="switchView('combat-editor')" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold text-gray-400 hover:text-white border border-transparent transition-all cursor-pointer">
+              Editor combate
+            </button>
+            <button id="nav-dashboard" onclick="switchView('dashboard')" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold text-gray-400 hover:text-white border border-transparent transition-all cursor-pointer">
+              Mis proyectos
+            </button>
+          </nav>
+
+          <button id="btn-account" onclick="openModal('modal-account')" class="flex items-center gap-2 bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-gray-200 px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer">
+            <span class="w-2 h-2 rounded-full bg-[#00E676] animate-pulse"></span>
+            <span class="hidden sm:inline">Mi cuenta</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 1 (POR DEFECTO): MULTIJUGADOR EN LÍNEA                        -->
+      <!-- =================================================================== -->
+      <div id="view-multiplayer" class="p-5 sm:p-8 space-y-6">
+        
+        <!-- Encabezado interno del panel wireframe -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#242B3D]">
+          <div class="flex items-center gap-2.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#00E676] shadow-[0_0_10px_#00E676]"></span>
+            <h2 class="font-display font-bold text-xl sm:text-2xl text-white tracking-tight">Multijugador en línea</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="netcode-status-pill" class="text-[11px] font-mono px-3 py-1 rounded-full bg-[#00E676]/10 text-[#00E676] border border-[#00E676]/35 font-semibold">
+              GGPO-CORE v2.4 · Listo
+            </span>
+          </div>
+        </div>
+
+        <!-- TARJETA PRINCIPAL CON LAS 4 FILAS DEL WIREFRAME -->
+        <div class="bg-[#0E1119] border border-[#242B3D] rounded-2xl p-5 sm:p-7 space-y-6 shadow-inner">
+          
+          <!-- FILA 1: Modo: (●) Activar Rollback Netcode -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#1D2332]">
+            <div class="space-y-1">
+              <div class="text-xs font-mono uppercase tracking-wider text-gray-400">Modo de sincronización P2P</div>
+              <button type="button" onclick="toggleNetcodeMode()" class="group flex items-center gap-3 text-left focus:outline-none cursor-pointer">
+                <!-- Radio estilizado (●) -->
+                <span id="rollback-radio-outer" class="w-6 h-6 rounded-full border-2 border-[#00E676] bg-[#00E676]/15 flex items-center justify-center shadow-[0_0_12px_rgba(0,230,118,0.35)] transition-all">
+                  <span id="rollback-radio-inner" class="w-3 h-3 rounded-full bg-[#00E676] transition-transform scale-100"></span>
+                </span>
+                <span class="font-display font-bold text-base sm:text-lg text-white group-hover:text-[#00E5FF] transition-colors">
+                  Modo: <span id="netcode-mode-label" class="text-[#00E676]">Activar Rollback Netcode</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- Insignia informativa de comportamiento de red -->
+            <div class="flex items-center gap-2 self-start sm:self-center">
+              <button type="button" onclick="toggleNetcodeMode()" class="px-3 py-1.5 rounded-xl bg-[#141822] hover:bg-[#1B2130] border border-[#242B3D] text-xs font-mono text-gray-300 transition-colors cursor-pointer">
+                Alternar a <span id="netcode-alt-label" class="text-[#FF8A00]">Delay-based</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- FILA 2: Tolerancia de latencia: [slider] 0–150ms -->
+          <div class="space-y-3 pb-5 border-b border-[#1D2332]">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label for="latency-slider" class="font-display font-bold text-base sm:text-lg text-white flex items-center gap-2">
+                <span>Tolerancia de latencia:</span>
+              </label>
+              <div class="flex items-center gap-2.5 font-mono">
+                <span id="latency-value-badge" class="px-3 py-1 rounded-lg bg-[#00E5FF]/15 border border-[#00E5FF]/40 text-[#00E5FF] font-bold text-sm">
+                  60 ms
+                </span>
+                <span id="rollback-frames-badge" class="px-2.5 py-1 rounded-lg bg-[#141822] border border-[#242B3D] text-gray-300 text-xs">
+                  Máx: <strong class="text-white">4f</strong> rollback @ 60FPS
+                </span>
+              </div>
+            </div>
+
+            <!-- Control deslizante 0 - 150ms -->
+            <div class="pt-1">
+              <input id="latency-slider" type="range" min="0" max="150" step="5" value="60" oninput="updateLatencyTolerance(this.value)" class="forge-slider w-full" />
+              <div class="flex justify-between text-[11px] font-mono text-gray-500 mt-2 select-none">
+                <span>0ms (LAN / Local)</span>
+                <span class="text-gray-400">50ms (3f)</span>
+                <span class="text-gray-400">100ms (6f)</span>
+                <span>150ms (Máx. tolerancia)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- FILA 3: Región de servidores: [Auto ▾] -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#1D2332]">
+            <div>
+              <label for="server-region-select" class="font-display font-bold text-base sm:text-lg text-white block">
+                Región de servidores:
+              </label>
+              <span class="text-xs font-mono text-gray-400">Relé NAT Traversal + Matchmaking regional</span>
+            </div>
+
+            <div class="relative w-full sm:w-80">
+              <select id="server-region-select" onchange="updateServerRegion(this.value)" class="w-full appearance-none bg-[#141822] hover:bg-[#191F2C] border border-[#2E374E] focus:border-[#00E5FF] rounded-xl px-4 py-3 pr-10 font-mono text-xs sm:text-sm text-white focus:outline-none transition-colors cursor-pointer">
+                <option value="auto" data-ping="28" data-jitter="2" selected>Auto (Mejor ruta · 28 ms)</option>
+                <option value="na-east" data-ping="42" data-jitter="3">Norteamérica Este (US-East · 42 ms)</option>
+                <option value="na-west" data-ping="54" data-jitter="4">Norteamérica Oeste (US-West · 54 ms)</option>
+                <option value="latam-north" data-ping="34" data-jitter="3">Latinoamérica Norte (MX / Central · 34 ms)</option>
+                <option value="sa-south" data-ping="88" data-jitter="6">Sudamérica (BR-South · 88 ms)</option>
+                <option value="eu-central" data-ping="112" data-jitter="5">Europa Central (EU-Central · 112 ms)</option>
+                <option value="ap-tokyo" data-ping="138" data-jitter="7">Asia-Pacífico (JP-Tokyo · 138 ms)</option>
+              </select>
+              <span class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#00E5FF] font-mono text-sm">▾</span>
+            </div>
+          </div>
+
+          <!-- FILA 4: [Probar conexión de ejemplo] -->
+          <div class="pt-1 flex flex-wrap items-center justify-between gap-4">
+            <button id="btn-test-connection" type="button" onclick="toggleNetworkSimulation()" class="btn-primary-forge text-white font-display font-bold text-sm sm:text-base px-6 py-3.5 rounded-xl flex items-center gap-2.5 cursor-pointer">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+              </svg>
+              <span id="btn-test-conn-label">Probar conexión de ejemplo</span>
+            </button>
+
+            <div class="text-xs font-mono text-gray-400 flex items-center gap-4">
+              <span>Ping estimado: <strong id="summary-base-ping" class="text-[#00E676]">28 ms</strong></span>
+              <span>Input Delay fijo: <strong id="summary-input-delay" class="text-white">1f</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL DESPLEGABLE DE DIAGNÓSTICO P2P EN VIVO -->
+        <section id="network-sim-panel" class="hidden bg-[#0B0D12] border border-[#242B3D] rounded-2xl p-5 sm:p-6 space-y-5 transition-all">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#1D2332]">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#00E5FF] animate-ping"></span>
+              <h3 class="font-display font-bold text-base sm:text-lg text-white">Telemetría P2P en vivo: P1 (Local) ↔ P2 (Rival remoto)</h3>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button type="button" onclick="injectLagSpike()" class="px-3 py-1.5 rounded-xl bg-[#FF3355]/15 hover:bg-[#FF3355]/25 border border-[#FF3355]/50 text-[#FF3355] font-mono text-xs font-bold transition-all active:scale-95 cursor-pointer">
+                ⚡ Inyectar pico de lag (+80ms)
+              </button>
+              <button type="button" onclick="stopNetworkSimulation()" class="px-3 py-1.5 rounded-xl bg-[#141822] hover:bg-[#1E2536] border border-[#242B3D] text-gray-300 font-mono text-xs transition-colors cursor-pointer">
+                ■ Detener prueba
+              </button>
+            </div>
+          </div>
+
+          <!-- Métricas numéricas instantáneas -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-[#141822] border border-[#242B3D] rounded-xl p-3">
+              <div class="text-[10px] font-mono uppercase text-gray-400">Ping Round-Trip</div>
+              <div id="live-metric-ping" class="font-display font-bold text-xl text-[#00E5FF] mt-0.5">28 ms</div>
+            </div>
+            <div class="bg-[#141822] border border-[#242B3D] rounded-xl p-3">
+              <div class="text-[10px] font-mono uppercase text-gray-400">Jitter</div>
+              <div id="live-metric-jitter" class="font-display font-bold text-xl text-white mt-0.5">2 ms</div>
+            </div>
+            <div class="bg-[#141822] border border-[#242B3D] rounded-xl p-3">
+              <div id="live-metric-rb-title" class="text-[10px] font-mono uppercase text-gray-400">Rollback Frames</div>
+              <div id="live-metric-rollback" class="font-display font-bold text-xl text-[#FF8A00] mt-0.5">2f</div>
+            </div>
+            <div class="bg-[#141822] border border-[#242B3D] rounded-xl p-3">
+              <div class="text-[10px] font-mono uppercase text-gray-400">Estabilidad</div>
+              <div id="live-metric-fps" class="font-display font-bold text-xl text-[#00E676] mt-0.5">60.0 FPS</div>
+            </div>
+          </div>
+
+          <!-- Osciloscopio en Canvas en tiempo real -->
+          <div class="relative bg-[#0E1119] border border-[#242B3D] rounded-xl p-3">
+            <div class="flex items-center justify-between text-[11px] font-mono text-gray-400 mb-2">
+              <span>OSCILOSCOPIO DE LATENCIA (ms) vs UMBRAL DE TOLERANCIA</span>
+              <span id="sim-event-log" class="text-[#00E676]">Sincronización fluida sin tirones</span>
+            </div>
+            <div class="w-full h-36">
+              <canvas id="net-oscilloscope" class="w-full h-full block rounded-lg"></canvas>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 2: EDITOR DE COMBATE — "PUÑETAZO FUERTE"                      -->
+      <!-- =================================================================== -->
+      <div id="view-combat-editor" class="hidden p-5 sm:p-7 space-y-6">
+        
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+          
+          <!-- COLUMNA IZQUIERDA: VISOR DE SPRITE Y CAJAS HIT / HURT -->
+          <div class="md:col-span-6 flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-mono uppercase tracking-wider text-gray-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-[#FF8A00]"></span> Visor del sprite del golpe
+              </span>
+              <span id="phase-badge" class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#FF3355]/20 text-[#FF3355] border border-[#FF3355]/40">
+                FASE: ACTIVO
+              </span>
+            </div>
+
+            <!-- Lienzo interactivo del sprite + cajas -->
+            <div id="sprite-stage" class="relative w-full aspect-[4/3] bg-[#0B0D12] border-2 border-[#242B3D] rounded-xl overflow-hidden select-none shadow-inner">
+              <!-- Cuadrícula de precisión de píxeles -->
+              <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: linear-gradient(to right, #374151 1px, transparent 1px), linear-gradient(to bottom, #374151 1px, transparent 1px); background-size: 24px 24px;"></div>
+              <!-- Línea de suelo y eje de origen -->
+              <div class="absolute bottom-7 inset-x-0 h-[2px] bg-[#2d3748] pointer-events-none"></div>
+              <div class="absolute bottom-7 left-[34%] w-3 h-3 -ml-1.5 translate-y-1.5 border border-[#FF8A00] rotate-45 pointer-events-none" title="Eje de origen (0,0)"></div>
+
+              <!-- SPRITE SVG DINÁMICO DEL LUCHADOR SEGÚN EL FRAME ACTUAL -->
+              <div id="fighter-sprite-wrapper" class="absolute inset-0 flex items-end justify-center pb-7 pointer-events-none transition-transform duration-75">
+                <!-- Renderizado dinámicamente por JS según Startup / Active / Recovery -->
+              </div>
+
+              <!-- CAPA DE CAJAS DE COLISIÓN (HITBOXES & HURTBOXES) -->
+              <div id="boxes-layer" class="absolute inset-0"></div>
+
+              <!-- Indicador modo dibujo -->
+              <div id="draw-mode-banner" class="hidden absolute top-2.5 inset-x-3 bg-[#141822]/95 border border-[#FF8A00] text-[#FF8A00] text-[11px] font-mono px-3 py-1.5 rounded-lg flex items-center justify-between shadow-lg pointer-events-none">
+                <span>✎ Arrastra sobre el visor para crear caja <strong id="draw-banner-type">HIT</strong></span>
+                <span>ESC cancela</span>
+              </div>
+
+              <!-- Coordenadas / leyenda inferior -->
+              <div class="absolute bottom-1.5 inset-x-3 flex items-center justify-between text-[10px] font-mono text-gray-500 pointer-events-none">
+                <span>Origen: (0, 0) • Escala 2x</span>
+                <span id="box-count-label">1 Hurtbox • 1 Hitbox</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA: CONTROLES DE FRAME Y CAJAS -->
+          <div class="md:col-span-6 bg-[#141822] border border-[#242B3D] rounded-xl p-4 sm:p-5 space-y-5">
+            
+            <!-- Control 1: Frame actual: [12] ◀ ▶ -->
+            <div class="pb-4 border-b border-[#242B3D]">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <label class="text-sm font-display font-bold text-gray-200 flex items-center gap-2">
+                  <span>Frame actual:</span>
+                  <span id="frame-number-box" class="inline-flex items-center justify-center min-w-[44px] px-2.5 py-1 rounded-lg bg-[#0B0D12] border border-[#FF8A00]/60 text-[#FF8A00] font-mono font-bold text-base shadow-inner">
+                    12
+                  </span>
+                  <span class="text-xs font-mono text-gray-500">/ 24f</span>
+                </label>
+
+                <!-- Botones ◀ ▶ y Play -->
+                <div class="flex items-center gap-1.5">
+                  <button onclick="stepFrame(-1)" title="Frame anterior (←)" class="w-9 h-9 rounded-lg bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-white font-bold flex items-center justify-center transition-colors active:scale-95 cursor-pointer">
+                    ◀
+                  </button>
+                  <button id="btn-play-anim" onclick="togglePlayAnimation()" title="Reproducir / Pausar (Espacio)" class="px-3 h-9 rounded-lg bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-xs font-mono text-gray-200 flex items-center gap-1 transition-colors cursor-pointer">
+                    <span id="play-icon">▶</span>
+                  </button>
+                  <button onclick="stepFrame(1)" title="Frame siguiente (→)" class="w-9 h-9 rounded-lg bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-white font-bold flex items-center justify-center transition-colors active:scale-95 cursor-pointer">
+                    ▶
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Control 2: Tipo de caja: (Hit)(Hurt) -->
+            <div class="pb-4 border-b border-[#242B3D] space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-display font-bold text-gray-200">Tipo de caja:</span>
+                <span class="text-[11px] font-mono text-gray-400">Haz clic para seleccionar</span>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-2.5">
+                <!-- Radio/Toggle (Hit) -->
+                <button id="btn-type-hit" onclick="setBoxType('hit')" class="flex items-center justify-center gap-2.5 py-2.5 px-3 rounded-xl border-2 border-[#FF3355] bg-[#FF3355]/15 text-white font-display font-bold text-sm transition-all cursor-pointer">
+                  <span id="dot-hit" class="w-3.5 h-3.5 rounded-full bg-[#FF3355] ring-2 ring-[#FF3355]/40"></span>
+                  <span>(Hit) Golpe</span>
+                </button>
+
+                <!-- Radio/Toggle (Hurt) -->
+                <button id="btn-type-hurt" onclick="setBoxType('hurt')" class="flex items-center justify-center gap-2.5 py-2.5 px-3 rounded-xl border border-[#2D364C] bg-[#0B0D12] hover:border-[#00E5FF]/50 text-gray-300 font-display font-bold text-sm transition-all cursor-pointer">
+                  <span id="dot-hurt" class="w-3.5 h-3.5 rounded-full border-2 border-[#00E5FF] bg-transparent"></span>
+                  <span>(Hurt) Cuerpo</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Control 3: [Dibujar caja] [Borrar] -->
+            <div class="space-y-3">
+              <div class="grid grid-cols-2 gap-2.5">
+                <button id="btn-draw-box" onclick="toggleDrawMode()" class="py-2.5 px-3 rounded-xl bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer">
+                  <svg class="w-4 h-4 text-[#FF8A00]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                  </svg>
+                  <span id="draw-btn-text">Dibujar caja</span>
+                </button>
+
+                <button id="btn-delete-box" onclick="deleteSelectedBox()" class="py-2.5 px-3 rounded-xl bg-[#1A202E] hover:bg-[#FF3355]/20 border border-[#2D364C] hover:border-[#FF3355]/50 text-gray-200 hover:text-red-300 font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer">
+                  <svg class="w-4 h-4 text-[#FF3355]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                  <span>Borrar</span>
+                </button>
+              </div>
+
+              <!-- Inspector compacto de la caja seleccionada -->
+              <div id="selected-box-inspector" class="bg-[#0B0D12] border border-[#242B3D] rounded-lg px-3 py-2 flex items-center justify-between text-[11px] font-mono text-gray-400">
+                <span>Caja activa: <strong id="insp-type" class="text-[#FF3355]">HITBOX #1</strong></span>
+                <span id="insp-coords">X:145 Y:72 W:76 H:46</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- LÍNEA DE TIEMPO (TIMELINE DE FRAMES: Startup / Activo / Recovery) -->
+        <section class="bg-[#141822] border border-[#242B3D] rounded-xl p-4 sm:p-5 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h2 class="text-sm font-display font-bold text-gray-200 tracking-wide">
+              Línea de tiempo:
+            </h2>
+            <div class="flex flex-wrap items-center gap-3 text-[11px] font-mono">
+              <span class="flex items-center gap-1.5 text-[#FF8A00]">
+                <span class="inline-block w-2.5 h-2.5 rounded-sm bg-[#FF8A00]"></span> [■] Startup (1–8f)
+              </span>
+              <span class="flex items-center gap-1.5 text-[#FF3355]">
+                <span class="inline-block w-2.5 h-2.5 rounded-sm bg-[#FF3355] border border-red-300"></span> [▦] Activo (9–14f)
+              </span>
+              <span class="flex items-center gap-1.5 text-[#00E5FF]">
+                <span class="inline-block w-2.5 h-2.5 rounded-sm bg-[#1E293B] border border-[#00E5FF]/50"></span> [ ] Recovery (15–24f)
+              </span>
+            </div>
+          </div>
+
+          <!-- Celdas interactivas de frames -->
+          <div class="overflow-x-auto pb-1">
+            <div id="timeline-cells" class="grid grid-cols-12 sm:grid-cols-24 gap-1 min-w-[540px]">
+              <!-- Generado dinámicamente por JS (24 frames) -->
+            </div>
+          </div>
+
+          <!-- Etiquetas de fase alineadas debajo de la línea de tiempo -->
+          <div class="grid grid-cols-3 text-center text-xs font-mono pt-1 border-t border-[#242B3D]">
+            <div class="text-[#FF8A00] font-semibold">Startup <span class="text-gray-500 text-[10px]">(8f)</span></div>
+            <div class="text-[#FF3355] font-semibold">Activo <span class="text-gray-500 text-[10px]">(6f)</span></div>
+            <div class="text-[#00E5FF] font-semibold">Recovery <span class="text-gray-500 text-[10px]">(10f)</span></div>
+          </div>
+        </section>
+
+        <!-- BOTONERA INFERIOR: [Guardar] [Probar en vivo] [Exportar] -->
+        <footer class="pt-1 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+            <button onclick="saveMoveData()" class="flex-1 sm:flex-initial bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-white font-display font-bold text-xs sm:text-sm px-5 py-3 rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer">
+              <svg class="w-4 h-4 text-[#00E676]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Guardar</span>
+            </button>
+
+            <button onclick="openLiveTestModal()" class="flex-1 sm:flex-initial btn-primary-forge text-white font-display font-bold text-xs sm:text-sm px-6 py-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+              </svg>
+              <span>Probar en vivo</span>
+            </button>
+
+            <button onclick="openExportModal()" class="flex-1 sm:flex-initial bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-gray-200 font-display font-bold text-xs sm:text-sm px-5 py-3 rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer">
+              <svg class="w-4 h-4 text-[#00E5FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span>Exportar</span>
+            </button>
+          </div>
+
+          <span id="save-status-text" class="text-[11px] font-mono text-gray-500">
+            Daño: 110 • Ventaja Hit: +4f • Block: -3f
+          </span>
+        </footer>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 3: DASHBOARD DE PROYECTOS FORGEFIGHT                          -->
+      <!-- =================================================================== -->
+      <div id="view-dashboard" class="hidden p-5 sm:p-8 space-y-7">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#242B3D]">
+          <div>
+            <h2 class="font-display text-xl font-bold text-white uppercase">Mis proyectos:</h2>
+            <p class="text-xs text-gray-400 font-mono">Selecciona un proyecto para editar sus movimientos o configurar su red</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="switchView('combat-editor')" class="bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-white font-display font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer">
+              Editor "Puñetazo fuerte"
+            </button>
+            <button onclick="switchView('multiplayer')" class="btn-primary-forge text-white font-display font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer">
+              Multijugador en línea
+            </button>
+          </div>
+        </div>
+
+        <div id="projects-list" class="space-y-3"></div>
+      </div>
+
+      <!-- Pie de estado técnico -->
+      <div class="bg-[#090c11] border-t border-[#1f2736] px-5 sm:px-7 py-2 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-gray-500">
+        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2 h-2 rounded-full bg-[#00E676]"></span> FORGEFIGHT Engine • GGPO Rollback & Hitbox Solver v2.4</span>
+        <span>60.0 FPS • Determinista</span>
+      </div>
+    </main>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 1: PROBAR EN VIVO (SALA DE ENTRENAMIENTO CON HITBOXES REALES)     -->
+  <!-- ======================================================================= -->
+  <div id="modal-live-test" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#141822] border border-[#242B3D] rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl">
+      <div class="bg-[#0E1119] px-5 py-3.5 border-b border-[#242B3D] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#FF3355] animate-ping"></span>
+          <h3 class="font-display font-bold text-white text-base">Prueba en vivo — "Puñetazo fuerte"</h3>
+        </div>
+        <button onclick="closeModal('modal-live-test')" class="text-gray-400 hover:text-white px-2 py-1 rounded-lg bg-[#1A202E] text-xs font-mono cursor-pointer">✕ Cerrar</button>
+      </div>
+
+      <div class="p-5 space-y-4">
+        <div class="bg-[#0B0D12] border border-[#242B3D] rounded-xl p-4 space-y-4">
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex-1">
+              <div class="flex justify-between text-xs font-mono mb-1">
+                <span class="text-[#FF8A00] font-bold">P1: RYUJIN</span>
+                <span class="text-gray-400">1000 / 1000</span>
+              </div>
+              <div class="h-3 bg-[#1A202E] rounded-full overflow-hidden p-0.5">
+                <div class="h-full w-full bg-gradient-to-r from-[#FF8A00] to-[#00E676] rounded-full"></div>
+              </div>
+            </div>
+            <div class="font-display font-bold text-2xl text-white px-2">∞</div>
+            <div class="flex-1">
+              <div class="flex justify-between text-xs font-mono mb-1">
+                <span id="dummy-hp-label" class="text-gray-400">1000 / 1000</span>
+                <span class="text-[#00E5FF] font-bold">CPU DUMMY</span>
+              </div>
+              <div class="h-3 bg-[#1A202E] rounded-full overflow-hidden p-0.5 flex justify-end">
+                <div id="dummy-hp-bar" class="h-full w-full bg-gradient-to-l from-[#00E5FF] to-[#FF3355] rounded-full transition-all duration-200"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative h-44 bg-gradient-to-b from-[#141822] to-[#0B0D12] border border-[#1E2536] rounded-xl overflow-hidden flex items-end justify-between px-10 pb-5">
+            <div id="live-status-banner" class="absolute top-3 left-1/2 -translate-x-1/2 text-xs font-mono px-3 py-1 rounded-full bg-[#1A202E] border border-[#2D364C] text-gray-300">
+              Pulsa "Ejecutar Puñetazo fuerte" para testear
+            </div>
+
+            <div id="live-p1-char" class="flex flex-col items-center transition-transform duration-100">
+              <span class="text-[10px] font-mono text-[#FF8A00] mb-1">P1</span>
+              <div class="w-14 h-24 rounded-xl bg-[#FF8A00]/20 border-2 border-[#FF8A00] flex items-center justify-center relative">
+                <span class="font-display font-bold text-white text-xs">RYU</span>
+                <div id="live-punch-fist" class="hidden absolute -right-10 top-6 w-11 h-7 rounded-md bg-[#FF3355]/40 border-2 border-[#FF3355] flex items-center justify-center text-[9px] font-mono text-white font-bold">
+                  HIT
+                </div>
+              </div>
+            </div>
+
+            <div id="live-hit-spark" class="hidden text-center animate-bounce">
+              <div class="font-display font-bold text-lg text-[#FF3355]">¡IMPACT!</div>
+              <div id="live-frame-adv" class="text-[11px] font-mono text-[#00E676]">110 DMG • +4f</div>
+            </div>
+
+            <div id="live-p2-char" class="flex flex-col items-center transition-transform duration-100">
+              <span class="text-[10px] font-mono text-[#00E5FF] mb-1">DUMMY</span>
+              <div class="w-14 h-24 rounded-xl bg-[#00E5FF]/20 border-2 border-[#00E5FF] flex items-center justify-center">
+                <span class="font-display font-bold text-white text-xs">CPU</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="triggerLivePunch(false)" class="btn-primary-forge text-white font-display font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer">
+              👊 Ejecutar "Puñetazo fuerte"
+            </button>
+            <button onclick="triggerLivePunch(true)" class="bg-[#1A202E] hover:bg-[#232B3D] border border-[#2D364C] text-[#00E5FF] font-display font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer">
+              🛡️ Probar en bloqueo
+            </button>
+          </div>
+          <button onclick="resetLiveDummy()" class="text-xs font-mono text-gray-400 hover:text-white px-3 py-2 cursor-pointer">
+            Reiniciar vida
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 2: EXPORTAR JSON DE FRAME DATA                                    -->
+  <!-- ======================================================================= -->
+  <div id="modal-export" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#141822] border border-[#242B3D] rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl">
+      <div class="bg-[#0E1119] px-5 py-3.5 border-b border-[#242B3D] flex items-center justify-between">
+        <h3 class="font-display font-bold text-white text-base">Exportar Frame Data — "Puñetazo fuerte"</h3>
+        <button onclick="closeModal('modal-export')" class="text-gray-400 hover:text-white px-2 py-1 rounded-lg bg-[#1A202E] text-xs font-mono cursor-pointer">✕</button>
+      </div>
+      <div class="p-5 space-y-4">
+        <p class="text-xs text-gray-400">Estructura JSON compilada lista para importar en cualquier personaje de FORGEFIGHT:</p>
+        <textarea id="export-json-textarea" readonly rows="10" class="w-full bg-[#0B0D12] border border-[#242B3D] rounded-xl p-3 font-mono text-[11px] text-[#00E676] focus:outline-none"></textarea>
+        <div class="flex justify-end gap-2">
+          <button onclick="copyExportJson()" class="btn-primary-forge text-white font-display font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer">
+            Copiar JSON
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 3: MI CUENTA                                                      -->
+  <!-- ======================================================================= -->
+  <div id="modal-account" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#141822] border border-[#242B3D] rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl">
+      <div class="bg-[#0E1119] px-5 py-3.5 border-b border-[#242B3D] flex items-center justify-between">
+        <h3 class="font-display font-bold text-white text-base">Mi cuenta — Creador</h3>
+        <button onclick="closeModal('modal-account')" class="text-gray-400 hover:text-white px-2 py-1 rounded-lg bg-[#1A202E] text-xs font-mono cursor-pointer">✕</button>
+      </div>
+      <div class="p-5 space-y-3 text-xs font-mono text-gray-300">
+        <div class="bg-[#0B0D12] border border-[#242B3D] rounded-xl p-3.5 space-y-1">
+          <div class="text-white font-bold text-sm">DevArcade_MX</div>
+          <div class="text-gray-400">Licencia: FORGEFIGHT Studio Pro</div>
+          <div class="text-[#00E676]">● Sincronización en la nube activa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- LÓGICA INTERACTIVA DE FORGEFIGHT                                        -->
+  <!-- ======================================================================= -->
+  <script>
+    // =========================================================================
+    // NAVEGACIÓN ENTRE VISTAS
+    // =========================================================================
+    function switchView(view) {
+      const mpView = document.getElementById('view-multiplayer');
+      const editorView = document.getElementById('view-combat-editor');
+      const dashView = document.getElementById('view-dashboard');
+
+      const navMp = document.getElementById('nav-multiplayer');
+      const navCombat = document.getElementById('nav-combat');
+      const navDash = document.getElementById('nav-dashboard');
+
+      const headerTitle = document.getElementById('header-main-title');
+      const headerSubtitle = document.getElementById('header-subtitle');
+
+      const inactiveBtnClass = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold text-gray-400 hover:text-white border border-transparent transition-all cursor-pointer';
+      const activeBtnClass = 'px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-display font-bold bg-[#1B2232] text-[#00E5FF] border border-[#00E5FF]/40 shadow-sm transition-all cursor-pointer';
+
+      mpView.classList.add('hidden');
+      editorView.classList.add('hidden');
+      dashView.classList.add('hidden');
+
+      navMp.className = inactiveBtnClass;
+      navCombat.className = inactiveBtnClass;
+      navDash.className = inactiveBtnClass;
+
+      if (view === 'multiplayer') {
+        mpView.classList.remove('hidden');
+        navMp.className = activeBtnClass;
+        headerTitle.innerHTML = 'Multijugador en línea';
+        headerSubtitle.textContent = 'GGPO-CORE v2.4 · Listo · Sincronización Determinista 60 FPS';
+        if (netSimInterval) resizeOscilloscope();
+      } else if (view === 'combat-editor') {
+        editorView.classList.remove('hidden');
+        navCombat.className = activeBtnClass;
+        headerTitle.innerHTML = 'Editor de combate — <span class="text-[#FF8A00]">"Puñetazo fuerte"</span>';
+        headerSubtitle.textContent = 'Proyecto "Dragón Puño" • Luchador: Ryujin • 60 FPS Frame Data';
+      } else if (view === 'dashboard') {
+        dashView.classList.remove('hidden');
+        navDash.className = activeBtnClass;
+        headerTitle.innerHTML = 'Mis proyectos';
+        headerSubtitle.textContent = 'Hub de desarrollo No-Code • 2 proyectos activos';
+        renderDashboardProjects();
+      }
+    }
+
+    function renderDashboardProjects() {
+      const list = document.getElementById('projects-list');
+      list.innerHTML = `
+        <div class="bg-[#141822] border border-[#242B3D] rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="font-display font-bold text-white">• Proyecto "Dragón Puño"</div>
+            <div class="text-xs font-mono text-gray-400 mt-0.5">Movimiento activo: "Puñetazo fuerte" (24f) · Rollback Netcode</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="switchView('combat-editor')" class="btn-primary-forge text-white font-display font-bold text-xs px-4 py-2 rounded-xl cursor-pointer">Editar Combate</button>
+            <button onclick="switchView('multiplayer')" class="bg-[#1A202E] border border-[#2D364C] text-[#00E5FF] font-display font-bold text-xs px-3.5 py-2 rounded-xl cursor-pointer">Red P2P</button>
+          </div>
+        </div>
+        <div class="bg-[#141822] border border-[#242B3D] rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="font-display font-bold text-white">• Proyecto "Samurai X"</div>
+            <div class="text-xs font-mono text-gray-400 mt-0.5">12 luchadores • 6 escenarios • Crossplay activo</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="switchView('combat-editor')" class="bg-[#1A202E] border border-[#2D364C] text-gray-200 font-display font-bold text-xs px-4 py-2 rounded-xl cursor-pointer">Abrir</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // LÓGICA INTERACTIVA DE LA VISTA: MULTIJUGADOR EN LÍNEA
+    // =========================================================================
+    let isRollbackEnabled = true;
+    let latencyToleranceMs = 60;
+    let baseRegionPing = 28;
+    let baseRegionJitter = 2;
+    let netSimInterval = null;
+    let lagSpikeRemainingTicks = 0;
+    let pingHistory = [];
+
+    function toggleNetcodeMode() {
+      isRollbackEnabled = !isRollbackEnabled;
+      const radioOuter = document.getElementById('rollback-radio-outer');
+      const radioInner = document.getElementById('rollback-radio-inner');
+      const modeLabel = document.getElementById('netcode-mode-label');
+      const altLabel = document.getElementById('netcode-alt-label');
+      const statusPill = document.getElementById('netcode-status-pill');
+      const inputDelayText = document.getElementById('summary-input-delay');
+      const rbMetricTitle = document.getElementById('live-metric-rb-title');
+
+      if (isRollbackEnabled) {
+        radioOuter.className = 'w-6 h-6 rounded-full border-2 border-[#00E676] bg-[#00E676]/15 flex items-center justify-center shadow-[0_0_12px_rgba(0,230,118,0.35)] transition-all';
+        radioInner.className = 'w-3 h-3 rounded-full bg-[#00E676] transition-transform scale-100';
+        modeLabel.textContent = 'Activar Rollback Netcode';
+        modeLabel.className = 'text-[#00E676]';
+        altLabel.textContent = 'Delay-based';
+        statusPill.textContent = 'GGPO-CORE v2.4 · Listo';
+        statusPill.className = 'text-[11px] font-mono px-3 py-1 rounded-full bg-[#00E676]/10 text-[#00E676] border border-[#00E676]/35 font-semibold';
+        inputDelayText.textContent = '1f';
+        if (rbMetricTitle) rbMetricTitle.textContent = 'Rollback Frames';
+        showToast('Modo Rollback Netcode activado (Predicción determinista)', 'success');
+      } else {
+        radioOuter.className = 'w-6 h-6 rounded-full border-2 border-[#FF8A00] bg-[#FF8A00]/15 flex items-center justify-center transition-all';
+        radioInner.className = 'w-3 h-3 rounded-full bg-[#FF8A00] transition-transform scale-75';
+        modeLabel.textContent = 'Delay-based Clásico (Sin Rollback)';
+        modeLabel.className = 'text-[#FF8A00]';
+        altLabel.textContent = 'Rollback Netcode';
+        statusPill.textContent = 'DELAY-SYNC · Espera de paquetes';
+        statusPill.className = 'text-[11px] font-mono px-3 py-1 rounded-full bg-[#FF8A00]/15 text-[#FF8A00] border border-[#FF8A00]/40 font-semibold';
+        const delayFrames = Math.max(2, Math.ceil(baseRegionPing / 16.67));
+        inputDelayText.textContent = `${delayFrames}f (Variable)`;
+        if (rbMetricTitle) rbMetricTitle.textContent = 'Input Delay Añadido';
+        showToast('Cambiado a Delay-based: los picos de ping congelarán los frames', 'info');
+      }
+    }
+
+    function updateLatencyTolerance(val) {
+      latencyToleranceMs = parseInt(val, 10);
+      const maxRollbackFrames = Math.round(latencyToleranceMs / 16.67);
+      document.getElementById('latency-value-badge').textContent = `${latencyToleranceMs} ms`;
+      document.getElementById('rollback-frames-badge').innerHTML = `Máx: <strong class="text-white">${maxRollbackFrames}f</strong> rollback @ 60FPS`;
+      if (netSimInterval) drawOscilloscope();
+    }
+
+    function updateServerRegion(regionKey) {
+      const select = document.getElementById('server-region-select');
+      const selectedOption = select.options[select.selectedIndex];
+      baseRegionPing = parseInt(selectedOption.getAttribute('data-ping'), 10) || 28;
+      baseRegionJitter = parseInt(selectedOption.getAttribute('data-jitter'), 10) || 2;
+
+      const summaryPing = document.getElementById('summary-base-ping');
+      summaryPing.textContent = `${baseRegionPing} ms`;
+      summaryPing.className = baseRegionPing <= 55 ? 'text-[#00E676]' : (baseRegionPing <= 95 ? 'text-[#FF8A00]' : 'text-[#FF3355]');
+
+      if (!isRollbackEnabled) {
+        const delayFrames = Math.max(2, Math.ceil(baseRegionPing / 16.67));
+        document.getElementById('summary-input-delay').textContent = `${delayFrames}f (Variable)`;
+      }
+      showToast(`Región actualizada: ${selectedOption.text.split('·')[0].trim()}`, 'info');
+    }
+
+    function toggleNetworkSimulation() {
+      if (netSimInterval) {
+        stopNetworkSimulation();
+      } else {
+        startNetworkSimulation();
+      }
+    }
+
+    function startNetworkSimulation() {
+      const panel = document.getElementById('network-sim-panel');
+      const btnLabel = document.getElementById('btn-test-conn-label');
+      panel.classList.remove('hidden');
+      btnLabel.textContent = 'Simulación de red activa...';
+
+      pingHistory = Array(42).fill(baseRegionPing);
+      resizeOscilloscope();
+      showToast('Iniciando diagnóstico P2P entre P1 y P2...', 'success');
+
+      netSimInterval = setInterval(() => {
+        let spike = 0;
+        if (lagSpikeRemainingTicks > 0) {
+          spike = 75 + Math.round(Math.random() * 18);
+          lagSpikeRemainingTicks--;
+        }
+
+        const jitterDelta = Math.round((Math.random() * 2 - 1) * baseRegionJitter);
+        const currentPing = Math.max(8, baseRegionPing + jitterDelta + spike);
+        const currentJitter = Math.abs(jitterDelta) + (spike > 0 ? 14 : 1);
+
+        pingHistory.push(currentPing);
+        if (pingHistory.length > 42) pingHistory.shift();
+
+        document.getElementById('live-metric-ping').textContent = `${currentPing} ms`;
+        document.getElementById('live-metric-jitter').textContent = `${currentJitter} ms`;
+
+        const logEl = document.getElementById('sim-event-log');
+        const fpsEl = document.getElementById('live-metric-fps');
+        const rbEl = document.getElementById('live-metric-rollback');
+
+        if (isRollbackEnabled) {
+          const effectivePing = Math.min(currentPing, latencyToleranceMs);
+          const rbFrames = Math.max(1, Math.round(effectivePing / 16.67));
+          rbEl.textContent = `${rbFrames}f`;
+          rbEl.className = 'font-display font-bold text-xl text-[#FF8A00] mt-0.5';
+          fpsEl.textContent = '60.0 FPS';
+          fpsEl.className = 'font-display font-bold text-xl text-[#00E676] mt-0.5';
+
+          if (spike > 0) {
+            logEl.textContent = `⚡ Pico detectado: re-simulando ${rbFrames} frames sin congelar pantalla`;
+            logEl.className = 'text-[#FF8A00] font-bold';
+          } else {
+            logEl.textContent = 'Sincronización fluida · 1f input delay fijo';
+            logEl.className = 'text-[#00E676]';
+          }
+        } else {
+          const delayFrames = Math.max(2, Math.ceil(currentPing / 16.67));
+          rbEl.textContent = `${delayFrames}f delay`;
+          rbEl.className = 'font-display font-bold text-xl text-[#FF3355] mt-0.5';
+
+          if (spike > 0) {
+            fpsEl.textContent = '41.5 FPS';
+            fpsEl.className = 'font-display font-bold text-xl text-[#FF3355] mt-0.5';
+            logEl.textContent = '⚠️ Stutter / Congelamiento esperando paquete del rival';
+            logEl.className = 'text-[#FF3355] font-bold';
+          } else {
+            fpsEl.textContent = '59.8 FPS';
+            fpsEl.className = 'font-display font-bold text-xl text-[#FF8A00] mt-0.5';
+            logEl.textContent = `Input lag variable (${delayFrames} frames de retraso)`;
+            logEl.className = 'text-[#FF8A00]';
+          }
+        }
+
+        drawOscilloscope();
+      }, 180);
+    }
+
+    function stopNetworkSimulation() {
+      if (netSimInterval) {
+        clearInterval(netSimInterval);
+        netSimInterval = null;
+      }
+      document.getElementById('network-sim-panel').classList.add('hidden');
+      document.getElementById('btn-test-conn-label').textContent = 'Probar conexión de ejemplo';
+      showToast('Prueba de conexión finalizada', 'info');
+    }
+
+    function injectLagSpike() {
+      lagSpikeRemainingTicks = 10;
+      showToast('Inyectando pico de latencia (+80ms) en la conexión...', 'info');
+    }
+
+    function resizeOscilloscope() {
+      const canvas = document.getElementById('net-oscilloscope');
+      if (!canvas || !canvas.parentElement) return;
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      drawOscilloscope();
+    }
+
+    function drawOscilloscope() {
+      const canvas = document.getElementById('net-oscilloscope');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      const maxScaleMs = 180;
+
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 3; i++) {
+        const y = (h / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+
+      const tolY = h - Math.min(1, latencyToleranceMs / maxScaleMs) * (h - 16) - 8;
+      ctx.save();
+      ctx.strokeStyle = '#FF8A00';
+      ctx.setLineDash([5, 5]);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, tolY);
+      ctx.lineTo(w, tolY);
+      ctx.stroke();
+      ctx.restore();
+
+      if (pingHistory.length < 2) return;
+
+      ctx.beginPath();
+      const stepX = w / (pingHistory.length - 1);
+      pingHistory.forEach((val, idx) => {
+        const x = idx * stepX;
+        const y = h - Math.min(1, val / maxScaleMs) * (h - 16) - 8;
+        if (idx === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+
+      ctx.strokeStyle = isRollbackEnabled ? '#00E5FF' : '#FF3355';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, isRollbackEnabled ? 'rgba(0, 229, 255, 0.25)' : 'rgba(255, 51, 85, 0.25)');
+      grad.addColorStop(1, 'rgba(11, 13, 18, 0)');
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    window.addEventListener('resize', () => {
+      if (netSimInterval) resizeOscilloscope();
+    });
+
+    // =========================================================================
+    // LÓGICA INTERACTIVA DEL EDITOR DE COMBATE ("PUÑETAZO FUERTE")
+    // =========================================================================
+    const TOTAL_FRAMES = 24;
+    let currentFrame = 12;
+    let activeBoxType = 'hit'; // 'hit' | 'hurt'
+    let selectedBoxId = 'hit-12-main';
+    let isDrawingMode = false;
+    let isPlaying = false;
+    let playInterval = null;
+    let frameBoxes = {};
+
+    function initDefaultFrameData() {
+      for (let f = 1; f <= TOTAL_FRAMES; f++) {
+        if (f <= 8) {
+          // Startup
+          frameBoxes[f] = [
+            { id: `hurt-${f}-1`, type: 'hurt', x: 26, y: 26, w: 22, h: 62 }
+          ];
+        } else if (f <= 14) {
+          // Activo (Frames 9 - 14)
+          frameBoxes[f] = [
+            { id: `hurt-${f}-1`, type: 'hurt', x: 28, y: 28, w: 24, h: 60 },
+            { id: `hit-${f}-main`, type: 'hit', x: 48, y: 34, w: 28, h: 18 }
+          ];
+        } else {
+          // Recovery
+          frameBoxes[f] = [
+            { id: `hurt-${f}-1`, type: 'hurt', x: 27, y: 27, w: 23, h: 61 }
+          ];
+        }
+      }
+    }
+
+    function getPhaseInfo(frame) {
+      if (frame <= 8) return { key: 'startup', label: 'FASE: STARTUP', color: 'text-[#FF8A00]', bg: 'bg-[#FF8A00]/20 border-[#FF8A00]/40' };
+      if (frame <= 14) return { key: 'active', label: 'FASE: ACTIVO', color: 'text-[#FF3355]', bg: 'bg-[#FF3355]/20 border-[#FF3355]/40' };
+      return { key: 'recovery', label: 'FASE: RECOVERY', color: 'text-[#00E5FF]', bg: 'bg-[#00E5FF]/20 border-[#00E5FF]/40' };
+    }
+
+    function setFrame(f) {
+      currentFrame = Math.max(1, Math.min(TOTAL_FRAMES, f));
+      document.getElementById('frame-number-box').textContent = currentFrame;
+
+      const phase = getPhaseInfo(currentFrame);
+      const badge = document.getElementById('phase-badge');
+      badge.textContent = phase.label;
+      badge.className = `text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full border ${phase.color} ${phase.bg}`;
+
+      renderFighterSprite(phase.key);
+      renderTimeline();
+      renderBoxes();
+    }
+
+    function stepFrame(delta) {
+      let next = currentFrame + delta;
+      if (next > TOTAL_FRAMES) next = 1;
+      if (next < 1) next = TOTAL_FRAMES;
+      setFrame(next);
+    }
+
+    function togglePlayAnimation() {
+      isPlaying = !isPlaying;
+      document.getElementById('play-icon').textContent = isPlaying ? '❚❚' : '▶';
+      if (isPlaying) {
+        playInterval = setInterval(() => stepFrame(1), 85);
+      } else {
+        clearInterval(playInterval);
+        playInterval = null;
+      }
+    }
+
+    function renderFighterSprite(phaseKey) {
+      const wrapper = document.getElementById('fighter-sprite-wrapper');
+      if (phaseKey === 'startup') {
+        wrapper.innerHTML = `
+          <svg class="w-48 h-48 -ml-10" viewBox="0 0 160 160" fill="none">
+            <circle cx="62" cy="44" r="14" fill="#1E293B" stroke="#FF8A00" stroke-width="2.5"/>
+            <path d="M48 40L34 34L42 44" fill="#FF3355"/>
+            <path d="M52 60L72 60L68 104L48 104Z" fill="#0F172A" stroke="#FF8A00" stroke-width="2.5"/>
+            <path d="M52 68L36 82L46 90" stroke="#F8FAFC" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="48" cy="90" r="6" fill="#FF8A00"/>
+            <path d="M52 104L42 142M66 104L78 142" stroke="#334155" stroke-width="9" stroke-linecap="round"/>
+          </svg>
+        `;
+      } else if (phaseKey === 'active') {
+        wrapper.innerHTML = `
+          <svg class="w-56 h-48 ml-4" viewBox="0 0 180 160" fill="none">
+            <path d="M95 52C125 46 155 54 170 64C152 74 125 78 95 72Z" fill="url(#punchTrail)" opacity="0.75"/>
+            <defs>
+              <linearGradient id="punchTrail" x1="95" y1="62" x2="170" y2="62" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FF3355" stop-opacity="0.1"/>
+                <stop offset="1" stop-color="#FF8A00" stop-opacity="0.95"/>
+              </linearGradient>
+            </defs>
+            <circle cx="78" cy="44" r="14" fill="#1E293B" stroke="#FF3355" stroke-width="2.5"/>
+            <path d="M64 40L44 32L56 45" fill="#FF3355"/>
+            <path d="M62 60L86 60L80 104L56 104Z" fill="#0F172A" stroke="#FF3355" stroke-width="2.5"/>
+            <path d="M82 65L146 65" stroke="#F8FAFC" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="150" cy="65" r="8" fill="#FF3355" stroke="#FFF" stroke-width="2"/>
+            <path d="M60 104L42 142M76 104L98 142" stroke="#334155" stroke-width="9" stroke-linecap="round"/>
+          </svg>
+        `;
+      } else {
+        wrapper.innerHTML = `
+          <svg class="w-48 h-48 -ml-4" viewBox="0 0 160 160" fill="none">
+            <circle cx="68" cy="46" r="14" fill="#1E293B" stroke="#00E5FF" stroke-width="2.5"/>
+            <path d="M56 62L78 62L74 104L52 104Z" fill="#0F172A" stroke="#00E5FF" stroke-width="2.5"/>
+            <path d="M74 68L92 78L80 88" stroke="#CBD5E1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M56 104L46 142M70 104L84 142" stroke="#334155" stroke-width="9" stroke-linecap="round"/>
+          </svg>
+        `;
+      }
+    }
+
+    function renderTimeline() {
+      const container = document.getElementById('timeline-cells');
+      let html = '';
+      for (let f = 1; f <= TOTAL_FRAMES; f++) {
+        const isCurrent = f === currentFrame;
+        let symbol = '[ ]';
+        let cellStyle = 'bg-[#0B0D12] border-[#242B3D] text-[#00E5FF]/70 hover:border-[#00E5FF]/50';
+
+        if (f <= 8) {
+          symbol = '[■]';
+          cellStyle = 'bg-[#FF8A00]/15 border-[#FF8A00]/40 text-[#FF8A00] hover:bg-[#FF8A00]/25';
+        } else if (f <= 14) {
+          symbol = '[▦]';
+          cellStyle = 'bg-[#FF3355]/20 border-[#FF3355]/50 text-[#FF3355] hover:bg-[#FF3355]/30';
+        }
+
+        const activeRing = isCurrent ? 'ring-2 ring-white scale-105 z-10 font-bold' : '';
+        html += `
+          <button onclick="setFrame(${f})" title="Frame ${f}" class="py-1.5 rounded text-[10px] font-mono border transition-all cursor-pointer flex flex-col items-center justify-center ${cellStyle} ${activeRing}">
+            <span>${symbol}</span>
+            <span class="text-[9px] opacity-75">${f}</span>
+          </button>
+        `;
+      }
+      container.innerHTML = html;
+    }
+
+    function renderBoxes() {
+      const layer = document.getElementById('boxes-layer');
+      const boxes = frameBoxes[currentFrame] || [];
+      if (!boxes.some(b => b.id === selectedBoxId)) {
+        selectedBoxId = boxes.length ? boxes[boxes.length - 1].id : null;
+      }
+
+      let hurtCount = 0;
+      let hitCount = 0;
+      layer.innerHTML = boxes.map(box => {
+        if (box.type === 'hurt') hurtCount++;
+        else hitCount++;
+
+        const isSel = box.id === selectedBoxId;
+        const isHit = box.type === 'hit';
+        const colorClasses = isHit
+          ? 'border-[#FF3355] bg-[#FF3355]/25 hitbox-pulse'
+          : 'border-[#00E5FF] bg-[#00E5FF]/20';
+        const selRing = isSel ? 'ring-2 ring-white' : '';
+
+        return `
+          <div onclick="selectBox('${box.id}', event)"
+               style="left:${box.x}%; top:${box.y}%; width:${box.w}%; height:${box.h}%;"
+               class="absolute border-2 rounded-sm cursor-pointer transition-shadow ${colorClasses} ${selRing}">
+            <span class="absolute -top-4 left-0 text-[9px] font-mono font-bold px-1 rounded ${isHit ? 'bg-[#FF3355] text-white' : 'bg-[#00E5FF] text-black'}">
+              ${isHit ? 'HIT' : 'HURT'}
+            </span>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('box-count-label').textContent = `${hurtCount} Hurtbox • ${hitCount} Hitbox`;
+      updateSelectedBoxInspector();
+    }
+
+    function selectBox(id, ev) {
+      if (ev) ev.stopPropagation();
+      selectedBoxId = id;
+      renderBoxes();
+    }
+
+    function updateSelectedBoxInspector() {
+      const boxes = frameBoxes[currentFrame] || [];
+      const box = boxes.find(b => b.id === selectedBoxId);
+      const typeEl = document.getElementById('insp-type');
+      const coordsEl = document.getElementById('insp-coords');
+
+      if (!box) {
+        typeEl.textContent = 'NINGUNA';
+        typeEl.className = 'text-gray-500';
+        coordsEl.textContent = '—';
+        return;
+      }
+      typeEl.textContent = box.type === 'hit' ? 'HITBOX' : 'HURTBOX';
+      typeEl.className = box.type === 'hit' ? 'text-[#FF3355]' : 'text-[#00E5FF]';
+      coordsEl.textContent = `X:${Math.round(box.x * 3)} Y:${Math.round(box.y * 2)} W:${Math.round(box.w * 3)} H:${Math.round(box.h * 2)}`;
+    }
+
+    function setBoxType(type) {
+      activeBoxType = type;
+      const btnHit = document.getElementById('btn-type-hit');
+      const btnHurt = document.getElementById('btn-type-hurt');
+      const dotHit = document.getElementById('dot-hit');
+      const dotHurt = document.getElementById('dot-hurt');
+
+      if (type === 'hit') {
+        btnHit.className = 'flex items-center justify-center gap-2.5 py-2.5 px-3 rounded-xl border-2 border-[#FF3355] bg-[#FF3355]/15 text-white font-display font-bold text-sm transition-all cursor-pointer';
+        dotHit.className = 'w-3.5 h-3.5 rounded-full bg-[#FF3355] ring-2 ring-[#FF3355]/40';
+        btnHurt.className = 'flex items-center justify-center gap-2.5 py-2.5 px-3 rounded-xl border border-[#2D364C] bg-[#0B0D12] hover:border-[#00E5FF]/50 text-gray-300 font-display font-bold text-sm transition-all cursor-pointer';
+        dotHurt.className = 'w-3.5 h-3.5 rounded-full border-2 border-[#00E5FF] bg-transparent';
+      } else {
+        btnHurt.className = 'flex items-center justify-center gap-2.5 py-2.5 px-3 rounded-xl border-2 border-[#00E5FF] bg-[#00E5FF]/15 text-white font-display font-bold text-sm transition-all cursor-pointer';
+        dotHurt.className = 'w-3.5 h-3.5 rounded-full bg-[#00E5FF] ring-2 ring-[#00E5FF]/40';
+        btnHit.className = 'flex items-center justify-center gap-2.5 py-2.5 px-3 rounded-xl border border-[#2D364C] bg-[#0B0D12] hover:border-[#FF3355]/50 text-gray-300 font-display font-bold text-sm transition-all cursor-pointer';
+        dotHit.className = 'w-3.5 h-3.5 rounded-full border-2 border-[#FF3355] bg-transparent';
+      }
+      document.getElementById('draw-banner-type').textContent = type.toUpperCase();
+    }
+
+    function toggleDrawMode() {
+      isDrawingMode = !isDrawingMode;
+      const banner = document.getElementById('draw-mode-banner');
+      const btnText = document.getElementById('draw-btn-text');
+      const stage = document.getElementById('sprite-stage');
+
+      if (isDrawingMode) {
+        banner.classList.remove('hidden');
+        btnText.textContent = 'Dibujando...';
+        stage.classList.add('cursor-crosshair');
+      } else {
+        banner.classList.add('hidden');
+        btnText.textContent = 'Dibujar caja';
+        stage.classList.remove('cursor-crosshair');
+      }
+    }
+
+    function deleteSelectedBox() {
+      if (!selectedBoxId) return;
+      const list = frameBoxes[currentFrame] || [];
+      frameBoxes[currentFrame] = list.filter(b => b.id !== selectedBoxId);
+      selectedBoxId = null;
+      renderBoxes();
+      showToast('Caja eliminada del frame ' + currentFrame, 'info');
+    }
+
+    function initStageInteractions() {
+      const stage = document.getElementById('sprite-stage');
+      let startX = 0;
+      let startY = 0;
+      let dragging = false;
+
+      stage.addEventListener('pointerdown', (e) => {
+        if (!isDrawingMode) return;
+        const rect = stage.getBoundingClientRect();
+        startX = ((e.clientX - rect.left) / rect.width) * 100;
+        startY = ((e.clientY - rect.top) / rect.height) * 100;
+        dragging = true;
+      });
+
+      stage.addEventListener('pointerup', (e) => {
+        if (!isDrawingMode || !dragging) return;
+        dragging = false;
+        const rect = stage.getBoundingClientRect();
+        const endX = ((e.clientX - rect.left) / rect.width) * 100;
+        const endY = ((e.clientY - rect.top) / rect.height) * 100;
+
+        const w = Math.max(8, Math.abs(endX - startX));
+        const h = Math.max(8, Math.abs(endY - startY));
+        const x = Math.min(90, Math.min(startX, endX));
+        const y = Math.min(85, Math.min(startY, endY));
+
+        const newId = `${activeBoxType}-${currentFrame}-${Date.now()}`;
+        if (!frameBoxes[currentFrame]) frameBoxes[currentFrame] = [];
+        frameBoxes[currentFrame].push({ id: newId, type: activeBoxType, x, y, w, h });
+        selectedBoxId = newId;
+        toggleDrawMode();
+        renderBoxes();
+        showToast(`Nueva caja ${activeBoxType.toUpperCase()} creada en frame ${currentFrame}`, 'success');
+      });
+    }
+
+    function saveMoveData() {
+      showToast('Frame Data de "Puñetazo fuerte" guardado correctamente', 'success');
+    }
+
+    // =========================================================================
+    // MODALES DE PRUEBA EN VIVO Y EXPORTACIÓN JSON
+    // =========================================================================
+    let dummyHp = 1000;
+
+    function openLiveTestModal() {
+      openModal('modal-live-test');
+    }
+
+    function triggerLivePunch(isBlocked) {
+      const p1 = document.getElementById('live-p1-char');
+      const fist = document.getElementById('live-punch-fist');
+      const spark = document.getElementById('live-hit-spark');
+      const p2 = document.getElementById('live-p2-char');
+      const banner = document.getElementById('live-status-banner');
+      const advLabel = document.getElementById('live-frame-adv');
+
+      p1.style.transform = 'translateX(36px)';
+      fist.classList.remove('hidden');
+
+      setTimeout(() => {
+        spark.classList.remove('hidden');
+        p2.style.transform = 'translateX(14px)';
+        if (isBlocked) {
+          dummyHp = Math.max(0, dummyHp - 15);
+          banner.textContent = 'GUARDIA • Chip Damage: 15 • Ventaja: -3f';
+          advLabel.textContent = 'BLOCKED • -3f';
+          advLabel.className = 'text-[11px] font-mono text-[#00E5FF]';
+        } else {
+          dummyHp = Math.max(0, dummyHp - 110);
+          banner.textContent = '¡IMPACTO LIMPIO! • Daño: 110 • Ventaja: +4f';
+          advLabel.textContent = '110 DMG • +4f';
+          advLabel.className = 'text-[11px] font-mono text-[#00E676]';
+        }
+        document.getElementById('dummy-hp-label').textContent = `${dummyHp} / 1000`;
+        document.getElementById('dummy-hp-bar').style.width = `${(dummyHp / 1000) * 100}%`;
+      }, 110);
+
+      setTimeout(() => {
+        p1.style.transform = 'translateX(0)';
+        p2.style.transform = 'translateX(0)';
+        fist.classList.add('hidden');
+        spark.classList.add('hidden');
+      }, 480);
+    }
+
+    function resetLiveDummy() {
+      dummyHp = 1000;
+      document.getElementById('dummy-hp-label').textContent = '1000 / 1000';
+      document.getElementById('dummy-hp-bar').style.width = '100%';
+      document.getElementById('live-status-banner').textContent = 'Vida reiniciada • Listo';
+    }
+
+    function openExportModal() {
+      const payload = {
+        engine: 'FORGEFIGHT v2.4',
+        moveName: 'Puñetazo fuerte',
+        totalFrames: TOTAL_FRAMES,
+        phases: { startup: [1, 8], active: [9, 14], recovery: [15, 24] },
+        netcode: {
+          rollbackEnabled: isRollbackEnabled,
+          latencyToleranceMs,
+          region: document.getElementById('server-region-select').value
+        },
+        frameBoxes: frameBoxes[currentFrame]
+      };
+      document.getElementById('export-json-textarea').value = JSON.stringify(payload, null, 2);
+      openModal('modal-export');
+    }
+
+    function copyExportJson() {
+      const textarea = document.getElementById('export-json-textarea');
+      textarea.select();
+      document.execCommand('copy');
+      showToast('JSON copiado al portapapeles', 'success');
+    }
+
+    // =========================================================================
+    // UTILIDADES DE MODALES, TOASTS Y TECLADO
+    // =========================================================================
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const borderCol = type === 'success' ? 'border-[#00E676] text-emerald-200' : 'border-[#FF8A00] text-orange-200';
+      toast.className = `bg-[#141822] border ${borderCol} px-4 py-2.5 rounded-xl shadow-xl text-xs font-mono flex items-center gap-2 transition-all duration-300`;
+      toast.innerHTML = `<span>${type === 'success' ? '✓' : '⚡'}</span><span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (!document.getElementById('view-combat-editor').classList.contains('hidden')) {
+        if (e.key === 'ArrowLeft') stepFrame(-1);
+        if (e.key === 'ArrowRight') stepFrame(1);
+        if (e.key === ' ') {
+          e.preventDefault();
+          togglePlayAnimation();
+        }
+      }
+      if (e.key === 'Escape') {
+        if (isDrawingMode) toggleDrawMode();
+        ['modal-live-test', 'modal-export', 'modal-account'].forEach(closeModal);
+      }
+    });
+
+    // Inicialización al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+      initDefaultFrameData();
+      initStageInteractions();
+      setFrame(12);
+      updateLatencyTolerance(60);
+      switchView('multiplayer');
+    });
+  </script>
+</body>
+</html>

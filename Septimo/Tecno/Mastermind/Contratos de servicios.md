@@ -34,4 +34,6 @@
 |                             |                                                                     | `void SumAPoint(string username)`                                         |
 | **IMatchCallbackService**   | Realizar las funciones callback de la partida                       | `void InSumAPointCallback(string username)`                               |
 |                             |                                                                     | `void OnSetWinnerCallback(string username)`                               |
+| **IAvatarService**          | Realizar funciones realizadas a un avatar (Subir y Descargar)       | `Avatar GetAvatarByUsername(string username)`                             |
+|                             |                                                                     | `void UploadAvatar(Avatar avatar)`                                        |
 

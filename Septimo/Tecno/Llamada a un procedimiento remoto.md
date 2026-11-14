@@ -21,7 +21,7 @@
 	- Si *suma(a,b)* es un RP entonces
 		- Se coloca una copia de *suma*, llamada *resguardo del cliente (Client Stub)*. Para realizar la llamada a esta copia, se realiza de la forma habitual mediante un señalamiento al núcleo
 		- A diferencia de la original, no coloca los parámetros en registros ni le pide al núcleo que le proporcione los datos
-		- Empaca los parámetros en un mensaje y le pide al núclo que envíe el mensaje al servidor
+		- Empaca los parámetros en un mensaje y le pide al núcleo que envíe el mensaje al servidor
 		- Después de llamar a SEND, el resguardo del cliente llama a RECEIVE y se bloquea hasta que regrese la respuesta
 
 ## Transferencia de parámetros
@@ -31,7 +31,7 @@
 
 ## Conexión dinámica (Binding)
 
-- Cómo los clintes se conectan o localizan el servidor=
+- Cómo los clintes se conectan o localizan el servidor
 - Se pueden optar por varias soluciones:
 	- Los servidores se registran en una entidad autoritativa central (CA)
 - El cliente conozca la máquina con la que debe conectar y proveer un "demonio" en esa máquina que conozca toda la información de los servidores (técnica de RPC y RMI)

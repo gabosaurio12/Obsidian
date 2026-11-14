@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORGEFIGHT — Motor No-Code de Videojuegos de Pelea</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            engine: {
+              bg: '#0f1115',
+              surface: '#161920',
+              elevated: '#1d222b',
+              border: '#282e3b',
+              crimson: '#ff3b30',
+              ember: '#ff6b00',
+              cyan: '#00d2ff',
+              emerald: '#10b981'
+            }
+          },
+          fontFamily: {
+            display: ['"Chakra Petch"', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* Estética industrial arcade y utilidades visuales del motor */
+    body {
+      background-color: #0f1115;
+      color: #f3f4f6;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(255, 59, 48, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(0, 210, 255, 0.05) 0%, transparent 45%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+    }
+
+    .engine-panel {
+      background: linear-gradient(180deg, #161920 0%, #12151b 100%);
+      border: 1px solid #282e3b;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .btn-primary-forge {
+      background: linear-gradient(135deg, #ff3b30 0%, #ff6b00 100%);
+      box-shadow: 0 4px 18px rgba(255, 59, 48, 0.35);
+      transition: all 0.18s ease;
+    }
+    .btn-primary-forge:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 107, 0, 0.48);
+    }
+    .btn-primary-forge:active {
+      transform: translateY(0);
+    }
+
+    .hitbox-pulse {
+      animation: hitboxGlow 1.4s infinite alternate;
+    }
+    @keyframes hitboxGlow {
+      from { box-shadow: 0 0 8px rgba(255, 59, 48, 0.5), inset 0 0 8px rgba(255, 59, 48, 0.3); }
+      to { box-shadow: 0 0 18px rgba(255, 59, 48, 0.9), inset 0 0 14px rgba(255, 59, 48, 0.5); }
+    }
+
+    .hurtbox-grid {
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 210, 255, 0.14),
+        rgba(0, 210, 255, 0.14) 6px,
+        rgba(0, 210, 255, 0.04) 6px,
+        rgba(0, 210, 255, 0.04) 12px
+      );
+    }
+
+    .hitbox-grid {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 59, 48, 0.25),
+        rgba(255, 59, 48, 0.25) 6px,
+        rgba(255, 59, 48, 0.08) 6px,
+        rgba(255, 59, 48, 0.08) 12px
+      );
+    }
+
+    /* Scrollbar sutil estilo herramienta pro */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f1115; }
+    ::-webkit-scrollbar-thumb { background: #2d3444; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #465066; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-engine-crimson selection:text-white">
+
+  <!-- Toast / Notificación flotante no intrusiva -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- CONTENEDOR PRINCIPAL DEL MOTOR -->
+  <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10 flex-1 flex flex-col justify-center">
+    
+    <!-- VENTANA MAESTRA (Estética de ventana de aplicación desktop) -->
+    <main class="engine-panel rounded-2xl overflow-hidden transition-all duration-300">
+      
+      <!-- 1. BARRA SUPERIOR (HEADER) — Fiel al wireframe: FORGEFIGHT a la izquierda, [Mi cuenta] a la derecha -->
+      <header class="bg-[#11141a] border-b border-engine-border px-5 sm:px-8 py-4 flex items-center justify-between gap-4">
+        <!-- Identidad Visual FORGEFIGHT -->
+        <button onclick="switchView('dashboard')" class="flex items-center gap-3.5 text-left group focus:outline-none" title="Volver al inicio del motor">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-engine-crimson to-engine-ember p-[1px] shadow-lg shadow-engine-crimson/20 group-hover:scale-105 transition-transform">
+            <div class="w-full h-full bg-[#13161d] rounded-[11px] flex items-center justify-center relative overflow-hidden">
+              <!-- Emblema SVG de puño/yunque estilizado -->
+              <svg class="w-6 h-6 text-engine-ember" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-display font-bold text-xl sm:text-2xl tracking-wider text-white">FORGE<span class="text-transparent bg-clip-text bg-gradient-to-r from-engine-crimson to-engine-ember">FIGHT</span></span>
+              <span class="hidden sm:inline-block text-[10px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded bg-engine-elevated text-engine-cyan border border-engine-cyan/30">v2.4 NO-CODE</span>
+            </div>
+            <p class="text-[11px] text-gray-400 font-mono hidden sm:block">2D/2.5D Fighting Game Engine • Rollback Ready</p>
+          </div>
+        </button>
+
+        <!-- Botón [Mi cuenta] -->
+        <div class="relative">
+          <button id="btn-account" onclick="openModal('modal-account')" class="flex items-center gap-2.5 bg-engine-elevated hover:bg-[#252b37] border border-engine-border hover:border-gray-600 text-gray-200 px-3.5 py-2 rounded-xl text-sm font-medium transition-all cursor-pointer">
+            <span class="w-2 h-2 rounded-full bg-engine-emerald animate-pulse"></span>
+            <span class="w-6 h-6 rounded-lg bg-gradient-to-tr from-engine-crimson to-engine-ember flex items-center justify-center text-xs font-bold text-white font-display">DEV</span>
+            <span>Mi cuenta</span>
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- =================================================================== -->
+      <!-- VISTA A: DASHBOARD PRINCIPAL (Estructura exacta del wireframe)      -->
+      <!-- =================================================================== -->
+      <div id="view-dashboard" class="p-5 sm:p-8 space-y-8">
+        
+        <!-- 2. SECCIÓN PRINCIPAL: "Mis proyectos:" -->
+        <section aria-labelledby="heading-projects">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div class="flex items-center gap-2.5">
+              <span class="w-1.5 h-5 rounded-full bg-gradient-to-b from-engine-crimson to-engine-ember"></span>
+              <h1 id="heading-projects" class="font-display text-lg sm:text-xl font-bold tracking-wide text-white uppercase">Mis proyectos:</h1>
+              <span id="project-count-badge" class="text-xs font-mono bg-engine-elevated text-gray-400 px-2 py-0.5 rounded-md border border-engine-border">2 activos</span>
+            </div>
+            <button onclick="openNewProjectQuick()" class="text-xs font-mono text-engine-cyan hover:text-white transition-colors flex items-center gap-1 cursor-pointer">
+              <span>+ Crear proyecto vacío</span>
+            </button>
+          </div>
+
+          <!-- Lista de proyectos (Renderizada dinámicamente desde JS) -->
+          <div id="projects-list" class="space-y-3">
+            <!-- Los proyectos "Dragón Puño" y "Samurai X" se inyectan aquí -->
+          </div>
+
+          <!-- Acción destacada debajo de la lista: Botón [+ Nuevo personaje] -->
+          <div class="mt-5 pt-2 flex flex-wrap items-center justify-between gap-4">
+            <button onclick="openModal('modal-new-character')" class="btn-primary-forge text-white font-display font-bold tracking-wide px-5 py-3 rounded-xl text-sm sm:text-base flex items-center gap-2.5 cursor-pointer">
+              <span class="bg-black/25 w-6 h-6 rounded-lg flex items-center justify-center text-lg leading-none">+</span>
+              <span>Nuevo personaje</span>
+            </button>
+            <span class="text-xs font-mono text-gray-500">Asistente visual sin código: Sprites • Hitboxes • Inputs</span>
+          </div>
+        </section>
+
+        <!-- Separador técnico sutil -->
+        <div class="border-t border-engine-border/80"></div>
+
+        <!-- 3. SECCIÓN INFERIOR: "Accesos rápidos:" -->
+        <section aria-labelledby="heading-quick-access">
+          <div class="flex items-center gap-2.5 mb-4">
+            <span class="w-1.5 h-5 rounded-full bg-engine-cyan"></span>
+            <h2 id="heading-quick-access" class="font-display text-lg sm:text-xl font-bold tracking-wide text-white uppercase">Accesos rápidos:</h2>
+          </div>
+
+          <!-- Tres botones principales bien diferenciados: [Marketplace] [Academia] [Publicar juego] -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            
+            <!-- [Marketplace] -->
+            <button onclick="openModal('modal-marketplace')" class="group text-left bg-engine-elevated/70 hover:bg-engine-elevated border border-engine-border hover:border-engine-ember/60 p-4 rounded-xl transition-all flex items-center gap-4 cursor-pointer">
+              <div class="w-11 h-11 rounded-xl bg-engine-ember/10 border border-engine-ember/30 flex items-center justify-center text-engine-ember group-hover:scale-110 transition-transform shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-display font-bold text-white group-hover:text-engine-ember transition-colors text-base">Marketplace</div>
+                <p class="text-xs text-gray-400 mt-0.5">Sprites, hitsparks y escenarios</p>
+              </div>
+            </button>
+
+            <!-- [Academia] -->
+            <button onclick="openModal('modal-academia')" class="group text-left bg-engine-elevated/70 hover:bg-engine-elevated border border-engine-border hover:border-engine-cyan/60 p-4 rounded-xl transition-all flex items-center gap-4 cursor-pointer">
+              <div class="w-11 h-11 rounded-xl bg-engine-cyan/10 border border-engine-cyan/30 flex items-center justify-center text-engine-cyan group-hover:scale-110 transition-transform shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-display font-bold text-white group-hover:text-engine-cyan transition-colors text-base">Academia</div>
+                <p class="text-xs text-gray-400 mt-0.5">Frame data, combos y rollback</p>
+              </div>
+            </button>
+
+            <!-- [Publicar juego] -->
+            <button onclick="openModal('modal-publish')" class="group text-left bg-engine-elevated/70 hover:bg-engine-elevated border border-engine-border hover:border-engine-emerald/60 p-4 rounded-xl transition-all flex items-center gap-4 cursor-pointer">
+              <div class="w-11 h-11 rounded-xl bg-engine-emerald/10 border border-engine-emerald/30 flex items-center justify-center text-engine-emerald group-hover:scale-110 transition-transform shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-display font-bold text-white group-hover:text-engine-emerald transition-colors text-base">Publicar juego</div>
+                <p class="text-xs text-gray-400 mt-0.5">Exportar PC, Web o Arcade</p>
+              </div>
+            </button>
+
+          </div>
+        </section>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- VISTA B: EDITOR DE PERSONAJES / FRAME DATA (Al pulsar [Editar])     -->
+      <!-- =================================================================== -->
+      <div id="view-editor" class="hidden p-5 sm:p-7 space-y-5">
+        <!-- Barra superior del editor -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-engine-border">
+          <div class="flex items-center gap-3">
+            <button onclick="switchView('dashboard')" class="bg-engine-elevated hover:bg-gray-800 border border-engine-border text-gray-200 px-3 py-1.5 rounded-lg text-xs font-mono flex items-center gap-1.5 cursor-pointer transition-colors">
+              <span>←</span>
+              <span>Dashboard</span>
+            </button>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono uppercase text-engine-ember">Editor de Movimientos</span>
+                <span class="text-gray-600">•</span>
+                <h2 id="editor-project-title" class="font-display font-bold text-lg text-white">Proyecto "Dragón Puño"</h2>
+              </div>
+              <p class="text-xs text-gray-400">Edición visual sin código de Hitboxes, Hurtboxes y propiedades de ataque</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="launchPlaytestFromEditor()" class="bg-engine-emerald/15 hover:bg-engine-emerald/25 text-engine-emerald border border-engine-emerald/40 px-3.5 py-1.5 rounded-lg text-xs font-display font-bold tracking-wide flex items-center gap-1.5 cursor-pointer transition-colors">
+              <span>▶</span>
+              <span>PROBAR AHORA</span>
+            </button>
+            <button onclick="showToast('Cambios de Frame Data compilados correctamente', 'success')" class="btn-primary-forge text-white px-3.5 py-1.5 rounded-lg text-xs font-display font-bold tracking-wide cursor-pointer">
+              GUARDAR
+            </button>
+          </div>
+        </div>
+
+        <!-- Cuerpo del Editor: Selector de movimiento + Visor de Hitboxes + Inspector -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          
+          <!-- Columna Izquierda: Lista de Personajes y Movimientos -->
+          <div class="lg:col-span-3 bg-[#11141a] border border-engine-border rounded-xl p-3.5 space-y-4">
+            <div>
+              <label class="text-[11px] font-mono uppercase text-gray-400 block mb-1.5">Luchador Activo</label>
+              <select id="editor-fighter-select" onchange="updateEditorFighter()" class="w-full bg-engine-elevated border border-engine-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-engine-cyan">
+                <!-- Se llena según el proyecto -->
+              </select>
+            </div>
+
+            <div>
+              <div class="text-[11px] font-mono uppercase text-gray-400 mb-2">Árbol de Movimientos</div>
+              <div class="space-y-1.5" id="move-list">
+                <button onclick="selectMove('5HP', 6, 4, 14, 110, '+2', true)" class="move-btn w-full text-left px-3 py-2 rounded-lg bg-engine-crimson/15 border border-engine-crimson/50 text-white text-xs font-mono flex items-center justify-between cursor-pointer">
+                  <span>5HP • Puño Fuerte</span>
+                  <span class="text-engine-ember">110 DMG</span>
+                </button>
+                <button onclick="selectMove('2MK', 5, 3, 11, 75, '-1', true)" class="move-btn w-full text-left px-3 py-2 rounded-lg bg-engine-elevated/60 hover:bg-engine-elevated border border-engine-border text-gray-300 text-xs font-mono flex items-center justify-between cursor-pointer">
+                  <span>2MK • Barrida Media</span>
+                  <span class="text-gray-400">75 DMG</span>
+                </button>
+                <button onclick="selectMove('236P', 11, 6, 18, 130, '-4', true)" class="move-btn w-full text-left px-3 py-2 rounded-lg bg-engine-elevated/60 hover:bg-engine-elevated border border-engine-border text-gray-300 text-xs font-mono flex items-center justify-between cursor-pointer">
+                  <span>236P • Onda Ígnea</span>
+                  <span class="text-engine-cyan">PROYECTIL</span>
+                </button>
+                <button onclick="selectMove('623P', 4, 8, 24, 160, '-18', true)" class="move-btn w-full text-left px-3 py-2 rounded-lg bg-engine-elevated/60 hover:bg-engine-elevated border border-engine-border text-gray-300 text-xs font-mono flex items-center justify-between cursor-pointer">
+                  <span>623P • Ascenso Dragón</span>
+                  <span class="text-engine-crimson">INVULN</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna Central: Viewport de Hitbox (Rojo) / Hurtbox (Azul) -->
+          <div class="lg:col-span-6 bg-[#0b0d11] border border-engine-border rounded-xl p-4 flex flex-col justify-between relative overflow-hidden">
+            <!-- Leyenda superior -->
+            <div class="flex items-center justify-between text-[11px] font-mono z-10">
+              <div class="flex items-center gap-3">
+                <span class="flex items-center gap-1.5 text-engine-crimson"><span class="w-2.5 h-2.5 bg-engine-crimson/40 border border-engine-crimson inline-block"></span> Hitbox (Ataque)</span>
+                <span class="flex items-center gap-1.5 text-engine-cyan"><span class="w-2.5 h-2.5 bg-engine-cyan/30 border border-engine-cyan inline-block"></span> Hurtbox (Cuerpo)</span>
+              </div>
+              <span id="viewport-frame-indicator" class="bg-engine-elevated px-2 py-0.5 rounded text-gray-300 border border-engine-border">Frame: 7 / 24 (ACTIVO)</span>
+            </div>
+
+            <!-- Escenario de prueba con cuadrícula de entrenamiento -->
+            <div class="relative h-64 my-3 rounded-lg border border-gray-800/80 bg-[linear-gradient(to_right,#181c24_1px,transparent_1px),linear-gradient(to_bottom,#181c24_1px,transparent_1px)] bg-[size:24px_24px] flex items-end justify-center overflow-hidden">
+              <!-- Suelo del stage -->
+              <div class="absolute bottom-6 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-engine-cyan/50 to-transparent"></div>
+              
+              <!-- Contenedor del personaje y cajas de colisión -->
+              <div class="relative mb-6 flex items-end">
+                <!-- Silueta estilizada del luchador (SVG) -->
+                <svg class="w-36 h-44 text-gray-200 drop-shadow-[0_0_12px_rgba(255,255,255,0.15)]" viewBox="0 0 140 160" fill="currentColor">
+                  <!-- Cabeza y cinta -->
+                  <circle cx="58" cy="30" r="14" />
+                  <path d="M44 26 L22 20 L26 28 L44 30 Z" fill="#ff3b30" />
+                  <!-- Torso en guardia -->
+                  <path d="M45 46 L74 46 L80 94 L42 94 Z" />
+                  <!-- Piernas en postura de combate -->
+                  <path d="M45 94 L28 148 L42 148 L56 102 Z" />
+                  <path d="M68 94 L92 148 L106 148 L80 94 Z" />
+                  <!-- Brazo extendido ejecutando golpe -->
+                  <path d="M72 50 L132 54 L132 68 L70 66 Z" fill="#ff6b00" />
+                </svg>
+
+                <!-- HURTBOX AZUL (Zona vulnerable del luchador) -->
+                <div class="hurtbox-grid absolute left-6 bottom-0 w-20 h-36 border-2 border-engine-cyan rounded-sm pointer-events-none">
+                  <span class="absolute -top-4 left-0 text-[9px] font-mono text-engine-cyan bg-black/80 px-1">HURT_BODY</span>
+                </div>
+
+                <!-- HITBOX ROJA (Zona activa del impacto, cambia según el frame seleccionado) -->
+                <div id="active-hitbox-box" class="hitbox-grid hitbox-pulse absolute left-24 top-8 w-20 h-12 border-2 border-engine-crimson rounded-sm transition-all duration-150">
+                  <span class="absolute -top-4 right-0 text-[9px] font-mono text-engine-crimson bg-black/80 px-1">HIT_01</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Línea de tiempo de Frames (Scrubber interactivo) -->
+            <div>
+              <div class="flex items-center justify-between text-[11px] font-mono text-gray-400 mb-1.5">
+                <span>Línea de tiempo (60 FPS)</span>
+                <span><span class="text-amber-400">■ Startup</span> • <span class="text-engine-crimson">■ Active</span> • <span class="text-engine-cyan">■ Recovery</span></span>
+              </div>
+              <div id="frame-timeline-bars" class="grid grid-cols-12 gap-1 h-7 bg-[#141820] p-1 rounded-lg border border-engine-border">
+                <!-- Generado dinámicamente -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Inspector No-Code de Frame Data -->
+          <div class="lg:col-span-3 bg-[#11141a] border border-engine-border rounded-xl p-3.5 flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="text-[11px] font-mono uppercase text-gray-400 border-b border-engine-border pb-2">Propiedades del Ataque</div>
+              
+              <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-engine-elevated p-2 rounded-lg border border-engine-border">
+                  <div class="text-[10px] font-mono text-amber-400">STARTUP</div>
+                  <div id="stat-startup" class="font-display font-bold text-base text-white">6f</div>
+                </div>
+                <div class="bg-engine-elevated p-2 rounded-lg border border-engine-border">
+                  <div class="text-[10px] font-mono text-engine-crimson">ACTIVE</div>
+                  <div id="stat-active" class="font-display font-bold text-base text-white">4f</div>
+                </div>
+                <div class="bg-engine-elevated p-2 rounded-lg border border-engine-border">
+                  <div class="text-[10px] font-mono text-engine-cyan">RECOV</div>
+                  <div id="stat-recovery" class="font-display font-bold text-base text-white">14f</div>
+                </div>
+              </div>
+
+              <div class="space-y-2 pt-1">
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">Daño Base</span>
+                    <span id="stat-damage-label" class="font-mono text-engine-ember font-bold">110</span>
+                  </div>
+                  <input id="input-damage" type="range" min="30" max="250" value="110" oninput="document.getElementById('stat-damage-label').textContent = this.value" class="w-full accent-engine-crimson cursor-pointer" />
+                </div>
+
+                <div class="flex items-center justify-between text-xs bg-engine-elevated px-3 py-2 rounded-lg border border-engine-border">
+                  <span class="text-gray-300">Ventaja en bloqueo</span>
+                  <span id="stat-onblock" class="font-mono font-bold text-engine-emerald">+2</span>
+                </div>
+
+                <label class="flex items-center justify-between text-xs bg-engine-elevated px-3 py-2 rounded-lg border border-engine-border cursor-pointer">
+                  <span class="text-gray-300">Cancelable a Especial</span>
+                  <input id="input-cancel" type="checkbox" checked class="accent-engine-cyan w-4 h-4 rounded" />
+                </label>
+              </div>
+            </div>
+
+            <div class="bg-engine-cyan/10 border border-engine-cyan/30 rounded-lg p-2.5 text-[11px] text-cyan-200 font-mono">
+              Tip: Pulsa cualquier bloque de la línea de tiempo para previsualizar el estado de la Hitbox.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Pie de estado del motor (Status bar profesional) -->
+      <footer class="bg-[#0d0f13] border-t border-engine-border px-5 sm:px-8 py-2.5 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-gray-500">
+        <div class="flex items-center gap-4">
+          <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2 h-2 rounded-full bg-engine-emerald"></span> Motor Listo (60.0 FPS)</span>
+          <span class="hidden sm:inline">GGPO Rollback Netcode: Activado</span>
+        </div>
+        <div>FORGEFIGHT Studio • Sin código requerido</div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: SIMULADOR "PLAYTEST RÁPIDO" (Al pulsar [▶] en un proyecto)   -->
+  <!-- ===================================================================== -->
+  <div id="modal-playtest" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="engine-panel w-full max-w-3xl rounded-2xl overflow-hidden border border-gray-700 shadow-2xl">
+      <!-- Barra de título del Playtest -->
+      <div class="bg-[#101318] px-5 py-3 border-b border-engine-border flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="px-2 py-0.5 rounded bg-engine-crimson text-white text-[10px] font-mono font-bold uppercase animate-pulse">PLAYTEST EN VIVO</span>
+          <h3 id="playtest-title" class="font-display font-bold text-white text-base sm:text-lg">Proyecto "Dragón Puño"</h3>
+        </div>
+        <button onclick="closeModal('modal-playtest')" class="text-gray-400 hover:text-white bg-engine-elevated hover:bg-red-500/20 px-2.5 py-1 rounded-lg text-xs font-mono transition-colors cursor-pointer">✕ CERRAR [ESC]</button>
+      </div>
+
+      <!-- Arena Arcade Interactiva -->
+      <div class="relative bg-gradient-to-b from-[#171c28] via-[#1c1624] to-[#0e1015] p-5 sm:p-6 select-none overflow-hidden">
+        
+        <!-- HUD Arcade: Barras de vida y reloj "99" -->
+        <div class="flex items-center justify-between gap-3 mb-6">
+          <!-- Jugador 1 -->
+          <div class="flex-1">
+            <div class="flex justify-between text-xs font-display font-bold mb-1">
+              <span id="p1-name" class="text-white tracking-wider">RYUJIN (P1)</span>
+              <span id="p1-hp-text" class="font-mono text-engine-cyan">1000 / 1000</span>
+            </div>
+            <div class="h-4 bg-gray-900 rounded-sm p-0.5 border border-gray-700 overflow-hidden">
+              <div id="p1-hp-bar" class="h-full bg-gradient-to-r from-amber-400 to-engine-emerald transition-all duration-200" style="width: 100%"></div>
+            </div>
+          </div>
+
+          <!-- Temporizador Arcade "99" -->
+          <div class="px-3 py-1 bg-black/70 border-2 border-engine-ember rounded-lg text-center shrink-0">
+            <div class="text-[9px] font-mono text-gray-400 leading-none">TIME</div>
+            <div id="arcade-timer" class="font-display font-bold text-2xl sm:text-3xl text-amber-400 leading-none mt-0.5">99</div>
+          </div>
+
+          <!-- CPU / Rival -->
+          <div class="flex-1 text-right">
+            <div class="flex justify-between text-xs font-display font-bold mb-1">
+              <span id="p2-hp-text" class="font-mono text-engine-crimson">1000 / 1000</span>
+              <span id="p2-name" class="text-white tracking-wider">KAGE-01 (CPU)</span>
+            </div>
+            <div class="h-4 bg-gray-900 rounded-sm p-0.5 border border-gray-700 overflow-hidden flex justify-end">
+              <div id="p2-hp-bar" class="h-full bg-gradient-to-l from-amber-400 to-engine-crimson transition-all duration-200" style="width: 100%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Escenario Visual de Combate -->
+        <div class="relative h-56 rounded-xl border border-white/10 bg-[radial-gradient(ellipse_at_center,rgba(255,107,0,0.12),transparent_70%)] flex items-end justify-around px-6 pb-8 overflow-hidden">
+          <!-- Contador de Combo flotante -->
+          <div id="combo-display" class="opacity-0 transition-opacity duration-200 absolute left-6 top-6">
+            <div class="font-display italic font-bold text-4xl text-transparent bg-clip-text bg-gradient-to-b from-amber-300 to-engine-crimson drop-shadow">
+              <span id="combo-count">0</span> HITS!
+            </div>
+            <div class="text-xs font-mono text-amber-200">COMBO DAMAGE: <span id="combo-dmg">0</span></div>
+          </div>
+
+          <!-- Banner KO -->
+          <div id="ko-banner" class="hidden absolute inset-0 bg-black/60 flex flex-col items-center justify-center z-20">
+            <div class="font-display italic font-bold text-6xl text-engine-crimson tracking-widest drop-shadow-[0_0_25px_rgba(255,59,48,0.9)]">K.O.!</div>
+            <button onclick="resetPlaytest()" class="mt-3 btn-primary-forge text-white font-display font-bold text-xs px-4 py-2 rounded-lg cursor-pointer">REINICIAR ROUND</button>
+          </div>
+
+          <!-- Luchador 1 (P1) -->
+          <div id="sprite-p1" class="transition-transform duration-100 flex flex-col items-center">
+            <div class="w-16 h-28 rounded-t-2xl bg-gradient-to-b from-engine-cyan to-blue-700 border-2 border-white/40 flex items-center justify-center shadow-[0_0_20px_rgba(0,210,255,0.4)] relative">
+              <span class="font-display font-bold text-white text-sm">P1</span>
+              <div class="absolute -right-3 top-6 w-6 h-3 bg-white rounded-full"></div>
+            </div>
+            <div class="w-20 h-2 bg-black/60 rounded-full blur-[2px] mt-1"></div>
+          </div>
+
+          <!-- Efecto Hitspark central -->
+          <div id="hitspark-fx" class="opacity-0 scale-50 transition-all duration-100 pointer-events-none text-amber-300 font-display font-bold text-3xl">
+            💥
+          </div>
+
+          <!-- Luchador 2 (CPU) -->
+          <div id="sprite-p2" class="transition-transform duration-100 flex flex-col items-center">
+            <div class="w-16 h-28 rounded-t-2xl bg-gradient-to-b from-engine-crimson to-red-900 border-2 border-white/40 flex items-center justify-center shadow-[0_0_20px_rgba(255,59,48,0.4)] relative">
+              <span class="font-display font-bold text-white text-sm">CPU</span>
+              <div class="absolute -left-3 top-6 w-6 h-3 bg-amber-400 rounded-full"></div>
+            </div>
+            <div class="w-20 h-2 bg-black/60 rounded-full blur-[2px] mt-1"></div>
+          </div>
+
+          <!-- Suelo del stage -->
+          <div class="absolute bottom-0 inset-x-0 h-8 bg-[#12151c] border-t border-engine-border flex items-center justify-center text-[10px] font-mono text-gray-500">
+            STAGE: TEMPLO DEL DRAGÓN • 60 FPS • INPUT DELAY: 0f
+          </div>
+        </div>
+
+        <!-- Controles Arcade Simulados -->
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-3 bg-[#11141a] p-3.5 rounded-xl border border-engine-border">
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="triggerAttack('Jab Rápido', 65, 1)" class="bg-engine-elevated hover:bg-gray-700 border border-gray-600 text-white font-mono text-xs px-3 py-2 rounded-lg cursor-pointer active:scale-95 transition">
+              [LP] Golpe Ligero
+            </button>
+            <button onclick="triggerAttack('Patada Fuerte', 120, 1)" class="bg-engine-elevated hover:bg-gray-700 border border-gray-600 text-white font-mono text-xs px-3 py-2 rounded-lg cursor-pointer active:scale-95 transition">
+              [HK] Patada Fuerte
+            </button>
+            <button onclick="triggerAttack('SUPER ESPECIAL: Furia del Dragón', 260, 4)" class="btn-primary-forge text-white font-display font-bold text-xs px-4 py-2 rounded-lg cursor-pointer active:scale-95 transition">
+              🔥 [236+P] SUPER COMBO
+            </button>
+          </div>
+          <button onclick="resetPlaytest()" class="text-xs font-mono text-gray-400 hover:text-white underline cursor-pointer">
+            Reiniciar Combate
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 2: CREAR NUEVO PERSONAJE / PROYECTO ([+ Nuevo personaje])       -->
+  <!-- ===================================================================== -->
+  <div id="modal-new-character" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="engine-panel w-full max-w-lg rounded-2xl overflow-hidden border border-gray-700">
+      <div class="bg-[#11141a] px-6 py-4 border-b border-engine-border flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-engine-ember"></span>
+          <h3 class="font-display font-bold text-lg text-white uppercase">Asistente de Nuevo Luchador</h3>
+        </div>
+        <button onclick="closeModal('modal-new-character')" class="text-gray-400 hover:text-white text-sm font-mono cursor-pointer">✕</button>
+      </div>
+
+      <form onsubmit="handleCreateCharacter(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">Nombre del Personaje</label>
+          <input id="char-name-input" type="text" required placeholder="Ej. Kenji Kurogane, Valkiria..." class="w-full bg-engine-bg border border-engine-border focus:border-engine-ember rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">Proyecto Destino</label>
+          <select id="char-project-select" onchange="toggleNewProjectInput()" class="w-full bg-engine-bg border border-engine-border focus:border-engine-ember rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none">
+            <!-- Opciones cargadas dinámicamente -->
+          </select>
+        </div>
+
+        <!-- Campo condicional si elige crear nuevo proyecto -->
+        <div id="new-project-name-wrapper" class="hidden">
+          <label class="block text-xs font-mono uppercase text-engine-cyan mb-1.5">Nombre del Nuevo Proyecto</label>
+          <input id="new-project-name-input" type="text" placeholder="Ej. Torneo Cibernético 2099" class="w-full bg-engine-bg border border-engine-cyan/50 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono uppercase text-gray-400 mb-2">Arquetipo de Combate (Plantilla de Frame Data)</label>
+          <div class="grid grid-cols-2 gap-2.5">
+            <label class="cursor-pointer">
+              <input type="radio" name="archetype" value="Shotokan (Equilibrado)" checked class="peer sr-only" />
+              <div class="p-3 rounded-xl bg-engine-bg border border-engine-border peer-checked:border-engine-ember peer-checked:bg-engine-ember/10 transition-all">
+                <div class="font-display font-bold text-sm text-white">Shotokan</div>
+                <div class="text-[11px] text-gray-400">Proyectil + Anti-aéreo</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="archetype" value="Rushdown (Presión)" class="peer sr-only" />
+              <div class="p-3 rounded-xl bg-engine-bg border border-engine-border peer-checked:border-engine-ember peer-checked:bg-engine-ember/10 transition-all">
+                <div class="font-display font-bold text-sm text-white">Rushdown</div>
+                <div class="text-[11px] text-gray-400">Alta velocidad y mixups</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="archetype" value="Grappler (Agarre)" class="peer sr-only" />
+              <div class="p-3 rounded-xl bg-engine-bg border border-engine-border peer-checked:border-engine-ember peer-checked:bg-engine-ember/10 transition-all">
+                <div class="font-display font-bold text-sm text-white">Grappler</div>
+                <div class="text-[11px] text-gray-400">Command grabs de alto daño</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="archetype" value="Zoner (Distancia)" class="peer sr-only" />
+              <div class="p-3 rounded-xl bg-engine-bg border border-engine-border peer-checked:border-engine-ember peer-checked:bg-engine-ember/10 transition-all">
+                <div class="font-display font-bold text-sm text-white">Zoner</div>
+                <div class="text-[11px] text-gray-400">Control de espacio y trampas</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-2.5 border-t border-engine-border">
+          <button type="button" onclick="closeModal('modal-new-character')" class="px-4 py-2 rounded-xl bg-engine-elevated text-gray-300 hover:text-white text-sm cursor-pointer">Cancelar</button>
+          <button type="submit" class="btn-primary-forge px-5 py-2 rounded-xl text-white font-display font-bold text-sm cursor-pointer">Generar Luchador</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 3: MI CUENTA ([Mi cuenta])                                      -->
+  <!-- ===================================================================== -->
+  <div id="modal-account" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="engine-panel w-full max-w-md rounded-2xl overflow-hidden border border-gray-700">
+      <div class="bg-[#11141a] px-6 py-4 border-b border-engine-border flex items-center justify-between">
+        <h3 class="font-display font-bold text-lg text-white">Perfil de Creador</h3>
+        <button onclick="closeModal('modal-account')" class="text-gray-400 hover:text-white font-mono cursor-pointer">✕</button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-engine-crimson to-engine-ember flex items-center justify-center font-display font-bold text-xl text-white">DEV</div>
+          <div>
+            <div class="font-display font-bold text-white text-lg">Estudio Indie Arcade</div>
+            <div class="text-xs font-mono text-engine-cyan">Plan FORGE PRO • Licencia Comercial</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 bg-engine-bg p-3.5 rounded-xl border border-engine-border text-xs font-mono">
+          <div>
+            <span class="text-gray-500 block">Créditos Assets</span>
+            <span class="text-white font-bold text-sm">1,450 FG</span>
+          </div>
+          <div>
+            <span class="text-gray-500 block">Compilaciones Cloud</span>
+            <span class="text-engine-emerald font-bold text-sm">Ilimitadas</span>
+          </div>
+        </div>
+        <div class="space-y-2 text-xs text-gray-300">
+          <div class="flex justify-between py-1.5 border-b border-engine-border/60">
+            <span>Resolución nativa de render</span>
+            <span class="font-mono text-white">1920x1080 (60Hz)</span>
+          </div>
+          <div class="flex justify-between py-1.5">
+            <span>Input Buffer predeterminado</span>
+            <span class="font-mono text-white">4 frames</span>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-account')" class="w-full py-2.5 rounded-xl bg-engine-elevated hover:bg-gray-800 text-white text-sm font-medium border border-engine-border cursor-pointer">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 4: MARKETPLACE ([Marketplace])                                  -->
+  <!-- ===================================================================== -->
+  <div id="modal-marketplace" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="engine-panel w-full max-w-2xl rounded-2xl overflow-hidden border border-gray-700">
+      <div class="bg-[#11141a] px-6 py-4 border-b border-engine-border flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-engine-ember">●</span>
+          <h3 class="font-display font-bold text-lg text-white uppercase">FORGEFIGHT Marketplace</h3>
+        </div>
+        <button onclick="closeModal('modal-marketplace')" class="text-gray-400 hover:text-white font-mono cursor-pointer">✕</button>
+      </div>
+      <div class="p-6 space-y-4">
+        <p class="text-xs text-gray-400">Importa paquetes listos para usar con hitboxes preconfiguradas directamente en tus proyectos.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div class="bg-engine-bg border border-engine-border rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-engine-ember/15 text-engine-ember">SPRITES + HITBOXES</span>
+              <h4 class="font-display font-bold text-white mt-2">Pack Artistas Marciales 2D</h4>
+              <p class="text-xs text-gray-400 mt-1">4 luchadores completos con 120 animaciones por personaje.</p>
+            </div>
+            <button onclick="showToast('Pack Artistas Marciales añadido a tu biblioteca', 'success')" class="mt-4 w-full py-2 rounded-lg bg-engine-elevated hover:bg-engine-ember hover:text-white text-xs font-mono text-gray-200 border border-engine-border transition-colors cursor-pointer">Importar Gratis</button>
+          </div>
+          <div class="bg-engine-bg border border-engine-border rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-engine-cyan/15 text-engine-cyan">VFX / SHADERS</span>
+              <h4 class="font-display font-bold text-white mt-2">Hitsparks & Super Flash FX</h4>
+              <p class="text-xs text-gray-400 mt-1">35 efectos de impacto estilo arcade y congelamiento de cámara.</p>
+            </div>
+            <button onclick="showToast('Hitsparks VFX importado al motor', 'success')" class="mt-4 w-full py-2 rounded-lg bg-engine-elevated hover:bg-engine-cyan hover:text-black text-xs font-mono text-gray-200 border border-engine-border transition-colors cursor-pointer">Importar Gratis</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 5: ACADEMIA ([Academia])                                        -->
+  <!-- ===================================================================== -->
+  <div id="modal-academia" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="engine-panel w-full max-w-2xl rounded-2xl overflow-hidden border border-gray-700">
+      <div class="bg-[#11141a] px-6 py-4 border-b border-engine-border flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-engine-cyan">●</span>
+          <h3 class="font-display font-bold text-lg text-white uppercase">Academia FORGEFIGHT</h3>
+        </div>
+        <button onclick="closeModal('modal-academia')" class="text-gray-400 hover:text-white font-mono cursor-pointer">✕</button>
+      </div>
+      <div class="p-6 space-y-3">
+        <div class="bg-engine-bg border border-engine-border p-4 rounded-xl flex items-center justify-between gap-4">
+          <div>
+            <div class="text-xs font-mono text-engine-cyan">MÓDULO 01 • FUNDAMENTOS</div>
+            <h4 class="font-display font-bold text-white">Dominando Hitboxes, Hurtboxes y Pushboxes</h4>
+            <p class="text-xs text-gray-400 mt-0.5">Aprende a equilibrar el alcance de ataques sin frustrar al jugador.</p>
+          </div>
+          <button onclick="closeModal('modal-academia'); openEditor(1);" class="shrink-0 px-3 py-2 rounded-lg bg-engine-cyan/15 text-engine-cyan border border-engine-cyan/40 text-xs font-mono hover:bg-engine-cyan hover:text-black transition-colors cursor-pointer">Abrir Lab →</button>
+        </div>
+        <div class="bg-engine-bg border border-engine-border p-4 rounded-xl flex items-center justify-between gap-4">
+          <div>
+            <div class="text-xs font-mono text-engine-ember">MÓDULO 02 • SISTEMA DE COMBOS</div>
+            <h4 class="font-display font-bold text-white">Cancelación de Normales a Especiales y Frame Traps</h4>
+            <p class="text-xs text-gray-400 mt-0.5">Configura ventanas de cancelación sin escribir una sola línea de código.</p>
+          </div>
+          <button onclick="showToast('Cargando lección interactiva de Cancelación...', 'info')" class="shrink-0 px-3 py-2 rounded-lg bg-engine-elevated text-gray-200 border border-engine-border text-xs font-mono hover:border-gray-500 cursor-pointer">Iniciar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 6: PUBLICAR JUEGO ([Publicar juego])                            -->
+  <!-- ===================================================================== -->
+  <div id="modal-publish" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="engine-panel w-full max-w-lg rounded-2xl overflow-hidden border border-gray-700">
+      <div class="bg-[#11141a] px-6 py-4 border-b border-engine-border flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-engine-emerald">●</span>
+          <h3 class="font-display font-bold text-lg text-white uppercase">Asistente de Publicación</h3>
+        </div>
+        <button onclick="closeModal('modal-publish')" class="text-gray-400 hover:text-white font-mono cursor-pointer">✕</button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-mono uppercase text-gray-400 mb-1.5">Selecciona el Proyecto a Compilar</label>
+          <select id="publish-project-select" class="w-full bg-engine-bg border border-engine-border rounded-xl px-3.5 py-2.5 text-sm text-white"></select>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5 text-xs">
+          <button onclick="startBuildExport('Windows / Steam (.exe)')" class="p-3.5 rounded-xl bg-engine-bg hover:bg-engine-elevated border border-engine-border hover:border-engine-emerald text-left transition-all cursor-pointer">
+            <div class="font-display font-bold text-white text-sm">Windows / Linux</div>
+            <div class="text-gray-400 font-mono text-[11px] mt-0.5">Ejecutable nativo 60FPS</div>
+          </button>
+          <button onclick="startBuildExport('Web HTML5 / Itch.io')" class="p-3.5 rounded-xl bg-engine-bg hover:bg-engine-elevated border border-engine-border hover:border-engine-cyan text-left transition-all cursor-pointer">
+            <div class="font-display font-bold text-white text-sm">Web / HTML5</div>
+            <div class="text-gray-400 font-mono text-[11px] mt-0.5">Listo para navegador</div>
+          </button>
+        </div>
+        <div id="build-progress-box" class="hidden bg-engine-bg border border-engine-emerald/40 rounded-xl p-3.5 space-y-2">
+          <div class="flex justify-between text-xs font-mono">
+            <span id="build-status-label" class="text-engine-emerald">Empaquetando sprites y rollback...</span>
+            <span id="build-percent" class="text-white">0%</span>
+          </div>
+          <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+            <div id="build-bar" class="h-full bg-engine-emerald transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LÓGICA DE INTERACTIVIDAD DEL MOTOR FORGEFIGHT -->
+  <script>
+    // Estado inicial de proyectos basado estrictamente en el wireframe
+    let projects = [
+      {
+        id: 1,
+        name: 'Dragón Puño',
+        style: '2.5D / 60 FPS',
+        stages: 4,
+        lastEdited: 'Hace 12 min',
+        accent: 'from-engine-crimson to-engine-ember',
+        fighters: [
+          { name: 'Ryujin', archetype: 'Shotokan (Equilibrado)' },
+          { name: 'Mei Lin', archetype: 'Rushdown (Presión)' },
+          { name: 'Goro Titan', archetype: 'Grappler (Agarre)' },
+          { name: 'Kage-01', archetype: 'Zoner (Distancia)' },
+          { name: 'Akira', archetype: 'Shotokan (Equilibrado)' },
+          { name: 'Viper', archetype: 'Rushdown (Presión)' },
+          { name: 'Tengu', archetype: 'Zoner (Distancia)' },
+          { name: 'Maestro Chen', archetype: 'Shotokan (Equilibrado)' }
+        ]
+      },
+      {
+        id: 2,
+        name: 'Samurai X',
+        style: 'Pixel Art / 2D',
+        stages: 6,
+        lastEdited: 'Ayer',
+        accent: 'from-engine-cyan to-blue-600',
+        fighters: [
+          { name: 'Musashi X', archetype: 'Shotokan (Equilibrado)' },
+          { name: 'Lady Yuki', archetype: 'Zoner (Distancia)' },
+          { name: 'Oni Kabuto', archetype: 'Grappler (Agarre)' },
+          { name: 'Shinobi K', archetype: 'Rushdown (Presión)' },
+          { name: 'Ronin Zero', archetype: 'Shotokan (Equilibrado)' },
+          { name: 'Kitsune', archetype: 'Rushdown (Presión)' },
+          { name: 'Shogun V', archetype: 'Grappler (Agarre)' },
+          { name: 'Hanzo', archetype: 'Zoner (Distancia)' },
+          { name: 'Sakura Blade', archetype: 'Rushdown (Presión)' },
+          { name: 'Takeda', archetype: 'Shotokan (Equilibrado)' },
+          { name: 'Oda Cyber', archetype: 'Zoner (Distancia)' },
+          { name: 'Jin', archetype: 'Shotokan (Equilibrado)' }
+        ]
+      }
+    ];
+
+    let currentEditingProjectId = 1;
+    let playtestState = { p1Hp: 1000, p2Hp: 1000, combo: 0, comboDmg: 0, timer: 99, interval: null };
+
+    // Renderizar lista de proyectos en el Dashboard
+    function renderProjects() {
+      const container = document.getElementById('projects-list');
+      const countBadge = document.getElementById('project-count-badge');
+      countBadge.textContent = `${projects.length} activo${projects.length !== 1 ? 's' : ''}`;
+
+      container.innerHTML = projects.map(proj => `
+        <div class="group bg-[#12151c] hover:bg-[#181c26] border border-engine-border hover:border-gray-600 rounded-xl p-4 sm:px-5 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <!-- Información del proyecto -->
+          <div class="flex items-start sm:items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br ${proj.accent} p-[1px] shrink-0 mt-0.5 sm:mt-0">
+              <div class="w-full h-full bg-[#131720] rounded-[11px] flex items-center justify-center font-display font-bold text-white text-base">
+                ${proj.name.substring(0, 2).toUpperCase()}
+              </div>
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-engine-ember font-mono text-sm">•</span>
+                <h3 class="font-display font-bold text-base sm:text-lg text-white group-hover:text-engine-ember transition-colors">
+                  Proyecto "${proj.name}"
+                </h3>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-engine-elevated text-gray-300 border border-engine-border">
+                  ${proj.style}
+                </span>
+              </div>
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-gray-400 mt-1">
+                <span>Personajes: <strong class="text-gray-200">${proj.fighters.length}</strong></span>
+                <span>Escenarios: <strong class="text-gray-200">${proj.stages}</strong></span>
+                <span class="text-gray-500">Editado: ${proj.lastEdited}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones explícitos del wireframe: [Editar] [▶] -->
+          <div class="flex items-center gap-2.5 self-end sm:self-center shrink-0">
+            <button onclick="openEditor(${proj.id})" class="bg-engine-elevated hover:bg-[#283040] border border-engine-border hover:border-engine-cyan/60 text-gray-200 hover:text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-engine-cyan" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+              <span>Editar</span>
+            </button>
+
+            <button onclick="openPlaytest(${proj.id})" title="Probar proyecto (Playtest Rápido)" class="bg-engine-emerald/15 hover:bg-engine-emerald text-engine-emerald hover:text-black border border-engine-emerald/50 px-4 py-2 rounded-xl text-xs sm:text-sm font-display font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm">
+              <span>▶</span>
+              <span class="sm:hidden">Probar</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      syncProjectSelects();
+    }
+
+    // Sincronizar selectores de proyectos en los modales
+    function syncProjectSelects() {
+      const charSelect = document.getElementById('char-project-select');
+      const pubSelect = document.getElementById('publish-project-select');
+
+      const optionsHtml = projects.map(p => `<option value="${p.id}">Proyecto "${p.name}" (${p.fighters.length} luchadores)</option>`).join('');
+      if (charSelect) {
+        charSelect.innerHTML = optionsHtml + `<option value="NEW">+ Crear nuevo proyecto...</option>`;
+      }
+      if (pubSelect) {
+        pubSelect.innerHTML = optionsHtml;
+      }
+    }
+
+    // Cambiar entre Dashboard y Editor de Frame Data
+    function switchView(viewName) {
+      const dash = document.getElementById('view-dashboard');
+      const editor = document.getElementById('view-editor');
+      if (viewName === 'editor') {
+        dash.classList.add('hidden');
+        editor.classList.remove('hidden');
+      } else {
+        editor.classList.add('hidden');
+        dash.classList.remove('hidden');
+      }
+    }
+
+    // Abrir vista de edición de personaje/frame data
+    function openEditor(projectId) {
+      currentEditingProjectId = projectId;
+      const proj = projects.find(p => p.id === projectId) || projects[0];
+      document.getElementById('editor-project-title').textContent = `Proyecto "${proj.name}"`;
+
+      const fighterSelect = document.getElementById('editor-fighter-select');
+      fighterSelect.innerHTML = proj.fighters.map((f, idx) => `<option value="${idx}">${f.name} — ${f.archetype.split(' ')[0]}</option>`).join('');
+
+      renderTimeline(6, 4, 14, 7);
+      switchView('editor');
+    }
+
+    // Renderizar línea de tiempo de frames interactiva
+    function renderTimeline(startup, active, recovery, selectedFrame) {
+      const total = Math.min(24, startup + active + recovery);
+      const container = document.getElementById('frame-timeline-bars');
+      let html = '';
+
+      for (let i = 1; i <= 12; i++) {
+        const frameNum = Math.ceil((i / 12) * total);
+        let phase = 'recovery';
+        let colorClass = 'bg-engine-cyan/40 border-engine-cyan/60';
+        if (frameNum <= startup) {
+          phase = 'startup';
+          colorClass = 'bg-amber-400/40 border-amber-400/60';
+        } else if (frameNum <= startup + active) {
+          phase = 'active';
+          colorClass = 'bg-engine-crimson/60 border-engine-crimson';
+        }
+
+        const isSelected = i === selectedFrame ? 'ring-2 ring-white scale-105' : 'opacity-80 hover:opacity-100';
+        html += `<button type="button" onclick="scrubFrame(${i}, ${frameNum}, ${total}, '${phase}')" class="${colorClass} ${isSelected} border rounded transition-all cursor-pointer" title="Frame ${frameNum} (${phase.toUpperCase()})"></button>`;
+      }
+      container.innerHTML = html;
+    }
+
+    function scrubFrame(slotIdx, frameNum, total, phase) {
+      const indicator = document.getElementById('viewport-frame-indicator');
+      const hitbox = document.getElementById('active-hitbox-box');
+      indicator.textContent = `Frame: ${frameNum} / ${total} (${phase.toUpperCase()})`;
+
+      if (phase === 'active') {
+        hitbox.classList.remove('opacity-20', 'scale-75');
+        hitbox.classList.add('opacity-100', 'scale-100');
+      } else {
+        hitbox.classList.remove('opacity-100', 'scale-100');
+        hitbox.classList.add('opacity-20', 'scale-75');
+      }
+
+      const s = parseInt(document.getElementById('stat-startup').textContent);
+      const a = parseInt(document.getElementById('stat-active').textContent);
+      const r = parseInt(document.getElementById('stat-recovery').textContent);
+      renderTimeline(s, a, r, slotIdx);
+    }
+
+    function selectMove(code, startup, active, recovery, dmg, onBlock) {
+      document.getElementById('stat-startup').textContent = `${startup}f`;
+      document.getElementById('stat-active').textContent = `${active}f`;
+      document.getElementById('stat-recovery').textContent = `${recovery}f`;
+      document.getElementById('stat-damage-label').textContent = dmg;
+      document.getElementById('input-damage').value = dmg;
+      document.getElementById('stat-onblock').textContent = onBlock;
+
+      // Actualizar estilo activo de botones de movimiento
+      document.querySelectorAll('.move-btn').forEach(btn => {
+        if (btn.textContent.includes(code)) {
+          btn.className = 'move-btn w-full text-left px-3 py-2 rounded-lg bg-engine-crimson/15 border border-engine-crimson/50 text-white text-xs font-mono flex items-center justify-between cursor-pointer';
+        } else {
+          btn.className = 'move-btn w-full text-left px-3 py-2 rounded-lg bg-engine-elevated/60 hover:bg-engine-elevated border border-engine-border text-gray-300 text-xs font-mono flex items-center justify-between cursor-pointer';
+        }
+      });
+
+      renderTimeline(startup, active, recovery, 5);
+      showToast(`Movimiento ${code} cargado en el visor`, 'info');
+    }
+
+    function updateEditorFighter() {
+      const name = document.getElementById('editor-fighter-select').selectedOptions[0].text;
+      showToast(`Editando frame data de ${name}`, 'info');
+    }
+
+    // Simulador Playtest Rápido
+    function openPlaytest(projectId) {
+      const proj = projects.find(p => p.id === projectId) || projects[0];
+      document.getElementById('playtest-title').textContent = `Proyecto "${proj.name}"`;
+      document.getElementById('p1-name').textContent = `${proj.fighters[0]?.name.toUpperCase() || 'RYUJIN'} (P1)`;
+      document.getElementById('p2-name').textContent = `${proj.fighters[1]?.name.toUpperCase() || 'RIVAL'} (CPU)`;
+
+      resetPlaytest();
+      openModal('modal-playtest');
+    }
+
+    function launchPlaytestFromEditor() {
+      openPlaytest(currentEditingProjectId);
+    }
+
+    function resetPlaytest() {
+      clearInterval(playtestState.interval);
+      playtestState = { p1Hp: 1000, p2Hp: 1000, combo: 0, comboDmg: 0, timer: 99, interval: null };
+      document.getElementById('ko-banner').classList.add('hidden');
+      document.getElementById('combo-display').classList.add('opacity-0');
+      updatePlaytestHUD();
+
+      playtestState.interval = setInterval(() => {
+        if (playtestState.timer > 0 && playtestState.p2Hp > 0) {
+          playtestState.timer--;
+          document.getElementById('arcade-timer').textContent = String(playtestState.timer).padStart(2, '0');
+        }
+      }, 1000);
+    }
+
+    function triggerAttack(moveName, damage, hits) {
+      if (playtestState.p2Hp <= 0) return;
+
+      playtestState.p2Hp = Math.max(0, playtestState.p2Hp - damage);
+      playtestState.combo += hits;
+      playtestState.comboDmg += damage;
+
+      // Animaciones de impacto
+      const p1 = document.getElementById('sprite-p1');
+      const p2 = document.getElementById('sprite-p2');
+      const fx = document.getElementById('hitspark-fx');
+
+      p1.style.transform = 'translateX(38px)';
+      p2.style.transform = 'translateX(14px) rotate(4deg)';
+      fx.classList.remove('opacity-0', 'scale-50');
+      fx.classList.add('opacity-100', 'scale-125');
+
+      setTimeout(() => {
+        p1.style.transform = 'translateX(0)';
+        p2.style.transform = 'translateX(0) rotate(0deg)';
+        fx.classList.add('opacity-0', 'scale-50');
+        fx.classList.remove('opacity-100', 'scale-125');
+      }, 160);
+
+      // Mostrar contador de combo
+      const comboBox = document.getElementById('combo-display');
+      comboBox.classList.remove('opacity-0');
+      document.getElementById('combo-count').textContent = playtestState.combo;
+      document.getElementById('combo-dmg').textContent = playtestState.comboDmg;
+
+      updatePlaytestHUD();
+
+      if (playtestState.p2Hp === 0) {
+        clearInterval(playtestState.interval);
+        document.getElementById('ko-banner').classList.remove('hidden');
+      }
+    }
+
+    function updatePlaytestHUD() {
+      const pct = (playtestState.p2Hp / 1000) * 100;
+      document.getElementById('p2-hp-bar').style.width = `${pct}%`;
+      document.getElementById('p2-hp-text').textContent = `${playtestState.p2Hp} / 1000`;
+    }
+
+    // Creación de nuevo personaje o nuevo proyecto
+    function toggleNewProjectInput() {
+      const val = document.getElementById('char-project-select').value;
+      const wrapper = document.getElementById('new-project-name-wrapper');
+      if (val === 'NEW') {
+        wrapper.classList.remove('hidden');
+      } else {
+        wrapper.classList.add('hidden');
+      }
+    }
+
+    function openNewProjectQuick() {
+      openModal('modal-new-character');
+      document.getElementById('char-project-select').value = 'NEW';
+      toggleNewProjectInput();
+    }
+
+    function handleCreateCharacter(e) {
+      e.preventDefault();
+      const charName = document.getElementById('char-name-input').value.trim();
+      const projVal = document.getElementById('char-project-select').value;
+      const archetype = document.querySelector('input[name="archetype"]:checked').value;
+
+      if (!charName) return;
+
+      if (projVal === 'NEW') {
+        const newProjName = document.getElementById('new-project-name-input').value.trim() || 'Nuevo Torneo';
+        projects.push({
+          id: Date.now(),
+          name: newProjName,
+          style: '2.5D / 60 FPS',
+          stages: 2,
+          lastEdited: 'Ahora mismo',
+          accent: 'from-purple-500 to-engine-crimson',
+          fighters: [{ name: charName, archetype }]
+        });
+        showToast(`Proyecto "${newProjName}" y luchador ${charName} creados`, 'success');
+      } else {
+        const target = projects.find(p => p.id === Number(projVal));
+        if (target) {
+          target.fighters.push({ name: charName, archetype });
+          target.lastEdited = 'Ahora mismo';
+          showToast(`${charName} (${archetype.split(' ')[0]}) añadido a "${target.name}"`, 'success');
+        }
+      }
+
+      document.getElementById('char-name-input').value = '';
+      document.getElementById('new-project-name-input').value = '';
+      closeModal('modal-new-character');
+      renderProjects();
+    }
+
+    // Simulación de exportación en "Publicar juego"
+    function startBuildExport(platform) {
+      const box = document.getElementById('build-progress-box');
+      const bar = document.getElementById('build-bar');
+      const pct = document.getElementById('build-percent');
+      const label = document.getElementById('build-status-label');
+
+      box.classList.remove('hidden');
+      bar.style.width = '15%';
+      pct.textContent = '15%';
+      label.textContent = `Compilando para ${platform}...`;
+
+      setTimeout(() => {
+        bar.style.width = '68%';
+        pct.textContent = '68%';
+        label.textContent = 'Optimizando hitboxes y shaders...';
+      }, 450);
+
+      setTimeout(() => {
+        bar.style.width = '100%';
+        pct.textContent = '100%';
+        label.textContent = `¡Paquete listo para ${platform}!`;
+        showToast(`Compilación completada: ${platform}`, 'success');
+      }, 1000);
+    }
+
+    // Utilidades de Modales y Toasts
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+      if (id === 'modal-playtest') clearInterval(playtestState.interval);
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const borderCol = type === 'success' ? 'border-engine-emerald text-emerald-200' : 'border-engine-cyan text-cyan-200';
+      toast.className = `bg-[#161920] border ${borderCol} px-4 py-2.5 rounded-xl shadow-xl text-xs font-mono flex items-center gap-2 transition-all duration-300`;
+      toast.innerHTML = `<span>${type === 'success' ? '✓' : 'ℹ'}</span><span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 2800);
+    }
+
+    // Cerrar modales con tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        ['modal-playtest', 'modal-new-character', 'modal-account', 'modal-marketplace', 'modal-academia', 'modal-publish'].forEach(closeModal);
+      }
+    });
+
+    // Inicialización al cargar
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProjects();
+    });
+  </script>
+</body>
+</html>
