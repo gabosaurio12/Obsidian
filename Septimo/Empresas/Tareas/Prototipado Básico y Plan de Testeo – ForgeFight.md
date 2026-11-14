@@ -25,7 +25,7 @@ Representar de forma simple el flujo y las pantallas clave del motor No-Code/Low
 
 ### 3.1 Flujo general del usuario
 
-![[image-5.png]]
+![[image-5 2.png]]
 
 ### 3.2 Bocetos de pantallas (representación en texto)
 
