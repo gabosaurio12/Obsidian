@@ -18,12 +18,12 @@ Tomando esta propuesta como referencia, extrae únicamente el fondo de pantalla 
 
 **Obtener un item:**
 ```
-Tomando esta imagen como referencia, extrae únicamente el item xxx, respetando todos los detalles.
+Tomando esta imagen como referencia, extrae únicamente el item, respetando todos los detalles, dimensiones y relación aspecto.
 ```
 
 **Extraer diseño de botones:**
 ```
-Tomando esta propuesta como referencia, extrae el diseño de los botones para poder utilizarlos como elemento individual en WPF como imagen.
+Tomando esta propuesta como referencia, extrae el diseño de los botones para poder utilizarlos como elemento individual en WPF como imagen, respeta todos los detalles, la dimensión y relación aspecto.
 ```
 
 **Crear una propueta basándose en otra página:**

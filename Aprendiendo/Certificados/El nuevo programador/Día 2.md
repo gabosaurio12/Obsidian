@@ -90,7 +90,7 @@ Indica qué puntos del checklist has comprobado y cómo.
 
 #### Skills de terceros
 
-Utilizar plataformas como [skills.sh][https://www.skills.sh/], podemos dotar al agente de habilidades específicas de forma modular. Esto mantiene el contexto principal limpio. Para instalar skills en nuestro agente, debemos instalar el paquete [agent-skills][https://www.skills.sh/docs]
+Utilizar plataformas como [skills.sh](https://www.skills.sh/), podemos dotar al agente de habilidades específicas de forma modular. Esto mantiene el contexto principal limpio. Para instalar skills en nuestro agente, debemos instalar el paquete [agent-skills](https://www.skills.sh/docs)
 
 ```
 npx skills add vercel-labs/agent-skills
@@ -131,7 +131,7 @@ Un servidor MCP proporciona esas capacidades: consultar documentación, acceder 
 - Ecosistema creciente
 
 ![[Aprendiendo/Certificados/El nuevo programador/imgs/image.png]]
-https://modelcontextprotocol.io
+[Página oficial de MCP](https://modelcontextprotocol.io)
 
 ### Creación
 1. Crea o edita opencode.json en la raíz del proyecto

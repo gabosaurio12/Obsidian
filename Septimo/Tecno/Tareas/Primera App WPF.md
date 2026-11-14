@@ -15,14 +15,14 @@ Quitar el elemento Grid y cambiar las propiedades de Title a "ExpenseIt", Height
 Abrir el MainWindow.xaml.cs:
 ![[Septimo/Tecno/imgs/image 4.png]]
 
-Agregar la página ExpenseItHome.xaml:![[image 5.png]]
+Agregar la página ExpenseItHome.xaml:![[Septimo/Tecno/imgs/image 5.png]]
 
 Configuramos el título a "ExpenseIt - Home" y el tamaño de la ventana a 350px de alto y 500px de ancho:
 ![[Septimo/Tecno/imgs/image-1.png]]
 
-Agregar la propiedad *Source* a MainWindow.xaml y dirigirla a "ExpenseItHome.xaml":![[image 7.png]]
+Agregar la propiedad *Source* a MainWindow.xaml y dirigirla a "ExpenseItHome.xaml":![[Septimo/Tecno/imgs/image 7.png]]
 
-Crear una nueva página "ExpenseReportPage.xaml":![[image 8.png]]
+Crear una nueva página "ExpenseReportPage.xaml":![[Septimo/Tecno/imgs/image 8.png]]
 
 Configurar el título de ExpenseReportPage.xaml a "ExpenseIt - View Expense" y la altura a 350px y el ancho a 500px
 ![[image 10.png]]
